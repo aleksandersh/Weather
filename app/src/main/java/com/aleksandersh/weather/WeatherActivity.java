@@ -1,7 +1,7 @@
 package com.aleksandersh.weather;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +14,6 @@ import android.view.MenuItem;
 
 public class WeatherActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
@@ -36,6 +35,17 @@ public class WeatherActivity extends AppCompatActivity
         // Установка активности обработчиком выбора Navigation view.
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (savedInstanceState == null) {
+            // При запуске приложения необходимо загрузить стандартный фрагмент
+            MenuItem item = navigationView.getMenu().findItem(R.id.nav_weather_fragment);
+            if (item != null) {
+                onNavigationItemSelected(item);
+                item.setChecked(true);
+            } else {
+                throw new RuntimeException("Can not find primary menu item.");
+            }
+        }
     }
 
     @Override
@@ -47,6 +57,14 @@ public class WeatherActivity extends AppCompatActivity
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Новая конфигурация передается Toggle, хотя я не совсем понял зачем это здесь
+        mToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public void onBackPressed() {
         // Если при нажатии кнопки Back открыт Navigation drawer, вместо закрытия активности
         // закрывается панель.
@@ -54,12 +72,6 @@ public class WeatherActivity extends AppCompatActivity
             mDrawer.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Enter your code there
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -81,10 +93,8 @@ public class WeatherActivity extends AppCompatActivity
                 fragment = WeatherFragment.newInstance();
         }
 
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
+        // Переключение фрагмента
+        replaceFragment(fragment);
 
         // Закрытие панели
         mDrawer.closeDrawer(GravityCompat.START);
@@ -105,5 +115,17 @@ public class WeatherActivity extends AppCompatActivity
                 R.string.drawer_open,
                 R.string.drawer_close
         );
+    }
+
+    /**
+     * Заменяет фрагмент в контейнере.
+     *
+     * @param fragment Новый фрагмент
+     */
+    protected void replaceFragment(Fragment fragment) {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }
