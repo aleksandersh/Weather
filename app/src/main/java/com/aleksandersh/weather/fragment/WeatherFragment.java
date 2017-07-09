@@ -1,4 +1,4 @@
-package com.aleksandersh.weather;
+package com.aleksandersh.weather.fragment;
 
 
 import android.os.Bundle;
@@ -7,31 +7,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aleksandersh.weather.R;
+
 
 /**
- * Фрагмент, содержащий настройки приложения.
+ * Фрагмент, содержащий данные о погоде.
  */
-public class SettingsFragment extends Fragment {
+public class WeatherFragment extends Fragment {
     /**
-     * Создает новый экземпляр {@link SettingsFragment} и задает аргументы.
+     * Создает новый экземпляр фрагмента {@link WeatherFragment} и задает аргументы.
      *
      * @return Новый экземпляр
      */
-    public static SettingsFragment newInstance() {
+    public static WeatherFragment newInstance() {
+
         Bundle args = new Bundle();
-        SettingsFragment fragment = new SettingsFragment();
+
+        WeatherFragment fragment = new WeatherFragment();
         fragment.setArguments(args);
 
         return fragment;
     }
 
-    public SettingsFragment() {
+    public WeatherFragment() {
         // Пустой конструктор
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_weather, container, false);
     }
 }

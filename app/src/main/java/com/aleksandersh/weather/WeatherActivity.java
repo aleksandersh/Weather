@@ -2,6 +2,7 @@ package com.aleksandersh.weather;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,8 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.aleksandersh.weather.fragment.AboutFragment;
+import com.aleksandersh.weather.fragment.SettingsFragment;
+import com.aleksandersh.weather.fragment.WeatherFragment;
+
 public class WeatherActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String TAG = "WeatherActivity";
+
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
@@ -75,7 +82,7 @@ public class WeatherActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
 
         int id = item.getItemId();
@@ -95,7 +102,8 @@ public class WeatherActivity extends AppCompatActivity
 
         // Переключение фрагмента
         replaceFragment(fragment);
-
+        // Установка нового заголовка, для начала хватит названия пункта меню
+        setTitle(item.getTitle());
         // Закрытие панели
         mDrawer.closeDrawer(GravityCompat.START);
 
