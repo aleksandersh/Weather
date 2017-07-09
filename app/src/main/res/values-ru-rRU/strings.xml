@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Погода</string>
 
+    <string name="app_description">Очередное клевое погодное приложение.</string>
+
     <string name="drawer_open">Открыть панель навигации</string>
     <string name="drawer_close">Закрыть панель навигации</string>
 

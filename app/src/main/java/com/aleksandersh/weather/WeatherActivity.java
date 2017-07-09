@@ -2,6 +2,7 @@ package com.aleksandersh.weather;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ public class WeatherActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +42,12 @@ public class WeatherActivity extends AppCompatActivity
         mDrawer.addDrawerListener(mToggle);
 
         // Установка активности обработчиком выбора Navigation view.
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
             // При запуске приложения необходимо загрузить стандартный фрагмент
-            MenuItem item = navigationView.getMenu().findItem(R.id.nav_weather_fragment);
-            if (item != null) {
-                onNavigationItemSelected(item);
-                item.setChecked(true);
-            } else {
-                throw new RuntimeException("Can not find primary menu item.");
-            }
+            selectNavigationMenuItem(R.id.nav_weather_fragment);
         }
     }
 
@@ -128,12 +124,28 @@ public class WeatherActivity extends AppCompatActivity
     /**
      * Заменяет фрагмент в контейнере.
      *
-     * @param fragment Новый фрагмент
+     * @param fragment Новый фрагмент.
      */
     protected void replaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+    }
+
+    /**
+     * Переключает пункт в панеле навигации.
+     *
+     * @param itemId Id ресурса выбираемого пункта меню.
+     * @throws IllegalArgumentException Исключение возникает, если пункт с таким Id не найден .
+     */
+    private void selectNavigationMenuItem(@IdRes int itemId) {
+        MenuItem item = mNavigationView.getMenu().findItem(itemId);
+        if (item != null) {
+            onNavigationItemSelected(item);
+            item.setChecked(true);
+        } else {
+            throw new IllegalArgumentException("Can not find menu item by id.");
+        }
     }
 }
