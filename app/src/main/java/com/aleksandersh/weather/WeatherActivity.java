@@ -1,14 +1,22 @@
 package com.aleksandersh.weather;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mToggle;
 
     @Override
@@ -17,19 +25,17 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
 
         // Получение и установка Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Toggle обеспечивает совместную работу DrawerLayout с ActionBar
-        mToggle = new ActionBarDrawerToggle(
-                this,
-                drawer,
-                toolbar,
-                R.string.drawer_open,
-                R.string.drawer_close
-        );
-        drawer.addDrawerListener(mToggle);
+        mToggle = setupDrawerToggle();
+        mDrawer.addDrawerListener(mToggle);
+
+        // Установка активности обработчиком выбора Navigation view.
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -41,8 +47,63 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // Если при нажатии кнопки Back открыт Navigation drawer, вместо закрытия активности
+        // закрывается панель.
+        if (mDrawer.isDrawerOpen(GravityCompat.START))
+            mDrawer.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Enter your code there
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        Fragment fragment = null;
+
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.nav_weather_fragment:
+                fragment = WeatherFragment.newInstance();
+                break;
+            case R.id.nav_about_fragment:
+                fragment = AboutFragment.newInstance();
+                break;
+            case R.id.nav_settings_fragment:
+                fragment = SettingsFragment.newInstance();
+                break;
+            default:
+                fragment = WeatherFragment.newInstance();
+        }
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+
+        // Закрытие панели
+        mDrawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    /**
+     * Собирает новый экземпляр {@link ActionBarDrawerToggle}.
+     *
+     * @return Новый экземпляр.
+     */
+    protected ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(
+                this,
+                mDrawer,
+                mToolbar,
+                R.string.drawer_open,
+                R.string.drawer_close
+        );
     }
 }

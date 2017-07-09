@@ -4,6 +4,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--Делает статус-бар полупрозрачным (API >= 19)-->
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 </resources>
