@@ -18,29 +18,33 @@ import com.aleksandersh.weather.fragment.AboutFragment;
 import com.aleksandersh.weather.fragment.SettingsFragment;
 import com.aleksandersh.weather.fragment.WeatherFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WeatherActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "WeatherActivity";
 
+    @BindView(R.id.toolbar)
     private Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
     private DrawerLayout mDrawer;
-    private ActionBarDrawerToggle mToggle;
+    @BindView(R.id.navigation_view)
     private NavigationView mNavigationView;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Toggle обеспечивает совместную работу DrawerLayout с ActionBar
         mToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(mToggle);
 
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {

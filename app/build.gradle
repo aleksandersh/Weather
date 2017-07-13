@@ -19,7 +19,8 @@ android {
     }
 }
 
-ext.supportLibraryVersion = '25.3.0'
+ext.supportLibraryVersion = '26.0.0-alpha1'
+ext.butterknifeVersion = '8.7.0'
 
 dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -29,5 +30,7 @@ dependencies {
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:support-v4:$supportLibraryVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     testCompile 'junit:junit:4.12'
 }
