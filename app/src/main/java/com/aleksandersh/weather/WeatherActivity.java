@@ -20,7 +20,7 @@ import com.aleksandersh.weather.fragment.WeatherFragment;
 
 public class WeatherActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String TAG = "WeatherActivity";
+    private static final String TAG = "WeatherActivity";
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
@@ -32,7 +32,6 @@ public class WeatherActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        // Получение и установка Toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
@@ -41,7 +40,6 @@ public class WeatherActivity extends AppCompatActivity
         mToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(mToggle);
 
-        // Установка активности обработчиком выбора Navigation view.
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
@@ -69,12 +67,11 @@ public class WeatherActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        // Если при нажатии кнопки Back открыт Navigation drawer, вместо закрытия активности
-        // закрывается панель.
-        if (mDrawer.isDrawerOpen(GravityCompat.START))
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
-        else
+        } else {
             super.onBackPressed();
+        }
     }
 
     @Override
@@ -93,14 +90,12 @@ public class WeatherActivity extends AppCompatActivity
                 fragment = SettingsFragment.newInstance();
                 break;
             default:
-                fragment = WeatherFragment.newInstance();
+                throw new IllegalArgumentException("Menu item Id did not processed.");
         }
 
-        // Переключение фрагмента
         replaceFragment(fragment);
         // Установка нового заголовка, для начала хватит названия пункта меню
         setTitle(item.getTitle());
-        // Закрытие панели
         mDrawer.closeDrawer(GravityCompat.START);
 
         return true;
@@ -134,7 +129,7 @@ public class WeatherActivity extends AppCompatActivity
     }
 
     /**
-     * Переключает пункт в панеле навигации.
+     * Переключает пункт в панели навигации.
      *
      * @param itemId Id ресурса выбираемого пункта меню.
      * @throws IllegalArgumentException Исключение возникает, если пункт с таким Id не найден .
