@@ -9,26 +9,17 @@ import android.view.ViewGroup;
 
 import com.aleksandersh.weather.R;
 
-
 /**
  * Фрагмент, содержащий настройки приложения.
  */
 public class SettingsFragment extends Fragment {
     /**
-     * Создает новый экземпляр {@link SettingsFragment} и задает аргументы.
+     * Создает новый экземпляр {@link SettingsFragment}.
      *
-     * @return Новый экземпляр
+     * @return Новый экземпляр.
      */
     public static SettingsFragment newInstance() {
-        Bundle args = new Bundle();
-        SettingsFragment fragment = new SettingsFragment();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
-    public SettingsFragment() {
-        // Пустой конструктор
+        return new SettingsFragment();
     }
 
     @Override

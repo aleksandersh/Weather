@@ -9,27 +9,17 @@ import android.view.ViewGroup;
 
 import com.aleksandersh.weather.R;
 
-
 /**
  * Фрагмент, содержащий информацию о приложении.
  */
 public class AboutFragment extends Fragment {
     /**
-     * Создает новый экземпляр фрагмента {@link AboutFragment} и задает аргументы.
+     * Создает новый экземпляр фрагмента {@link AboutFragment}.
      *
-     * @return Новый экземпляр
+     * @return Новый экземпляр.
      */
     public static AboutFragment newInstance() {
-        Bundle args = new Bundle();
-
-        AboutFragment fragment = new AboutFragment();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
-    public AboutFragment() {
-        // Пустой констурктор
+        return new AboutFragment();
     }
 
     @Override

@@ -9,28 +9,17 @@ import android.view.ViewGroup;
 
 import com.aleksandersh.weather.R;
 
-
 /**
  * Фрагмент, содержащий данные о погоде.
  */
 public class WeatherFragment extends Fragment {
     /**
-     * Создает новый экземпляр фрагмента {@link WeatherFragment} и задает аргументы.
+     * Создает новый экземпляр фрагмента {@link WeatherFragment}.
      *
-     * @return Новый экземпляр
+     * @return Новый экземпляр.
      */
     public static WeatherFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        WeatherFragment fragment = new WeatherFragment();
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
-    public WeatherFragment() {
-        // Пустой конструктор
+        return new WeatherFragment();
     }
 
     @Override

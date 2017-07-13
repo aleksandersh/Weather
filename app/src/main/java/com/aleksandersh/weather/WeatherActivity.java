@@ -18,31 +18,33 @@ import com.aleksandersh.weather.fragment.AboutFragment;
 import com.aleksandersh.weather.fragment.SettingsFragment;
 import com.aleksandersh.weather.fragment.WeatherFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WeatherActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String TAG = "WeatherActivity";
+    private static final String TAG = "WeatherActivity";
 
-    private Toolbar mToolbar;
-    private DrawerLayout mDrawer;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+    @BindView(R.id.navigation_view)
+    NavigationView mNavigationView;
     private ActionBarDrawerToggle mToggle;
-    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        // Получение и установка Toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Toggle обеспечивает совместную работу DrawerLayout с ActionBar
         mToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(mToggle);
 
-        // Установка активности обработчиком выбора Navigation view.
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
@@ -69,12 +71,19 @@ public class WeatherActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        // Если при нажатии кнопки Back открыт Navigation drawer, вместо закрытия активности
-        // закрывается панель.
-        if (mDrawer.isDrawerOpen(GravityCompat.START))
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
-        else
+        } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -93,14 +102,12 @@ public class WeatherActivity extends AppCompatActivity
                 fragment = SettingsFragment.newInstance();
                 break;
             default:
-                fragment = WeatherFragment.newInstance();
+                throw new IllegalArgumentException("Menu item Id did not processed.");
         }
 
-        // Переключение фрагмента
         replaceFragment(fragment);
         // Установка нового заголовка, для начала хватит названия пункта меню
         setTitle(item.getTitle());
-        // Закрытие панели
         mDrawer.closeDrawer(GravityCompat.START);
 
         return true;
@@ -134,7 +141,7 @@ public class WeatherActivity extends AppCompatActivity
     }
 
     /**
-     * Переключает пункт в панеле навигации.
+     * Переключает пункт в панели навигации.
      *
      * @param itemId Id ресурса выбираемого пункта меню.
      * @throws IllegalArgumentException Исключение возникает, если пункт с таким Id не найден .
