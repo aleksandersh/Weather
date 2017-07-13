@@ -26,11 +26,11 @@ public class WeatherActivity extends AppCompatActivity
     private static final String TAG = "WeatherActivity";
 
     @BindView(R.id.toolbar)
-    private Toolbar mToolbar;
+    Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
-    private DrawerLayout mDrawer;
+    DrawerLayout mDrawer;
     @BindView(R.id.navigation_view)
-    private NavigationView mNavigationView;
+    NavigationView mNavigationView;
     private ActionBarDrawerToggle mToggle;
 
     @Override
