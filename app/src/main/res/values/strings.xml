@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Weather</string>
+
+    <string name="app_description">Another cool weather application.</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="nav_title_weather_fragment">Weather</string>
+    <string name="nav_title_settings_fragment">Settings</string>
+    <string name="nav_title_about_fragment">About</string>
+</resources>

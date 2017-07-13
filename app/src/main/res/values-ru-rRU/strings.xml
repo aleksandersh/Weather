@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+
+    <string name="app_description">Очередное клевое погодное приложение.</string>
+
+    <string name="drawer_open">Открыть панель навигации</string>
+    <string name="drawer_close">Закрыть панель навигации</string>
+
+    <string name="nav_title_weather_fragment">Погода</string>
+    <string name="nav_title_settings_fragment">Настройки</string>
+    <string name="nav_title_about_fragment">О приложении</string>
+</resources>
