@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.dto.currentWeather;
+package com.aleksandersh.weather.network.dto.currentWeather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,15 +19,7 @@ public class LocationDto {
         return mLongitude;
     }
 
-    public void setLongitude(Double longitude) {
-        this.mLongitude = longitude;
-    }
-
     public Double getLatitude() {
         return mLatitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.mLatitude = latitude;
     }
 }

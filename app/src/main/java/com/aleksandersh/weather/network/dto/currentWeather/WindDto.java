@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.dto.currentWeather;
+package com.aleksandersh.weather.network.dto.currentWeather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -19,15 +19,7 @@ public class WindDto {
         return mSpeed;
     }
 
-    public void setSpeed(Double speed) {
-        this.mSpeed = speed;
-    }
-
     public Integer getDirection() {
         return mDirection;
-    }
-
-    public void setDirection(Integer direction) {
-        this.mDirection = direction;
     }
 }

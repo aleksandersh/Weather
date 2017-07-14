@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.dto.currentWeather;
+package com.aleksandersh.weather.network.dto.currentWeather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -51,95 +51,47 @@ public class CurrentWeatherDto {
         return mLocationDto;
     }
 
-    public void setLocation(LocationDto locationDto) {
-        this.mLocationDto = locationDto;
-    }
-
     public List<WeatherConditionDto> getWeatherCondition() {
         return mWeatherConditionDto;
-    }
-
-    public void setWeatherConditionDto(List<WeatherConditionDto> weatherConditionDto) {
-        this.mWeatherConditionDto = weatherConditionDto;
     }
 
     public String getBase() {
         return mBase;
     }
 
-    public void setBase(String base) {
-        this.mBase = base;
-    }
-
     public GeneralDto getGeneral() {
         return mGeneralDto;
-    }
-
-    public void setGeneral(GeneralDto generalDto) {
-        this.mGeneralDto = generalDto;
     }
 
     public Integer getVisibility() {
         return mVisibility;
     }
 
-    public void setVisibility(Integer visibility) {
-        this.mVisibility = visibility;
-    }
-
     public WindDto getWind() {
         return mWindDto;
-    }
-
-    public void setWind(WindDto windDto) {
-        this.mWindDto = windDto;
     }
 
     public CloudsDto getClouds() {
         return mCloudsDto;
     }
 
-    public void setClouds(CloudsDto cloudsDto) {
-        this.mCloudsDto = cloudsDto;
-    }
-
     public Integer getTime() {
         return mTime;
-    }
-
-    public void setTime(Integer time) {
-        this.mTime = time;
     }
 
     public SystemDto getSystem() {
         return mSystemDto;
     }
 
-    public void setSystem(SystemDto systemDto) {
-        this.mSystemDto = systemDto;
-    }
-
     public Integer getCityId() {
         return mCityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.mCityId = cityId;
     }
 
     public String getCityName() {
         return mCityName;
     }
 
-    public void setCityName(String cityName) {
-        this.mCityName = cityName;
-    }
-
     public Integer getCod() {
         return mCod;
-    }
-
-    public void setCod(Integer cod) {
-        this.mCod = cod;
     }
 }

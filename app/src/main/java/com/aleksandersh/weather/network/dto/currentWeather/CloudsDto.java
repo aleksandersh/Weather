@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.dto.currentWeather;
+package com.aleksandersh.weather.network.dto.currentWeather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -14,9 +14,5 @@ public class CloudsDto {
 
     public Integer getCloudiness() {
         return mCloudiness;
-    }
-
-    public void setCloudiness(Integer cloudiness) {
-        this.mCloudiness = cloudiness;
     }
 }
