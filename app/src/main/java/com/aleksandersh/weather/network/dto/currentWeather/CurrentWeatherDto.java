@@ -15,7 +15,7 @@ public class CurrentWeatherDto {
     private LocationDto mLocationDto;
     @SerializedName("weather")
     @Expose
-    private List<WeatherConditionDto> mWeatherConditionDto = null;
+    private List<WeatherConditionDto> mWeatherConditionDtoList = null;
     @SerializedName("base")
     @Expose
     private String mBase;
@@ -51,8 +51,8 @@ public class CurrentWeatherDto {
         return mLocationDto;
     }
 
-    public List<WeatherConditionDto> getWeatherCondition() {
-        return mWeatherConditionDto;
+    public List<WeatherConditionDto> getWeatherConditions() {
+        return mWeatherConditionDtoList;
     }
 
     public String getBase() {

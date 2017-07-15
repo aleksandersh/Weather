@@ -1,6 +1,7 @@
 package com.aleksandersh.weather.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by AleksanderSh on 14.07.2017.
@@ -9,10 +10,10 @@ import java.util.Date;
 public class Weather {
     private Date mCalculationTime;
     private Location mLocation;
-    private WeatherCondition mCondition;
+    private List<WeatherCondition> mConditions;
     private double mTemperature;
-    private double mTemperatureMin;
-    private double mTemperatureMax;
+    private double mMinimumTemperature;
+    private double mMaximumTemperature;
     private int mPressure;
     private int mHumidity;
     private int mCloudiness;
@@ -35,12 +36,12 @@ public class Weather {
         mLocation = location;
     }
 
-    public WeatherCondition getCondition() {
-        return mCondition;
+    public List<WeatherCondition> getConditions() {
+        return mConditions;
     }
 
-    public void setCondition(WeatherCondition condition) {
-        mCondition = condition;
+    public void setConditions(List<WeatherCondition> conditions) {
+        mConditions = conditions;
     }
 
     public double getTemperature() {
@@ -51,20 +52,20 @@ public class Weather {
         mTemperature = temperature;
     }
 
-    public double getTemperatureMin() {
-        return mTemperatureMin;
+    public double getMinimumTemperature() {
+        return mMinimumTemperature;
     }
 
-    public void setTemperatureMin(double temperatureMin) {
-        mTemperatureMin = temperatureMin;
+    public void setMinimumTemperature(double minimumTemperature) {
+        mMinimumTemperature = minimumTemperature;
     }
 
-    public double getTemperatureMax() {
-        return mTemperatureMax;
+    public double getMaximumTemperature() {
+        return mMaximumTemperature;
     }
 
-    public void setTemperatureMax(double temperatureMax) {
-        mTemperatureMax = temperatureMax;
+    public void setMaximumTemperature(double maximumTemperature) {
+        mMaximumTemperature = maximumTemperature;
     }
 
     public int getPressure() {
