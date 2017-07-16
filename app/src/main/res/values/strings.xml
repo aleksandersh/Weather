@@ -9,4 +9,10 @@
     <string name="nav_title_weather_fragment">Weather</string>
     <string name="nav_title_settings_fragment">Settings</string>
     <string name="nav_title_about_fragment">About</string>
+    
+    <string name="pref_service_title">Weather auto-update</string>
+    <string name="pref_service_enabled_title">Enabled</string>
+    <string name="pref_service_interval_title">Update interval</string>
+    <string name="pref_service_interval_default">2h</string>
+
 </resources>
