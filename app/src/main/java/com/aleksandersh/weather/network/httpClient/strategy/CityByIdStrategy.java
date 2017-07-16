@@ -17,22 +17,14 @@ public class CityByIdStrategy implements HttpClientStrategy<CurrentWeatherDto> {
     private CurrentWeatherHttpService mHttpService;
     private long mCityId;
 
-    public CityByIdStrategy(CurrentWeatherHttpService httpService) {
+    public CityByIdStrategy(CurrentWeatherHttpService httpService, long cityId) {
         mHttpService = httpService;
+        mCityId = cityId;
     }
 
     @Override
     public Response<CurrentWeatherDto> getWeather(String apiKey, String lang, String units)
             throws IOException {
         return mHttpService.getCurrentWeatherByCityId(apiKey, lang, units, mCityId).execute();
-    }
-
-    /**
-     * Установка идентификатора города.
-     *
-     * @param cityId Идентификатор города.
-     */
-    public void setCityId(long cityId) {
-        this.mCityId = cityId;
     }
 }

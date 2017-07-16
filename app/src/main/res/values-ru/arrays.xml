@@ -9,4 +9,10 @@
         <item>12 часов</item>
         <item>24 часа</item>
     </string-array>
+
+    <string-array name="pref_units_entries">
+        <item>Кельвина</item>
+        <item>Цельсия</item>
+        <item>Фаренгейта</item>
+    </string-array>
 </resources>

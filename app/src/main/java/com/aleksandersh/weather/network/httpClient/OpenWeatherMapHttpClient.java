@@ -29,8 +29,6 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
     private static final String API_KEY = "7eb42e583dff5e64a589739dd927bd0c";
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
-    private String lang;
-    private String units;
     private CurrentWeatherHttpService mCurrentWeatherHttpService = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -46,11 +44,11 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
      * модель погоды может быть {@code null}.
      */
     @Override
-    public HttpClientResponse<Weather> getCurrentWeatherByCityId(long cityId) {
+    public HttpClientResponse<Weather> getCurrentWeatherByCityId(String lang, String units,
+                                                                 long cityId) {
         CityByIdStrategy strategy =
-                new CityByIdStrategy(mCurrentWeatherHttpService);
-        strategy.setCityId(cityId);
-        return getCurrentWeather(strategy);
+                new CityByIdStrategy(mCurrentWeatherHttpService, cityId);
+        return getCurrentWeather(lang, units, strategy);
     }
 
     /**
@@ -61,11 +59,12 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
      * модель погоды может быть {@code null}.
      */
     @Override
-    public HttpClientResponse<Weather> getCurrentWeatherByCityName(String cityName) {
+    public HttpClientResponse<Weather> getCurrentWeatherByCityName(String lang, String units,
+                                                                   String cityName) {
         CityByNameStrategy strategy =
                 new CityByNameStrategy(mCurrentWeatherHttpService);
         strategy.setCityName(cityName);
-        return getCurrentWeather(strategy);
+        return getCurrentWeather(lang, units, strategy);
     }
 
     /**
@@ -78,15 +77,19 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
      */
     @Override
     public HttpClientResponse<Weather> getCurrentWeatherByLocation(
+            String lang,
+            String units,
             double latitude,
             double longitude) {
         LocationStrategy strategy = new LocationStrategy(mCurrentWeatherHttpService);
         strategy.setLatitude(latitude);
         strategy.setLongitude(longitude);
-        return getCurrentWeather(strategy);
+        return getCurrentWeather(lang, units, strategy);
     }
 
     private HttpClientResponse<Weather> getCurrentWeather(
+            String lang,
+            String units,
             HttpClientStrategy<CurrentWeatherDto> strategy) {
         HttpClientResponse<Weather> clientResponse = new HttpClientResponse<>();
         try {
@@ -107,23 +110,5 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
             Log.w(TAG, "getCurrentWeatherByCityId: Problem occurred talking to the server.");
         }
         return clientResponse;
-    }
-
-    /**
-     * Установка языка для ответа от сервера.
-     *
-     * @param lang Обозначение языка.
-     */
-    public void setLang(String lang) {
-        this.lang = lang;
-    }
-
-    /**
-     * Установка системы единиц измерения температуры.
-     *
-     * @param units Система единиц измерения температуры.
-     */
-    public void setUnits(String units) {
-        this.units = units;
     }
 }

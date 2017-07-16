@@ -10,9 +10,11 @@ import com.aleksandersh.weather.model.Weather;
  */
 
 public interface WeatherHttpClient {
-    HttpClientResponse<Weather> getCurrentWeatherByCityId(long cityId);
+    HttpClientResponse<Weather> getCurrentWeatherByCityId(String lang, String units, long cityId);
 
-    HttpClientResponse<Weather> getCurrentWeatherByCityName(String cityName);
+    HttpClientResponse<Weather> getCurrentWeatherByCityName(String lang, String units,
+                                                            String cityName);
 
-    HttpClientResponse<Weather> getCurrentWeatherByLocation(double latitude, double longitude);
+    HttpClientResponse<Weather> getCurrentWeatherByLocation(String lang, String units,
+                                                            double latitude, double longitude);
 }

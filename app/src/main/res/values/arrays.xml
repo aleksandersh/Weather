@@ -10,13 +10,25 @@
         <item>24 hours</item>
     </string-array>
 
+    <string-array name="pref_units_entries">
+        <item>Kelvin</item>
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+
     <string-array name="pref_service_interval_values">
-        <item>30m</item>
-        <item>1h</item>
-        <item>2h</item>
-        <item>3h</item>
-        <item>6h</item>
-        <item>12h</item>
-        <item>24h</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>360</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+
+    <string-array name="pref_units_values">
+        <item>default</item>
+        <item>metric</item>
+        <item>imperial</item>
     </string-array>
 </resources>
