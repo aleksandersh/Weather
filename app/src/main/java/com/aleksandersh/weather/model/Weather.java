@@ -107,4 +107,23 @@ public class Weather {
     public void setWindDirection(int windDirection) {
         mWindDirection = windDirection;
     }
+
+    public String getConditionsDescription() {
+        String conditionText = "";
+        if (!mConditions.isEmpty()) {
+            if (mConditions.size() == 1) {
+                conditionText = mConditions.get(0).getDescription();
+            } else {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (WeatherCondition condition : mConditions) {
+                    if (stringBuilder.length() > 0) {
+                        stringBuilder.append(", ");
+                    }
+                    stringBuilder.append(condition.getDescription());
+                }
+                conditionText = stringBuilder.toString();
+            }
+        }
+        return conditionText;
+    }
 }

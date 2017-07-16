@@ -43,7 +43,7 @@ public class CurrentWeatherDto {
     @SerializedName("name")
     @Expose
     private String mCityName;
-    @SerializedName("mCod")
+    @SerializedName("cod")
     @Expose
     private Integer mCod;
 
