@@ -24,12 +24,12 @@ import java.util.List;
  * используемую в приложении.
  */
 
-public class OpenWeatherMapDtoConverter implements DtoConverter<Weather, CurrentWeatherDto> {
+public class OpenWeatherMapDtoConverter implements DtoConverter<CurrentWeatherDto> {
     @Override
     public Weather convert(CurrentWeatherDto dto) {
         Weather weather = new Weather();
 
-        weather.setCalculationTime(new Date(dto.getTime()));
+        weather.setCalculationTime(new Date((long) dto.getTime() * 1000));
 
         GeneralDto generalDto = dto.getGeneral();
         if (generalDto != null) {
@@ -78,7 +78,7 @@ public class OpenWeatherMapDtoConverter implements DtoConverter<Weather, Current
                 weatherCondition.setGroup(conditionDto.getGroup());
                 weatherCondition.setDescription(conditionDto.getDescription());
                 weatherCondition.setIcon(conditionDto.getIcon());
-
+                weatherConditions.add(weatherCondition);
             }
         } else {
             weatherConditions = Collections.emptyList();
