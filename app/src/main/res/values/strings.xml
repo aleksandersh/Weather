@@ -26,6 +26,7 @@
 
     <string name="api_language_value">en</string>
 
+    <string name="refresh_button_title">Refresh</string>
     <string name="city">Moscow</string>
     <string name="pressure_title">pressure</string>
     <string name="humidity_title">humidity</string>
