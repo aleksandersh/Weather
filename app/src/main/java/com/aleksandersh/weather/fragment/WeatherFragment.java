@@ -124,8 +124,8 @@ public class WeatherFragment extends Fragment implements WeatherProvider.Weather
     private void updateUi(Weather weather) {
         mTemperatureTextView.setText(String.format(Locale.US, "%.1f", weather.getTemperature()));
         mConditionTextView.setText(weather.getConditionsDescription());
-        mPressureTextView.setText(weather.getPressure());
-        mHumidityTextView.setText(weather.getHumidity());
-        mCloudinessTextView.setText(weather.getCloudiness());
+        mPressureTextView.setText(String.valueOf(weather.getPressure()));
+        mHumidityTextView.setText(String.valueOf(weather.getHumidity()));
+        mCloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
     }
 }
