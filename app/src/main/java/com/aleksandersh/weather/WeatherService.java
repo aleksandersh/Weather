@@ -1,12 +1,9 @@
 package com.aleksandersh.weather;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.util.Log;
 
 public class WeatherService extends Service {
@@ -16,21 +13,6 @@ public class WeatherService extends Service {
 
     public static Intent newIntent(Context context) {
         return new Intent(context, WeatherService.class);
-    }
-
-    public static void scheduleService(Context context, boolean isOn) {
-        Intent intent = WeatherService.newIntent(context);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        if (isOn)
-            alarmManager.setInexactRepeating(
-                    AlarmManager.ELAPSED_REALTIME,
-                    SystemClock.elapsedRealtime(),
-                    15 * 1000,
-                    pendingIntent);
-
     }
 
     @Override
@@ -55,7 +37,6 @@ public class WeatherService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 }

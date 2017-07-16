@@ -14,7 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Moscow"
+        android:text="@string/city"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/temperature_text_view"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView2"
+        app:layout_constraintRight_toLeftOf="@+id/pressure_title_text_view"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="+24"/>
 
@@ -57,13 +57,14 @@
         tools:text="Rain, snow Rain, snow Rain, snow Rain, "/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/pressure_title_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginTop="8dp"
+        android:text="@string/pressure_title"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
@@ -74,47 +75,78 @@
         tools:text="Pressure"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/pressure_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="-1dp"
+        android:layout_marginTop="0dp"
         android:textAlignment="center"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/textView2"
-        app:layout_constraintRight_toRightOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
+        app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/pressure_title_text_view"
         tools:text="1000"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/humidity_title_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/humidity_title"
         android:textAlignment="center"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/textView3"
-        app:layout_constraintRight_toRightOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
+        app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/pressure_text_view"
         tools:text="Humidity"/>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/humidity_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="-1dp"
+        android:layout_marginTop="0dp"
         android:textAlignment="center"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/textView4"
-        app:layout_constraintRight_toRightOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
+        app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/humidity_title_text_view"
         tools:text="80"/>
+
+    <TextView
+        android:id="@+id/cloudiness_title_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/cloudiness_title"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
+        app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/humidity_text_view"
+        tools:text="cloudiness"/>
+
+    <TextView
+        android:id="@+id/cloudiness_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
+        app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/cloudiness_title_text_view"
+        tools:text="1000"/>
+
 </android.support.constraint.ConstraintLayout>

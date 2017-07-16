@@ -25,4 +25,10 @@
     <string name="pref_service_interval_default">120</string>
 
     <string name="api_language_value">en</string>
+
+    <string name="city">Moscow</string>
+    <string name="pressure_title">pressure</string>
+    <string name="humidity_title">humidity</string>
+    <string name="cloudiness_title">cloudiness</string>
+    <string name="wind_title">wind</string>
 </resources>
