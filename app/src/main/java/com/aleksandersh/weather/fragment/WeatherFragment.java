@@ -4,6 +4,7 @@ package com.aleksandersh.weather.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,8 @@ import butterknife.Unbinder;
 /**
  * Фрагмент, содержащий данные о погоде.
  */
-public class WeatherFragment extends Fragment implements WeatherProvider.WeatherSubscriber {
+public class WeatherFragment extends Fragment
+        implements WeatherProvider.WeatherSubscriber, SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "WeatherFragment";
     private static final long MOSCOW_ID = 524901;
 
@@ -44,6 +46,8 @@ public class WeatherFragment extends Fragment implements WeatherProvider.Weather
     TextView mHumidityTextView;
     @BindView(R.id.cloudiness_text_view)
     TextView mCloudinessTextView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
      * Создает новый экземпляр фрагмента {@link WeatherFragment}.
@@ -67,6 +71,8 @@ public class WeatherFragment extends Fragment implements WeatherProvider.Weather
 
         mUnbinder = ButterKnife.bind(this, view);
         mFilled = false;
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
     }
@@ -94,8 +100,14 @@ public class WeatherFragment extends Fragment implements WeatherProvider.Weather
     }
 
     @Override
+    public void onRefresh() {
+        mWeatherProvider.requestWeather(MOSCOW_ID);
+    }
+
+    @Override
     public void onWeatherUpdated(WeatherStorableState storableState) {
         updateUi(storableState.getWeather());
+        mSwipeRefreshLayout.setRefreshing(false);
         mLastUpdateDate = storableState.getDate();
         mFilled = true;
     }
@@ -112,6 +124,7 @@ public class WeatherFragment extends Fragment implements WeatherProvider.Weather
     @Override
     public void onErrorUpdating(String errorDescription) {
         // TODO: 16.07.2017 Вывести ошибку
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
