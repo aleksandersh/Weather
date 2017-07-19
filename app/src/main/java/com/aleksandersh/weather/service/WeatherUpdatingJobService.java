@@ -23,11 +23,11 @@ public class WeatherUpdatingJobService extends JobService {
 
         mWeatherProvider.requestWeatherUpdate();
 
-        return false;
+        return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters job) {
-        return false;
+        return true;
     }
 }

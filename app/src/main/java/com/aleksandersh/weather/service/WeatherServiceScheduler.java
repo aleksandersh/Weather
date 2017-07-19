@@ -10,6 +10,8 @@ import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by AleksanderSh on 18.07.2017.
  * <p>
@@ -18,6 +20,7 @@ import com.firebase.jobdispatcher.Trigger;
 
 public class WeatherServiceScheduler implements ServiceScheduler {
     private static final String TAG = "WeatherServiceScheduler";
+    private static final int SYNC_FLEXTIME_SECONDS = 30;
 
     private Context mContext;
     private FirebaseJobDispatcher mDispatcher;
@@ -40,7 +43,7 @@ public class WeatherServiceScheduler implements ServiceScheduler {
                 .setRecurring(true)
                 .setLifetime(Lifetime.FOREVER)
                 .setReplaceCurrent(true)
-                .setTrigger(Trigger.executionWindow(interval, interval))
+                .setTrigger(Trigger.executionWindow(interval, interval + SYNC_FLEXTIME_SECONDS))
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .build();

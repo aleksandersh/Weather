@@ -7,6 +7,8 @@ import com.aleksandersh.weather.R;
 import com.aleksandersh.weather.service.ServiceScheduler;
 import com.aleksandersh.weather.service.WeatherServiceScheduler;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by AleksanderSh on 16.07.2017.
  * <p>
@@ -33,8 +35,8 @@ public class SettingsChangeListener implements SharedPreferences.OnSharedPrefere
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(mServiceEnabledKey) || key.equals(mServiceIntervalKey)) {
             if (sharedPreferences.getBoolean(mServiceEnabledKey, false)) {
-                int interval = Integer.parseInt(sharedPreferences.getString(mServiceIntervalKey,
-                        mServiceIntervalDefault)) * 60;
+                int interval = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(
+                        sharedPreferences.getString(mServiceIntervalKey, mServiceIntervalDefault)));
                 mServiceScheduler.startService(interval);
             } else {
                 if (key.equals(mServiceEnabledKey)) {
