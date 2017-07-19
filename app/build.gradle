@@ -46,5 +46,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.firebase:firebase-jobdispatcher:0.7.0"
     testCompile "junit:junit:4.12"
 }

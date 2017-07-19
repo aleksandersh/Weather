@@ -22,19 +22,13 @@
         </activity>
 
         <service
-            android:name=".WeatherService"
-            android:enabled="true"
-            android:exported="false">
+            android:exported="false"
+            android:name=".service.WeatherUpdatingJobService">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
         </service>
 
-        <receiver
-            android:name=".broadcastReceiver.WeatherBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
