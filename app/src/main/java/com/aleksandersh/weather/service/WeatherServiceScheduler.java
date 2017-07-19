@@ -27,6 +27,11 @@ public class WeatherServiceScheduler implements ServiceScheduler {
         mDispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
     }
 
+    /**
+     * Запускает сервис с заданным интервалом.
+     *
+     * @param interval Интервал (в секундах).
+     */
     @Override
     public void startService(int interval) {
         Job job = mDispatcher.newJobBuilder()

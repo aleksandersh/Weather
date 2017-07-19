@@ -34,7 +34,7 @@ public class SettingsChangeListener implements SharedPreferences.OnSharedPrefere
         if (key.equals(mServiceEnabledKey) || key.equals(mServiceIntervalKey)) {
             if (sharedPreferences.getBoolean(mServiceEnabledKey, false)) {
                 int interval = Integer.parseInt(sharedPreferences.getString(mServiceIntervalKey,
-                        mServiceIntervalDefault));
+                        mServiceIntervalDefault)) * 60;
                 mServiceScheduler.startService(interval);
             } else {
                 if (key.equals(mServiceEnabledKey)) {
