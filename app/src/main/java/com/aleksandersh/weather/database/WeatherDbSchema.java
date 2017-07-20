@@ -22,7 +22,7 @@ public class WeatherDbSchema {
             public static final String WIND_SPEED = "wind_speed";
             public static final String WIND_DIRECTION = "wind_direction";
             public static final String DESCRIPTION = "description";
-            public static final String GROUP = "group";
+            public static final String GROUP = "weather_group";
         }
     }
 }

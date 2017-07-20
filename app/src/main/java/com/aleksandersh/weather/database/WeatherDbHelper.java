@@ -24,6 +24,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + WeatherDbSchema.CurrentWeatherTable.NAME + "(" +
                 WeatherDbSchema.CurrentWeatherTable.Cols._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                WeatherDbSchema.CurrentWeatherTable.Cols.CITY_ID + " INTEGER, " +
                 WeatherDbSchema.CurrentWeatherTable.Cols.UPDATE_TIME + " INTEGER, " +
                 WeatherDbSchema.CurrentWeatherTable.Cols.LANGUAGE + " TEXT, " +
                 WeatherDbSchema.CurrentWeatherTable.Cols.UNITS + " TEXT, " +

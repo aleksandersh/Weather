@@ -43,6 +43,8 @@ public class WeatherDao {
 
             ContentValues values = getWeatherStorableStateContentValues(storableState);
             mDatabase.insert(WeatherDbSchema.CurrentWeatherTable.NAME, null, values);
+
+            mDatabase.setTransactionSuccessful();
         } finally {
             mDatabase.endTransaction();
         }
