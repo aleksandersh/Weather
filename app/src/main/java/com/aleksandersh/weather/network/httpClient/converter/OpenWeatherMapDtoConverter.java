@@ -20,7 +20,6 @@ import java.util.List;
  * Created by AleksanderSh on 15.07.2017.
  * <p>
  * Конвертирует объект передачи данных сервиса Open weather map в модель данных,
- * <p>
  * используемую в приложении.
  */
 
@@ -29,13 +28,11 @@ public class OpenWeatherMapDtoConverter implements DtoConverter<CurrentWeatherDt
     public Weather convert(CurrentWeatherDto dto) {
         Weather weather = new Weather();
 
-        weather.setCalculationTime(new Date((long) dto.getTime() * 1000));
+        weather.setCityId(dto.getCityId());
 
         GeneralDto generalDto = dto.getGeneral();
         if (generalDto != null) {
             weather.setTemperature(generalDto.getTemperature());
-            weather.setMinimumTemperature(generalDto.getMinimumTemperature());
-            weather.setMaximumTemperature(generalDto.getMaximumTemperature());
             weather.setPressure(generalDto.getPressure());
             weather.setHumidity(generalDto.getHumidity());
         }
@@ -51,41 +48,60 @@ public class OpenWeatherMapDtoConverter implements DtoConverter<CurrentWeatherDt
             weather.setWindDirection(windDto.getDirection());
         }
 
-        Location location = new Location();
-        location.setCityId(dto.getCityId());
-        location.setCityName(dto.getCityName());
-
-        LocationDto locationDto = dto.getLocation();
-        if (locationDto != null) {
-            location.setLatitude(locationDto.getLatitude());
-            location.setLongitude(locationDto.getLongitude());
-        }
-
-        SystemDto systemDto = dto.getSystem();
-        if (systemDto != null) {
-            location.setCountryCode(systemDto.getCountryCode());
-        }
-
-        weather.setLocation(location);
-
-        List<WeatherCondition> weatherConditions;
+        String description;
+        String group;
         List<WeatherConditionDto> weatherConditionDtoList = dto.getWeatherConditions();
-        if (weatherConditionDtoList != null) {
-            weatherConditions = new ArrayList<>(weatherConditionDtoList.size());
-            for (WeatherConditionDto conditionDto : weatherConditionDtoList) {
-                WeatherCondition weatherCondition = new WeatherCondition();
-                weatherCondition.setId(conditionDto.getId());
-                weatherCondition.setGroup(conditionDto.getGroup());
-                weatherCondition.setDescription(conditionDto.getDescription());
-                weatherCondition.setIcon(conditionDto.getIcon());
-                weatherConditions.add(weatherCondition);
-            }
+        if (weatherConditionDtoList != null && !weatherConditionDtoList.isEmpty()) {
+            group = getGroupByServiceWeatherId(weatherConditionDtoList.get(0).getId());
+            description = getDescriptionFromWeatherConditions(weatherConditionDtoList);
         } else {
-            weatherConditions = Collections.emptyList();
+            description = "";
+            group = "";
         }
 
-        weather.setConditions(weatherConditions);
+        weather.setDescription(description);
+        weather.setGroup(group);
 
         return weather;
+    }
+
+    private String getGroupByServiceWeatherId(int weatherId) {
+        String group;
+        if (200 <= weatherId && weatherId < 300) {
+            group = "storm";
+        } else if (300 <= weatherId && weatherId < 600) {
+            group = "rain";
+        } else if (600 <= weatherId && weatherId < 700) {
+            group = "snow";
+        } else if (700 <= weatherId && weatherId < 800) {
+            group = "fog";
+        } else if (weatherId == 800) {
+            group = "clear_sky";
+        } else if (801 <= weatherId && weatherId < 900) {
+            group = "clouds";
+        } else {
+            group = "";
+        }
+
+        return group;
+    }
+
+    private String getDescriptionFromWeatherConditions(List<WeatherConditionDto> conditions) {
+        String description;
+
+        if (conditions.size() == 1) {
+            description = conditions.get(0).getDescription();
+        } else {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (WeatherConditionDto conditionDto : conditions) {
+                if (stringBuilder.length() > 0) {
+                    stringBuilder.append(", ");
+                }
+                stringBuilder.append(conditionDto.getDescription());
+            }
+            description = stringBuilder.toString();
+        }
+
+        return description;
     }
 }
