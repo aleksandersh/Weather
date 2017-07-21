@@ -6,7 +6,7 @@ import android.database.CursorWrapper;
 import com.aleksandersh.weather.database.WeatherDbSchema.CurrentWeatherTable.Cols;
 import com.aleksandersh.weather.model.Weather;
 import com.aleksandersh.weather.model.WeatherRequest;
-import com.aleksandersh.weather.storage.WeatherStorableState;
+import com.aleksandersh.weather.model.WeatherStorableState;
 
 import java.util.Date;
 

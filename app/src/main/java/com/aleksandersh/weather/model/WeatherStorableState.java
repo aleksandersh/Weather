@@ -1,7 +1,4 @@
-package com.aleksandersh.weather.storage;
-
-import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.model.WeatherRequest;
+package com.aleksandersh.weather.model;
 
 import java.util.Date;
 
