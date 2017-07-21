@@ -1,6 +1,5 @@
 package com.aleksandersh.weather.fragment.loader;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -21,10 +20,10 @@ public class UpdateWeatherProcessor extends HandlerThread {
     private Handler mHandler;
     private WeatherManager mWeatherManager;
 
-    public UpdateWeatherProcessor(Context context) {
+    public UpdateWeatherProcessor(WeatherManager weatherManager) {
         super(TAG);
 
-        mWeatherManager = new WeatherManager(context);
+        mWeatherManager = weatherManager;
     }
 
     @Override

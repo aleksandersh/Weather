@@ -9,6 +9,8 @@ import com.aleksandersh.weather.service.WeatherServiceScheduler;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 /**
  * Created by AleksanderSh on 16.07.2017.
  * <p>
@@ -19,16 +21,16 @@ public class SettingsChangeListener implements SharedPreferences.OnSharedPrefere
     private String mServiceEnabledKey;
     private String mServiceIntervalKey;
     private String mServiceIntervalDefault;
-    private Context mContext;
+
     private ServiceScheduler mServiceScheduler;
 
-    public SettingsChangeListener(Context context) {
-        mContext = context;
+    @Inject
+    public SettingsChangeListener(Context context, ServiceScheduler scheduler) {
+        mServiceScheduler = scheduler;
 
         mServiceEnabledKey = context.getString(R.string.pref_service_enabled_key);
         mServiceIntervalKey = context.getString(R.string.pref_service_interval_key);
         mServiceIntervalDefault = context.getString(R.string.pref_service_interval_default);
-        mServiceScheduler = new WeatherServiceScheduler(context);
     }
 
     @Override

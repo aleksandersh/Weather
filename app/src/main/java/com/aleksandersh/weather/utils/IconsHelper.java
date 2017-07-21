@@ -6,6 +6,8 @@ import com.aleksandersh.weather.R;
 
 /**
  * Created by AleksanderSh on 21.07.2017.
+ * <p>
+ * Позволяет подбирать иконки в зависимости от типа погоды.
  */
 
 public class IconsHelper {
@@ -23,7 +25,7 @@ public class IconsHelper {
      * @return Идентификатор Drawable ресурса. {@code 0}, если ресурс не определен.
      */
     @DrawableRes
-    public static int getDrawableResorceByGroup(String group) {
+    public static int getDrawableResourceByGroup(String group) {
         if (group.equals(GROUP_STORM)) return R.drawable.storm_icon;
         else if (group.equals(GROUP_RAIN)) return R.drawable.rain_icon;
         else if (group.equals(GROUP_SNOW)) return R.drawable.snow_icon;

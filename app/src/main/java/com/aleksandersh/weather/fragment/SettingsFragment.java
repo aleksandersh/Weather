@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.aleksandersh.weather.R;
+import com.aleksandersh.weather.WeatherApplication;
+
+import javax.inject.Inject;
 
 /**
  * Фрагмент, содержащий настройки приложения.
  */
 public class SettingsFragment extends PreferenceFragmentCompat {
-    private SharedPreferences.OnSharedPreferenceChangeListener mChangeListener;
+    @Inject
+    SharedPreferences.OnSharedPreferenceChangeListener mChangeListener;
 
     /**
      * Создает новый экземпляр {@link SettingsFragment}.
@@ -26,7 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChangeListener = new SettingsChangeListener(getContext().getApplicationContext());
+        ((WeatherApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override

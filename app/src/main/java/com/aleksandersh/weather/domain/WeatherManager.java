@@ -10,13 +10,14 @@ import com.aleksandersh.weather.model.Weather;
 import com.aleksandersh.weather.model.WeatherRequest;
 import com.aleksandersh.weather.model.WeatherStorableState;
 import com.aleksandersh.weather.network.httpClient.HttpClientResponse;
-import com.aleksandersh.weather.network.httpClient.OpenWeatherMapHttpClient;
 import com.aleksandersh.weather.network.httpClient.WeatherHttpClient;
 import com.aleksandersh.weather.utils.ErrorsHelper;
 import com.aleksandersh.weather.utils.PreferencesHelper;
 import com.aleksandersh.weather.utils.WeatherUpdateBroadcastHelper;
 
 import java.util.Date;
+
+import javax.inject.Inject;
 
 /**
  * Created by AleksanderSh on 20.07.2017.
@@ -32,12 +33,14 @@ public class WeatherManager {
     private WeatherDao mWeatherDao;
     private Context mContext;
 
-    public WeatherManager(Context context) {
+    @Inject
+    public WeatherManager(Context context, PreferencesHelper preferencesHelper,
+                          WeatherHttpClient httpClient, WeatherDao weatherDao) {
         mContext = context;
 
-        mPreferencesHelper = new PreferencesHelper(context);
-        mHttpClient = new OpenWeatherMapHttpClient();
-        mWeatherDao = new WeatherDao(context);
+        mPreferencesHelper = preferencesHelper;
+        mHttpClient = httpClient;
+        mWeatherDao = weatherDao;
     }
 
     /**

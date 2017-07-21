@@ -4,6 +4,8 @@ import android.provider.BaseColumns;
 
 /**
  * Created by AleksanderSh on 20.07.2017.
+ * <p>
+ * Схема базы данных приложения.
  */
 
 public class WeatherDbSchema {
