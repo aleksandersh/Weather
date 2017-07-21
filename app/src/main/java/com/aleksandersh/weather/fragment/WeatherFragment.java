@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleksandersh.weather.R;
@@ -23,6 +24,7 @@ import com.aleksandersh.weather.fragment.loader.UpdateWeatherProcessor;
 import com.aleksandersh.weather.model.Weather;
 import com.aleksandersh.weather.model.WeatherStorableState;
 import com.aleksandersh.weather.utils.ErrorsHelper;
+import com.aleksandersh.weather.utils.IconsHelper;
 import com.aleksandersh.weather.utils.WeatherUpdateBroadcastHelper;
 
 import java.util.Locale;
@@ -58,6 +60,8 @@ public class WeatherFragment extends Fragment
     TextView mCloudinessTextView;
     @BindView(R.id.error_text_view)
     TextView mErrorTextView;
+    @BindView(R.id.weather_group_image_view)
+    ImageView mWeatherGroupImageView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -164,6 +168,10 @@ public class WeatherFragment extends Fragment
         mPressureTextView.setText(String.valueOf(weather.getPressure()));
         mHumidityTextView.setText(String.valueOf(weather.getHumidity()));
         mCloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
+        int iconId = IconsHelper.getDrawableResorceByGroup(weather.getGroup());
+        if (iconId != 0) {
+            mWeatherGroupImageView.setImageDrawable(getResources().getDrawable(iconId));
+        }
     }
 
     private void onFailedLoading(String error) {
