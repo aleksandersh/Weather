@@ -9,4 +9,27 @@
     <string name="nav_title_weather_fragment">Weather</string>
     <string name="nav_title_settings_fragment">Settings</string>
     <string name="nav_title_about_fragment">About</string>
+
+    <string name="pref_units_title">Units</string>
+    <string name="pref_service_title">Weather auto-update</string>
+    <string name="pref_service_enabled_title">Enabled</string>
+    <string name="pref_service_interval_title">Update interval</string>
+
+    <string name="pref_last_city_id_key">last_city_id</string>
+    <string name="pref_units_key">units</string>
+    <string name="pref_service_enabled_key">service_enabled</string>
+    <string name="pref_service_interval_key">service_interval</string>
+
+    <string name="pref_last_city_id_default">524901</string>
+    <string name="pref_units_default">metric</string>
+    <string name="pref_service_interval_default">120</string>
+
+    <string name="api_language_value">en</string>
+
+    <string name="refresh_button_title">Refresh</string>
+    <string name="city">Moscow</string>
+    <string name="pressure_title">pressure</string>
+    <string name="humidity_title">humidity</string>
+    <string name="cloudiness_title">cloudiness</string>
+    <string name="wind_title">wind</string>
 </resources>

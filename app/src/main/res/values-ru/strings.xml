@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Погода</string>
 
@@ -10,4 +9,18 @@
     <string name="nav_title_weather_fragment">Погода</string>
     <string name="nav_title_settings_fragment">Настройки</string>
     <string name="nav_title_about_fragment">О приложении</string>
+
+    <string name="pref_units_title">Единицы измерения</string>
+    <string name="pref_service_title">Авто-обновление погоды</string>
+    <string name="pref_service_enabled_title">Включено</string>
+    <string name="pref_service_interval_title">Интервал обновления</string>
+
+    <string name="api_language_value">ru</string>
+
+    <string name="refresh_button_title">Обновить</string>
+    <string name="city">Москва</string>
+    <string name="pressure_title">давление</string>
+    <string name="humidity_title">влажность</string>
+    <string name="cloudiness_title">облачность</string>
+    <string name="wind_title">ветер</string>
 </resources>

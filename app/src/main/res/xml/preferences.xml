@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="@string/pref_units_default"
+        android:entries="@array/pref_units_entries"
+        android:entryValues="@array/pref_units_values"
+        android:key="@string/pref_units_key"
+        android:title="@string/pref_units_title"/>
+
+    <PreferenceCategory
+        android:title="@string/pref_service_title">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_service_enabled_key"
+            android:title="@string/pref_service_enabled_title"/>
+
+        <ListPreference
+            android:defaultValue="@string/pref_service_interval_default"
+            android:entries="@array/pref_service_interval_entries"
+            android:entryValues="@array/pref_service_interval_values"
+            android:key="@string/pref_service_interval_key"
+            android:title="@string/pref_service_interval_title"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
