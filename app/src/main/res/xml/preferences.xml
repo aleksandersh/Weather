@@ -10,7 +10,7 @@
     <PreferenceCategory
         android:title="@string/pref_service_title">
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/pref_service_enabled_key"
             android:title="@string/pref_service_enabled_title"/>
 
