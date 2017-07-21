@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_internet_disconnected">
+        Отсутствует подключение к интернету.
+    </string>
+    <string name="error_http_contacting_server">
+        Проблема подключения к серверу.
+    </string>
+    <string name="error_http_request_failed">
+        Ошибка выпонения запроса к серверу.
+    </string>
+</resources>

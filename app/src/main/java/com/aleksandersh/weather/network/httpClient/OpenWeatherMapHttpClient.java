@@ -11,6 +11,7 @@ import com.aleksandersh.weather.network.httpClient.strategy.CityByNameStrategy;
 import com.aleksandersh.weather.network.httpClient.strategy.HttpClientStrategy;
 import com.aleksandersh.weather.network.httpClient.strategy.LocationStrategy;
 import com.aleksandersh.weather.network.httpService.CurrentWeatherHttpService;
+import com.aleksandersh.weather.utils.ErrorsHelper;
 
 import java.io.IOException;
 
@@ -102,12 +103,12 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
                 // Было бы не плохо добавить обработку ошибок, но сервер на все возвращает либо
                 // 200, либо 401 и иногда текстовое описание. Надо будет подумать.
                 clientResponse.setSuccessful(false);
-                clientResponse.setErrorDescription("Failed to execute query.");
+                clientResponse.setErrorCode(ErrorsHelper.ERROR_HTTP_REQUEST_FAILED);
             }
         } catch (IOException e) {
             clientResponse.setSuccessful(false);
-            clientResponse.setErrorDescription("Problem occurred talking to the server.");
-            Log.w(TAG, "getCurrentWeatherByCityId: Problem occurred talking to the server.");
+            clientResponse.setErrorCode(ErrorsHelper.ERROR_HTTP_CONTACTING_SERVER);
+            Log.d(TAG, "getCurrentWeatherByCityId: Problem occurred talking to the server.");
         }
         return clientResponse;
     }

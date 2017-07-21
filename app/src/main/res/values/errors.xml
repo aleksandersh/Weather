@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_internet_disconnected">
+        The internet connection is missing.
+    </string>
+    <string name="error_http_contacting_server">
+        The problem with the connection to the server.
+    </string>
+    <string name="error_http_request_failed">
+        Error in the query to the server.
+    </string>
+</resources>

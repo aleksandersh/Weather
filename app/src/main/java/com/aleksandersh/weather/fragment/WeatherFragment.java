@@ -1,9 +1,15 @@
 package com.aleksandersh.weather.fragment;
 
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +18,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.WeatherProvider;
+import com.aleksandersh.weather.fragment.loader.StoredWeatherLoader;
+import com.aleksandersh.weather.fragment.loader.UpdateWeatherProcessor;
 import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.storage.WeatherStorableState;
+import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.utils.ErrorsHelper;
+import com.aleksandersh.weather.utils.WeatherUpdateBroadcastHelper;
 
-import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -27,14 +35,16 @@ import butterknife.Unbinder;
  * Фрагмент, содержащий данные о погоде.
  */
 public class WeatherFragment extends Fragment
-        implements WeatherProvider.WeatherSubscriber, SwipeRefreshLayout.OnRefreshListener {
+        implements SwipeRefreshLayout.OnRefreshListener,
+        LoaderManager.LoaderCallbacks<WeatherStorableState> {
     private static final String TAG = "WeatherFragment";
     private static final long MOSCOW_ID = 524901;
+    private static final int LOADER_ID = 1;
 
-    private WeatherProvider mWeatherProvider;
     private Unbinder mUnbinder;
-    private boolean mFilled;
-    private Date mLastUpdateDate;
+    private UpdateWeatherProcessor mUpdateWeatherProcessor;
+    private BroadcastReceiver mReceiver;
+    private long mCityId;
 
     @BindView(R.id.temperature_text_view)
     TextView mTemperatureTextView;
@@ -46,6 +56,8 @@ public class WeatherFragment extends Fragment
     TextView mHumidityTextView;
     @BindView(R.id.cloudiness_text_view)
     TextView mCloudinessTextView;
+    @BindView(R.id.error_text_view)
+    TextView mErrorTextView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -61,7 +73,15 @@ public class WeatherFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWeatherProvider = WeatherProvider.get(getContext().getApplicationContext());
+
+        mCityId = MOSCOW_ID; // Moscow hardcoded
+        mReceiver = new WeatherUpdatingBroadcastReceiver();
+
+        mUpdateWeatherProcessor = new UpdateWeatherProcessor(getContext().getApplicationContext());
+        mUpdateWeatherProcessor.start();
+        mUpdateWeatherProcessor.getLooper();
+
+        getLoaderManager().initLoader(LOADER_ID, savedInstanceState, this);
     }
 
     @Override
@@ -70,11 +90,25 @@ public class WeatherFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         mUnbinder = ButterKnife.bind(this, view);
-        mFilled = false;
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter(WeatherUpdateBroadcastHelper.WEATHER_UPDATE_ACTION);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -85,60 +119,76 @@ public class WeatherFragment extends Fragment
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mWeatherProvider.subscribe(this);
-        if (!mFilled) {
-            mWeatherProvider.requestStoredState();
-        }
-    }
+    public void onDestroy() {
+        super.onDestroy();
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mWeatherProvider.unsubscribe(this);
+        mUpdateWeatherProcessor.quit();
     }
 
     @Override
     public void onRefresh() {
-        mWeatherProvider.requestWeather(MOSCOW_ID);
+        mUpdateWeatherProcessor.requestUpdate(mCityId);
     }
 
     @Override
-    public void onWeatherUpdated(WeatherStorableState storableState) {
-        updateUi(storableState.getWeather());
-        mSwipeRefreshLayout.setRefreshing(false);
-        mLastUpdateDate = storableState.getDate();
-        mFilled = true;
-    }
-
-    @Override
-    public void onStoredStateLoaded(WeatherStorableState storableState) {
-        if (!mFilled) {
-            updateUi(storableState.getWeather());
-            mFilled = true;
-            mLastUpdateDate = storableState.getDate();
+    public Loader<WeatherStorableState> onCreateLoader(int id, Bundle args) {
+        Loader<WeatherStorableState> loader = null;
+        if (id == LOADER_ID) {
+            loader = new StoredWeatherLoader(getActivity(), mCityId);
         }
+
+        return loader;
     }
 
     @Override
-    public void onErrorUpdating(String errorDescription) {
-        // TODO: 16.07.2017 Вывести ошибку
+    public void onLoadFinished(Loader<WeatherStorableState> loader, WeatherStorableState data) {
+        Log.d(TAG, "onLoadFinished");
+
+        if (data != null) {
+            updateUi(data.getWeather());
+            mErrorTextView.setVisibility(View.GONE);
+        } else {
+            mUpdateWeatherProcessor.requestUpdate(mCityId);
+        }
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void onErrorStoredStateLoading() {
-        if (!mFilled) {
-            mWeatherProvider.requestWeather(MOSCOW_ID);
-        }
+    public void onLoaderReset(Loader<WeatherStorableState> loader) {
+        Log.d(TAG, "onLoaderReset");
     }
 
     private void updateUi(Weather weather) {
         mTemperatureTextView.setText(String.format(Locale.US, "%.1f", weather.getTemperature()));
-        mConditionTextView.setText(weather.getConditionsDescription());
+        mConditionTextView.setText(weather.getDescription());
         mPressureTextView.setText(String.valueOf(weather.getPressure()));
         mHumidityTextView.setText(String.valueOf(weather.getHumidity()));
         mCloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
+    }
+
+    private void onFailedLoading(String error) {
+        mErrorTextView.setText(error);
+        mErrorTextView.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    private class WeatherUpdatingBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive");
+
+            if (mCityId == intent.getLongExtra(WeatherUpdateBroadcastHelper.CITY_ID_EXTRA, 0)) {
+                if (intent.getBooleanExtra(WeatherUpdateBroadcastHelper.SUCCESSFUL_EXTRA, false)) {
+                    getLoaderManager().restartLoader(LOADER_ID, null, WeatherFragment.this);
+                } else {
+                    String error;
+                    int errorResource = ErrorsHelper.getStringResourceByErrorCode(
+                            intent.getIntExtra(WeatherUpdateBroadcastHelper.ERROR_CODE_EXTRA, 0));
+                    if (errorResource != 0) error = getString(errorResource);
+                    else error = "";
+                    onFailedLoading(error);
+                }
+            }
+        }
     }
 }

@@ -1,19 +1,12 @@
 package com.aleksandersh.weather.network.httpClient.converter;
 
-import com.aleksandersh.weather.model.Location;
 import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.model.WeatherCondition;
 import com.aleksandersh.weather.network.dto.currentWeather.CloudsDto;
 import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.dto.currentWeather.GeneralDto;
-import com.aleksandersh.weather.network.dto.currentWeather.LocationDto;
-import com.aleksandersh.weather.network.dto.currentWeather.SystemDto;
 import com.aleksandersh.weather.network.dto.currentWeather.WeatherConditionDto;
 import com.aleksandersh.weather.network.dto.currentWeather.WindDto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**

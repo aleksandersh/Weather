@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import com.aleksandersh.weather.database.cursorWrapper.CurrentWeatherCursorWrapper;
 import com.aleksandersh.weather.model.Weather;
 import com.aleksandersh.weather.model.WeatherRequest;
-import com.aleksandersh.weather.storage.WeatherStorableState;
+import com.aleksandersh.weather.model.WeatherStorableState;
 
 /**
  * Created by AleksanderSh on 20.07.2017.
