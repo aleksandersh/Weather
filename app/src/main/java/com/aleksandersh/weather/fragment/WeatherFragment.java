@@ -11,7 +11,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleksandersh.weather.R;
+import com.aleksandersh.weather.WeatherApplication;
+import com.aleksandersh.weather.database.WeatherDao;
+import com.aleksandersh.weather.domain.WeatherManager;
 import com.aleksandersh.weather.fragment.loader.StoredWeatherLoader;
 import com.aleksandersh.weather.fragment.loader.UpdateWeatherProcessor;
 import com.aleksandersh.weather.model.Weather;
@@ -28,6 +30,8 @@ import com.aleksandersh.weather.utils.IconsHelper;
 import com.aleksandersh.weather.utils.WeatherUpdateBroadcastHelper;
 
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +46,11 @@ public class WeatherFragment extends Fragment
     private static final String TAG = "WeatherFragment";
     private static final long MOSCOW_ID = 524901;
     private static final int LOADER_ID = 1;
+
+    @Inject
+    WeatherDao mWeatherDao;
+    @Inject
+    WeatherManager mWeatherManager;
 
     private Unbinder mUnbinder;
     private UpdateWeatherProcessor mUpdateWeatherProcessor;
@@ -78,10 +87,12 @@ public class WeatherFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ((WeatherApplication) getActivity().getApplication()).getAppComponent().inject(this);
+
         mCityId = MOSCOW_ID; // Moscow hardcoded
         mReceiver = new WeatherUpdatingBroadcastReceiver();
 
-        mUpdateWeatherProcessor = new UpdateWeatherProcessor(getContext().getApplicationContext());
+        mUpdateWeatherProcessor = new UpdateWeatherProcessor(mWeatherManager);
         mUpdateWeatherProcessor.start();
         mUpdateWeatherProcessor.getLooper();
 
@@ -138,7 +149,7 @@ public class WeatherFragment extends Fragment
     public Loader<WeatherStorableState> onCreateLoader(int id, Bundle args) {
         Loader<WeatherStorableState> loader = null;
         if (id == LOADER_ID) {
-            loader = new StoredWeatherLoader(getActivity(), mCityId);
+            loader = new StoredWeatherLoader(getActivity(), mWeatherDao, mCityId);
         }
 
         return loader;
@@ -146,8 +157,6 @@ public class WeatherFragment extends Fragment
 
     @Override
     public void onLoadFinished(Loader<WeatherStorableState> loader, WeatherStorableState data) {
-        Log.d(TAG, "onLoadFinished");
-
         if (data != null) {
             updateUi(data.getWeather());
             mErrorTextView.setVisibility(View.GONE);
@@ -159,7 +168,6 @@ public class WeatherFragment extends Fragment
 
     @Override
     public void onLoaderReset(Loader<WeatherStorableState> loader) {
-        Log.d(TAG, "onLoaderReset");
     }
 
     private void updateUi(Weather weather) {
@@ -168,7 +176,7 @@ public class WeatherFragment extends Fragment
         mPressureTextView.setText(String.valueOf(weather.getPressure()));
         mHumidityTextView.setText(String.valueOf(weather.getHumidity()));
         mCloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
-        int iconId = IconsHelper.getDrawableResorceByGroup(weather.getGroup());
+        int iconId = IconsHelper.getDrawableResourceByGroup(weather.getGroup());
         if (iconId != 0) {
             mWeatherGroupImageView.setImageDrawable(getResources().getDrawable(iconId));
         }
@@ -183,8 +191,6 @@ public class WeatherFragment extends Fragment
     private class WeatherUpdatingBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive");
-
             if (mCityId == intent.getLongExtra(WeatherUpdateBroadcastHelper.CITY_ID_EXTRA, 0)) {
                 if (intent.getBooleanExtra(WeatherUpdateBroadcastHelper.SUCCESSFUL_EXTRA, false)) {
                     getLoaderManager().restartLoader(LOADER_ID, null, WeatherFragment.this);

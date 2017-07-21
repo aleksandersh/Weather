@@ -2,9 +2,14 @@ package com.aleksandersh.weather.service;
 
 import android.os.AsyncTask;
 
+import com.aleksandersh.weather.WeatherApplication;
+import com.aleksandersh.weather.di.component.AppComponent;
+import com.aleksandersh.weather.di.module.AppModule;
 import com.aleksandersh.weather.domain.WeatherManager;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
+
+import javax.inject.Inject;
 
 /**
  * Created by AleksanderSh on 18.07.2017.
@@ -15,15 +20,18 @@ import com.firebase.jobdispatcher.JobService;
 public class WeatherUpdatingJobService extends JobService {
     static final String TAG = "WeatherUpdatingJobS";
 
-    private WeatherManager mWeatherManager;
+    @Inject
+    WeatherManager mWeatherManager;
     private UpdatingWeatherTask mBackgroundTask;
 
     @Override
-    public boolean onStartJob(final JobParameters job) {
-        if (mWeatherManager == null) {
-            mWeatherManager = new WeatherManager(getApplicationContext());
-        }
+    public void onCreate() {
+        super.onCreate();
+        ((WeatherApplication) getApplication()).getAppComponent().inject(this);
+    }
 
+    @Override
+    public boolean onStartJob(final JobParameters job) {
         mBackgroundTask = new UpdatingWeatherTask(job);
         mBackgroundTask.execute();
 
@@ -38,7 +46,7 @@ public class WeatherUpdatingJobService extends JobService {
         return true;
     }
 
-    public class UpdatingWeatherTask extends AsyncTask<Void, Void, Void> {
+    private class UpdatingWeatherTask extends AsyncTask<Void, Void, Void> {
         private JobParameters mJobParameters;
 
         public UpdatingWeatherTask(JobParameters jobParameters) {

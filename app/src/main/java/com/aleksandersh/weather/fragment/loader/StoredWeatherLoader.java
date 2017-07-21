@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.aleksandersh.weather.database.WeatherDao;
+import com.aleksandersh.weather.database.WeatherDatabaseDao;
 import com.aleksandersh.weather.model.WeatherStorableState;
 
 /**
@@ -17,11 +18,11 @@ public class StoredWeatherLoader extends AsyncTaskLoader<WeatherStorableState> {
     private WeatherDao mWeatherDao;
     private long mCityId;
 
-    public StoredWeatherLoader(Context context, long cityId) {
+    public StoredWeatherLoader(Context context, WeatherDao weatherDao, long cityId) {
         super(context);
 
         mCityId = cityId;
-        mWeatherDao = new WeatherDao(context);
+        mWeatherDao = weatherDao;
     }
 
     @Override

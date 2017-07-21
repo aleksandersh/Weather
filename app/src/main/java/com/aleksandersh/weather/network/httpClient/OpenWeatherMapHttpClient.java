@@ -15,6 +15,8 @@ import com.aleksandersh.weather.utils.ErrorsHelper;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,14 +30,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class OpenWeatherMapHttpClient implements WeatherHttpClient {
     private static final String TAG = "OwmHttpClient";
     private static final String API_KEY = "7eb42e583dff5e64a589739dd927bd0c";
-    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
-    private CurrentWeatherHttpService mCurrentWeatherHttpService = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(CurrentWeatherHttpService.class);
-    private DtoConverter<CurrentWeatherDto> mConverter = new OpenWeatherMapDtoConverter();
+    private CurrentWeatherHttpService mCurrentWeatherHttpService;
+    private DtoConverter<CurrentWeatherDto> mConverter;
+
+    @Inject
+    public OpenWeatherMapHttpClient(CurrentWeatherHttpService currentWeatherHttpService,
+                                    DtoConverter<CurrentWeatherDto> converter) {
+        mCurrentWeatherHttpService = currentWeatherHttpService;
+        mConverter = converter;
+    }
 
     /**
      * Получает погоду для города с заданным идентификатором.
