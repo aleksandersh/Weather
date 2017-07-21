@@ -11,8 +11,11 @@ import com.aleksandersh.weather.network.httpClient.strategy.CityByNameStrategy;
 import com.aleksandersh.weather.network.httpClient.strategy.HttpClientStrategy;
 import com.aleksandersh.weather.network.httpClient.strategy.LocationStrategy;
 import com.aleksandersh.weather.network.httpService.CurrentWeatherHttpService;
+import com.aleksandersh.weather.utils.ErrorsHelper;
 
 import java.io.IOException;
+
+import javax.inject.Inject;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -27,14 +30,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class OpenWeatherMapHttpClient implements WeatherHttpClient {
     private static final String TAG = "OwmHttpClient";
     private static final String API_KEY = "7eb42e583dff5e64a589739dd927bd0c";
-    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
-    private CurrentWeatherHttpService mCurrentWeatherHttpService = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(CurrentWeatherHttpService.class);
-    private DtoConverter<CurrentWeatherDto> mConverter = new OpenWeatherMapDtoConverter();
+    private CurrentWeatherHttpService mCurrentWeatherHttpService;
+    private DtoConverter<CurrentWeatherDto> mConverter;
+
+    @Inject
+    public OpenWeatherMapHttpClient(CurrentWeatherHttpService currentWeatherHttpService,
+                                    DtoConverter<CurrentWeatherDto> converter) {
+        mCurrentWeatherHttpService = currentWeatherHttpService;
+        mConverter = converter;
+    }
 
     /**
      * Получает погоду для города с заданным идентификатором.
@@ -102,12 +107,12 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
                 // Было бы не плохо добавить обработку ошибок, но сервер на все возвращает либо
                 // 200, либо 401 и иногда текстовое описание. Надо будет подумать.
                 clientResponse.setSuccessful(false);
-                clientResponse.setErrorDescription("Failed to execute query.");
+                clientResponse.setErrorCode(ErrorsHelper.ERROR_HTTP_REQUEST_FAILED);
             }
         } catch (IOException e) {
             clientResponse.setSuccessful(false);
-            clientResponse.setErrorDescription("Problem occurred talking to the server.");
-            Log.w(TAG, "getCurrentWeatherByCityId: Problem occurred talking to the server.");
+            clientResponse.setErrorCode(ErrorsHelper.ERROR_HTTP_CONTACTING_SERVER);
+            Log.d(TAG, "getCurrentWeatherByCityId: Problem occurred talking to the server.");
         }
         return clientResponse;
     }

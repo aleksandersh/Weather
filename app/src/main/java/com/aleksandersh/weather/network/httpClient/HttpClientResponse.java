@@ -9,7 +9,7 @@ package com.aleksandersh.weather.network.httpClient;
 public class HttpClientResponse<T> {
     private T mModel;
     private boolean mSuccessful;
-    private String mErrorDescription;
+    private int mErrorCode;
 
     /**
      * Получение обработанных данных из сервиса.
@@ -40,15 +40,15 @@ public class HttpClientResponse<T> {
     }
 
     /**
-     * С помощью этого метода можно получить описание ошибки при работе с сервисом.
+     * Получить код ошибки.
      *
-     * @return Описание ошибки.
+     * @return Код ошибки.
      */
-    public String getErrorDescription() {
-        return mErrorDescription;
+    public int getErrorCode() {
+        return mErrorCode;
     }
 
-    public void setErrorDescription(String errorDescription) {
-        mErrorDescription = errorDescription;
+    public void setErrorCode(int errorCode) {
+        mErrorCode = errorCode;
     }
 }
