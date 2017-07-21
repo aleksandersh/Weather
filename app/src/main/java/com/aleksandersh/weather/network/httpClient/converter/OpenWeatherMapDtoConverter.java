@@ -6,6 +6,7 @@ import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.dto.currentWeather.GeneralDto;
 import com.aleksandersh.weather.network.dto.currentWeather.WeatherConditionDto;
 import com.aleksandersh.weather.network.dto.currentWeather.WindDto;
+import com.aleksandersh.weather.utils.IconsHelper;
 
 import java.util.List;
 
@@ -61,17 +62,17 @@ public class OpenWeatherMapDtoConverter implements DtoConverter<CurrentWeatherDt
     private String getGroupByServiceWeatherId(int weatherId) {
         String group;
         if (200 <= weatherId && weatherId < 300) {
-            group = "storm";
+            group = IconsHelper.GROUP_STORM;
         } else if (300 <= weatherId && weatherId < 600) {
-            group = "rain";
+            group = IconsHelper.GROUP_RAIN;
         } else if (600 <= weatherId && weatherId < 700) {
-            group = "snow";
+            group = IconsHelper.GROUP_SNOW;
         } else if (700 <= weatherId && weatherId < 800) {
-            group = "fog";
+            group = IconsHelper.GROUP_FOG;
         } else if (weatherId == 800) {
-            group = "clear_sky";
+            group = IconsHelper.GROUP_CLEAR_SKY;
         } else if (801 <= weatherId && weatherId < 900) {
-            group = "clouds";
+            group = IconsHelper.GROUP_CLOUDS;
         } else {
             group = "";
         }
