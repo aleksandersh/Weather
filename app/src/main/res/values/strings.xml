@@ -10,6 +10,11 @@
     <string name="nav_title_settings_fragment">Settings</string>
     <string name="nav_title_about_fragment">About</string>
 
+    <string name="menu_title_change_city">Change city</string>
+
+    <string name="city_chooser_action_select">Select</string>
+    <string name="city_chooser_hint_city_name">City name</string>
+
     <string name="pref_units_title">Units</string>
     <string name="pref_service_title">Weather auto-update</string>
     <string name="pref_service_enabled_title">Enabled</string>
@@ -31,4 +36,5 @@
     <string name="humidity_title">humidity</string>
     <string name="cloudiness_title">cloudiness</string>
     <string name="wind_title">wind</string>
+
 </resources>

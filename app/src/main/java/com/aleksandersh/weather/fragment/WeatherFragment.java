@@ -7,11 +7,15 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -104,11 +108,36 @@ public class WeatherFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
+        setHasOptionsMenu(true);
+
         mUnbinder = ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.weather_toolbar, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_weather_toolbar_change_city: {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                CityChooserDialogFragment cityChooserDialogFragment = CityChooserDialogFragment.newInstance();
+                cityChooserDialogFragment.show(fragmentManager, CityChooserDialogFragment.TAG);
+                return true;
+            }
+            default: {
+                throw new IllegalArgumentException("Unknown menu id");
+            }
+        }
     }
 
     @Override

@@ -1,0 +1,53 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/city_chooser_height"
+    android:minWidth="@dimen/city_chooser_width"
+    android:padding="@dimen/city_chooser_padding"
+    tools:context="com.aleksandersh.weather.fragment.CityChooserDialogFragment"
+    >
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/city_chooser_textview_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00999999"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"
+        >
+
+        <AutoCompleteTextView
+            android:id="@+id/textview_city_chooser_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/city_chooser_hint_city_name"
+            />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+
+        android:text="@string/city_chooser_action_select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginEnd="8dp"
+        />
+
+</android.support.constraint.ConstraintLayout>
