@@ -6,9 +6,9 @@ import android.net.ConnectivityManager;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.aleksandersh.weather.database.WeatherDao;
-import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.model.WeatherRequest;
-import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.model.weather.Weather;
+import com.aleksandersh.weather.model.weather.WeatherRequest;
+import com.aleksandersh.weather.model.weather.WeatherStorableState;
 import com.aleksandersh.weather.network.httpClient.HttpClientResponse;
 import com.aleksandersh.weather.network.httpClient.WeatherHttpClient;
 import com.aleksandersh.weather.utils.ErrorsHelper;

@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.model;
+package com.aleksandersh.weather.model.weather;
 
 /**
  * Created by AleksanderSh on 16.07.2017.

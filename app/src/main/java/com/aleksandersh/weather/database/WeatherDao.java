@@ -1,6 +1,6 @@
 package com.aleksandersh.weather.database;
 
-import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.model.weather.WeatherStorableState;
 
 /**
  * Created by AleksanderSh on 21.07.2017.

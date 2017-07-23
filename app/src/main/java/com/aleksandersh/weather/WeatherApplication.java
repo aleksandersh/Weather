@@ -29,7 +29,7 @@ public class WeatherApplication extends Application {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .domainModule(new DomainModule())
-                .networkModule(new NetworkModule("http://api.openweathermap.org/data/2.5/"))
+                .networkModule(new NetworkModule())
                 .serviceModule(new ServiceModule())
                 .build();
     }

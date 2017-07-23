@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.model;
+package com.aleksandersh.weather.model.weather;
 
 import java.util.Date;
 

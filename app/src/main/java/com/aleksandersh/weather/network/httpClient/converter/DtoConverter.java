@@ -1,6 +1,6 @@
 package com.aleksandersh.weather.network.httpClient.converter;
 
-import com.aleksandersh.weather.model.Weather;
+import com.aleksandersh.weather.model.weather.Weather;
 
 /**
  * Created by AleksanderSh on 15.07.2017.

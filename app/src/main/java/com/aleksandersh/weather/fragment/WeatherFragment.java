@@ -27,8 +27,8 @@ import com.aleksandersh.weather.database.WeatherDao;
 import com.aleksandersh.weather.domain.WeatherManager;
 import com.aleksandersh.weather.fragment.loader.StoredWeatherLoader;
 import com.aleksandersh.weather.fragment.loader.UpdateWeatherProcessor;
-import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.model.weather.Weather;
+import com.aleksandersh.weather.model.weather.WeatherStorableState;
 import com.aleksandersh.weather.utils.ErrorsHelper;
 import com.aleksandersh.weather.utils.IconsHelper;
 import com.aleksandersh.weather.utils.WeatherUpdateBroadcastHelper;
@@ -130,8 +130,8 @@ public class WeatherFragment extends Fragment
         switch (item.getItemId()) {
             case R.id.action_weather_toolbar_change_city: {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                CityChooserDialogFragment cityChooserDialogFragment = CityChooserDialogFragment.newInstance();
-                cityChooserDialogFragment.show(fragmentManager, CityChooserDialogFragment.TAG);
+                CityDialogFragment cityChooserDialogFragment = CityDialogFragment.newInstance();
+                cityChooserDialogFragment.show(fragmentManager, CityDialogFragment.TAG);
                 return true;
             }
             default: {

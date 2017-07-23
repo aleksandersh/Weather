@@ -1,6 +1,6 @@
 package com.aleksandersh.weather.network.httpClient.converter;
 
-import com.aleksandersh.weather.model.Weather;
+import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.network.dto.currentWeather.CloudsDto;
 import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.dto.currentWeather.GeneralDto;

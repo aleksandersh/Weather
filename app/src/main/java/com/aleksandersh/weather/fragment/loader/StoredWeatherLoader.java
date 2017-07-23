@@ -4,8 +4,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.aleksandersh.weather.database.WeatherDao;
-import com.aleksandersh.weather.database.WeatherDatabaseDao;
-import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.model.weather.WeatherStorableState;
 
 /**
  * Created by AleksanderSh on 20.07.2017.

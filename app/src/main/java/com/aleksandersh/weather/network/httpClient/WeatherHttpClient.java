@@ -1,6 +1,6 @@
 package com.aleksandersh.weather.network.httpClient;
 
-import com.aleksandersh.weather.model.Weather;
+import com.aleksandersh.weather.model.weather.Weather;
 
 /**
  * Created by AleksanderSh on 14.07.2017.

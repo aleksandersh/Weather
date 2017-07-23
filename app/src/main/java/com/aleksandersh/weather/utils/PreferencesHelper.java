@@ -6,7 +6,7 @@ import android.content.SharedPreferences.Editor;
 import android.support.v7.preference.PreferenceManager;
 
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.model.WeatherRequest;
+import com.aleksandersh.weather.model.weather.WeatherRequest;
 
 /**
  * Created by AleksanderSh on 19.07.2017.
