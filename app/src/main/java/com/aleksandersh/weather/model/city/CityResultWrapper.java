@@ -19,14 +19,14 @@ public class CityResultWrapper implements Parcelable
     @SerializedName("totalResultsCount")
     @Expose
     private int totalResultsCount;
-    @SerializedName("cities")
+    @SerializedName("geonames")
     @Expose
     private List<City> cities = null;
+
     public final static Parcelable.Creator<CityResultWrapper> CREATOR = new Creator<CityResultWrapper>() {
 
-
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public CityResultWrapper createFromParcel(Parcel in) {
             CityResultWrapper instance = new CityResultWrapper();
@@ -40,7 +40,7 @@ public class CityResultWrapper implements Parcelable
         }
 
     }
-    ;
+            ;
 
     public int getTotalResultsCount() {
         return totalResultsCount;
@@ -64,7 +64,7 @@ public class CityResultWrapper implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

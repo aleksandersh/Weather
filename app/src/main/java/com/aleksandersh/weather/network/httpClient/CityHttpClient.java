@@ -1,7 +1,6 @@
 package com.aleksandersh.weather.network.httpClient;
 
 import com.aleksandersh.weather.model.city.City;
-import com.aleksandersh.weather.model.city.CityResultWrapper;
 
 import java.util.List;
 

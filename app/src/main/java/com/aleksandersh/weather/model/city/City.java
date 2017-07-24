@@ -10,7 +10,6 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Vladimir Kondenko on 22.07.17.
  */
-
 public class City implements Parcelable
 {
 
@@ -63,7 +62,7 @@ public class City implements Parcelable
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public City createFromParcel(Parcel in) {
             City instance = new City();
@@ -90,7 +89,7 @@ public class City implements Parcelable
         }
 
     }
-    ;
+            ;
 
     public String getAdminCode1() {
         return adminCode1;
@@ -231,7 +230,8 @@ public class City implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }
+

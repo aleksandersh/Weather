@@ -18,7 +18,7 @@ import dagger.Provides;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -29,18 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     @Provides
-    @Named(Const.DI_API_SCOPE_WEATHER)
-    public String provideWeatherApuBaseUrl() {
-        return Const.BASE_URL_WEATHER;
-    }
-
-    @Provides
-    @Named(Const.DI_API_SCOPE_CITY)
-    public String provideCityApiBaseUrl() {
-        return Const.BASE_URL_CITY;
-    }
-
-    @Provides
     @Singleton
     public GsonConverterFactory provideConverterFactory() {
         return GsonConverterFactory.create();
@@ -49,13 +37,13 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_CITY)
-    public Interceptor provideApiKeyInterceptor() {
+    public ApiKeyInterceptor provideApiKeyInterceptor() {
         return new ApiKeyInterceptor(Const.API_KEY_PARAM_CITY, Const.API_KEY_CITY);
     }
 
     @Provides
     @Singleton
-    public OkHttpClient provideHttpClient(ApiKeyInterceptor apiKeyInterceptor) {
+    public OkHttpClient provideHttpClient(@Named(Const.DI_API_SCOPE_CITY) ApiKeyInterceptor apiKeyInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(apiKeyInterceptor)
                 .build();
@@ -64,12 +52,12 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_CITY)
-    public Retrofit provideCityRetrofit(@Named(Const.DI_API_SCOPE_CITY) String baseUrl, OkHttpClient client, GsonConverterFactory converterFactory) {
+    public Retrofit provideCityRetrofit(OkHttpClient client, GsonConverterFactory converterFactory) {
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
                 .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(Const.BASE_URL_CITY)
                 .addConverterFactory(converterFactory)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
     }
@@ -77,9 +65,9 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_WEATHER)
-    public Retrofit provideWeatherRetrofit(@Named(Const.DI_API_SCOPE_WEATHER) String baseUrl, GsonConverterFactory converterFactory) {
+    public Retrofit provideWeatherRetrofit(GsonConverterFactory converterFactory) {
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Const.BASE_URL_WEATHER)
                 .addConverterFactory(converterFactory)
                 .build();
     }
@@ -93,20 +81,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public CityHttpService provideCityHttpService(@Named(Const.DI_API_SCOPE_CITY) Retrofit retrofit) {
-        return retrofit.create(CityHttpService.class);
-    }
-
-    @Provides
-    @Singleton
     public DtoConverter<CurrentWeatherDto> provideDtoConverter() {
         return new OpenWeatherMapDtoConverter();
     }
 
     @Provides
     @Singleton
-    public WeatherHttpClient provideWeatherHttpClient(CurrentWeatherHttpService service,
-                                                      DtoConverter<CurrentWeatherDto> converter) {
+    public WeatherHttpClient provideWeatherHttpClient(CurrentWeatherHttpService service, DtoConverter<CurrentWeatherDto> converter) {
         return new OpenWeatherMapHttpClient(service, converter);
     }
 }

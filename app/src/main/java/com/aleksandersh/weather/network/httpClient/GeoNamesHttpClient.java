@@ -1,8 +1,9 @@
 package com.aleksandersh.weather.network.httpClient;
 
-import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.model.city.CityResultWrapper;
+import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.network.httpService.CityHttpService;
+import com.aleksandersh.weather.utils.Const;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class GeoNamesHttpClient implements CityHttpClient {
 
     @Override
     public Single<List<City>> getCity(String name) {
-        return service.searchByName(name)
+        return service.searchByName(name, Const.DEFAULT_SUGGESTIONS_NUMBER)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(CityResultWrapper::getCities);
