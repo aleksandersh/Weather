@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.aleksandersh.weather.database.WeatherDao;
+import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.model.weather.WeatherRequest;
 import com.aleksandersh.weather.model.weather.WeatherStorableState;
@@ -88,6 +89,10 @@ public class WeatherManager {
                     .getWeatherUpdateUnsuccessfulIntent(request.getCityId(),
                             response.getErrorCode()));
         }
+    }
+
+    public City getCity() {
+        return mPreferencesHelper.getSelectedCity();
     }
 
     private void sendLocalBroadcast(Intent intent) {

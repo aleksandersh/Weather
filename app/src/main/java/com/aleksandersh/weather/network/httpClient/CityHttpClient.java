@@ -1,6 +1,6 @@
 package com.aleksandersh.weather.network.httpClient;
 
-import com.aleksandersh.weather.model.city.City;
+import com.aleksandersh.weather.network.dto.city.CityDto;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ import io.reactivex.Single;
 
 public interface CityHttpClient {
 
-    public Single<List<City>> getCity(String name);
+    public Single<List<CityDto>> getCity(String name);
 
 }

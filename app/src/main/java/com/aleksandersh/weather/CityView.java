@@ -1,12 +1,12 @@
 package com.aleksandersh.weather;
 
-import com.aleksandersh.weather.model.city.City;
+import com.aleksandersh.weather.network.dto.city.CityDto;
 
 import java.util.List;
 
 public interface CityView {
 
-    void updateData(List<City> cities);
+    void updateData(List<CityDto> cities);
 
     void showError(Throwable throwable);
 

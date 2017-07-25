@@ -1,5 +1,5 @@
 
-package com.aleksandersh.weather.model.city;
+package com.aleksandersh.weather.network.dto.city;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Vladimir Kondenko on 22.07.17.
  */
 
-public class CityResultWrapper implements Parcelable
+public class CityResultDto implements Parcelable
 {
 
     @SerializedName("totalResultsCount")
@@ -21,22 +21,22 @@ public class CityResultWrapper implements Parcelable
     private int totalResultsCount;
     @SerializedName("geonames")
     @Expose
-    private List<City> cities = null;
+    private List<CityDto> cities = null;
 
-    public final static Parcelable.Creator<CityResultWrapper> CREATOR = new Creator<CityResultWrapper>() {
+    public final static Parcelable.Creator<CityResultDto> CREATOR = new Creator<CityResultDto>() {
 
         @SuppressWarnings({
                 "unchecked"
         })
-        public CityResultWrapper createFromParcel(Parcel in) {
-            CityResultWrapper instance = new CityResultWrapper();
+        public CityResultDto createFromParcel(Parcel in) {
+            CityResultDto instance = new CityResultDto();
             instance.totalResultsCount = ((int) in.readValue((int.class.getClassLoader())));
-            in.readList(instance.cities, (City.class.getClassLoader()));
+            in.readList(instance.cities, (CityDto.class.getClassLoader()));
             return instance;
         }
 
-        public CityResultWrapper[] newArray(int size) {
-            return (new CityResultWrapper[size]);
+        public CityResultDto[] newArray(int size) {
+            return (new CityResultDto[size]);
         }
 
     }
@@ -50,11 +50,11 @@ public class CityResultWrapper implements Parcelable
         this.totalResultsCount = totalResultsCount;
     }
 
-    public List<City> getCities() {
+    public List<CityDto> getCities() {
         return cities;
     }
 
-    public void setCities(List<City> cities) {
+    public void setCities(List<CityDto> cities) {
         this.cities = cities;
     }
 

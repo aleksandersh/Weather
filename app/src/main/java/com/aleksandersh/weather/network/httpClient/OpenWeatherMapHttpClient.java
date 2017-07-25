@@ -29,11 +29,11 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
     private static final String API_KEY = "7eb42e583dff5e64a589739dd927bd0c";
 
     private CurrentWeatherHttpService mCurrentWeatherHttpService;
-    private DtoConverter<CurrentWeatherDto> mConverter;
+    private DtoConverter<Weather, CurrentWeatherDto> mConverter;
 
     @Inject
     public OpenWeatherMapHttpClient(CurrentWeatherHttpService currentWeatherHttpService,
-                                    DtoConverter<CurrentWeatherDto> converter) {
+                                    DtoConverter<Weather, CurrentWeatherDto> converter) {
         mCurrentWeatherHttpService = currentWeatherHttpService;
         mConverter = converter;
     }

@@ -1,11 +1,11 @@
 package com.aleksandersh.weather.di.module;
 
+import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.httpClient.OpenWeatherMapHttpClient;
 import com.aleksandersh.weather.network.httpClient.WeatherHttpClient;
 import com.aleksandersh.weather.network.httpClient.converter.DtoConverter;
 import com.aleksandersh.weather.network.httpClient.converter.OpenWeatherMapDtoConverter;
-import com.aleksandersh.weather.network.httpService.CityHttpService;
 import com.aleksandersh.weather.network.httpService.CurrentWeatherHttpService;
 import com.aleksandersh.weather.utils.ApiKeyInterceptor;
 import com.aleksandersh.weather.utils.Const;
@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -72,6 +71,7 @@ public class NetworkModule {
                 .build();
     }
 
+    // TODO: Переместить в отдельный Submodule
 
     @Provides
     @Singleton
@@ -81,13 +81,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public DtoConverter<CurrentWeatherDto> provideDtoConverter() {
+    public DtoConverter<Weather, CurrentWeatherDto> provideDtoConverter() {
         return new OpenWeatherMapDtoConverter();
     }
 
     @Provides
     @Singleton
-    public WeatherHttpClient provideWeatherHttpClient(CurrentWeatherHttpService service, DtoConverter<CurrentWeatherDto> converter) {
+    public WeatherHttpClient provideWeatherHttpClient(CurrentWeatherHttpService service, DtoConverter<Weather, CurrentWeatherDto> converter) {
         return new OpenWeatherMapHttpClient(service, converter);
     }
 }

@@ -6,7 +6,9 @@ import android.content.SharedPreferences.Editor;
 import android.support.v7.preference.PreferenceManager;
 
 import com.aleksandersh.weather.R;
+import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.model.weather.WeatherRequest;
+import com.aleksandersh.weather.network.dto.city.CityDto;
 
 /**
  * Created by AleksanderSh on 19.07.2017.
@@ -15,12 +17,19 @@ import com.aleksandersh.weather.model.weather.WeatherRequest;
  */
 
 public class PreferencesHelper {
+
     private Context mContext;
     private SharedPreferences mDefaultPreferences;
 
     private String mServiceEnabledKey;
     private String mServiceIntervalKey;
     private String mServiceIntervalDefault;
+
+    private String mCurrentCityId;
+    private String mCurrentCityName;
+    private String mCurrentCityCountryName;
+    private String mCurrentCityLng;
+    private String mCurrentCityLat;
 
     public PreferencesHelper(Context context) {
         mContext = context;
@@ -29,6 +38,12 @@ public class PreferencesHelper {
         mServiceEnabledKey = context.getString(R.string.pref_service_enabled_key);
         mServiceIntervalKey = context.getString(R.string.pref_service_interval_key);
         mServiceIntervalDefault = context.getString(R.string.pref_service_interval_default);
+
+        mCurrentCityId = context.getString(R.string.pref_current_city_id);
+        mCurrentCityName = context.getString(R.string.pref_current_city_name);
+        mCurrentCityCountryName = context.getString(R.string.pref_current_city_country_name);
+        mCurrentCityLng = context.getString(R.string.pref_current_city_lng);
+        mCurrentCityLat = context.getString(R.string.pref_current_city_lat);
     }
 
     public boolean isServiceEnabled() {
@@ -93,4 +108,24 @@ public class PreferencesHelper {
         editor.putLong(cityIdKey, cityId);
         editor.apply();
     }
+
+    public void saveCity(CityDto city) {
+        Editor editor = mDefaultPreferences.edit();
+        editor.putInt(mCurrentCityId, city.getCityId());
+        editor.putString(mCurrentCityName, city.getName());
+        editor.putString(mCurrentCityCountryName, city.getCountryName());
+        editor.putString(mCurrentCityLng, city.getLng());
+        editor.putString(mCurrentCityLat, city.getLat());
+        editor.apply();
+    }
+
+    public City getSelectedCity() {
+        int id = mDefaultPreferences.getInt(mCurrentCityId, 0);
+        String name = mDefaultPreferences.getString(mCurrentCityName, "");
+        String countryName = mDefaultPreferences.getString(mCurrentCityCountryName, "");
+        String lng = mDefaultPreferences.getString(mCurrentCityLng, "");
+        String lat = mDefaultPreferences.getString(mCurrentCityLat, "");
+        return new City(id, name, countryName, lng, lat);
+    }
+
 }

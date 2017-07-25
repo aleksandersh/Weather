@@ -8,14 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.aleksandersh.weather.CityView;
 import com.aleksandersh.weather.R;
 import com.aleksandersh.weather.WeatherApplication;
 import com.aleksandersh.weather.domain.CityManager;
-import com.aleksandersh.weather.model.city.City;
+import com.aleksandersh.weather.network.dto.city.CityDto;
 import com.aleksandersh.weather.utils.CitiesAdapter;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -25,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -34,15 +33,17 @@ public class CityDialogFragment extends DialogFragment implements CityView {
 
     public static final String TAG = "cityChooserFragment";
 
+    private Unbinder mUnbinder;
+
     @Inject
     public CityManager manager;
 
-    private Unbinder mUnbinder;
-
-    @BindView(R.id.textview_city_chooser_city)
+    @BindView(R.id.textview_city)
     public AppCompatAutoCompleteTextView textViewCity;
 
     private CitiesAdapter citiesSuggestAdapter;
+
+    private CityDto selectedCity = null;
 
     public CityDialogFragment() {}
 
@@ -72,6 +73,12 @@ public class CityDialogFragment extends DialogFragment implements CityView {
         return rootView;
     }
 
+    @OnClick(R.id.button_select_city)
+    public void selectCity() {
+        manager.onCitySelected(selectedCity);
+        dismiss();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -79,7 +86,7 @@ public class CityDialogFragment extends DialogFragment implements CityView {
     }
 
     @Override
-    public void updateData(List<City> cities) {
+    public void updateData(List<CityDto> cities) {
         citiesSuggestAdapter.updateData(cities);
     }
 
@@ -88,8 +95,8 @@ public class CityDialogFragment extends DialogFragment implements CityView {
         Log.e(TAG, throwable.getMessage(), throwable);
     }
 
-    private void selectItem(City city) {
+    private void selectItem(CityDto city) {
         textViewCity.setText(city.getName());
-        manager.onCitySelected(city);
+        selectedCity = city;
     }
 }

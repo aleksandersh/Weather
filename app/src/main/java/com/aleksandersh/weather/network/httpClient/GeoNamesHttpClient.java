@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.network.httpClient;
 
-import com.aleksandersh.weather.model.city.CityResultWrapper;
-import com.aleksandersh.weather.model.city.City;
+import com.aleksandersh.weather.network.dto.city.CityDto;
+import com.aleksandersh.weather.network.dto.city.CityResultDto;
 import com.aleksandersh.weather.network.httpService.CityHttpService;
 import com.aleksandersh.weather.utils.Const;
 
@@ -27,11 +27,11 @@ public class GeoNamesHttpClient implements CityHttpClient {
     }
 
     @Override
-    public Single<List<City>> getCity(String name) {
+    public Single<List<CityDto>> getCity(String name) {
         return service.searchByName(name, Const.DEFAULT_SUGGESTIONS_NUMBER)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(CityResultWrapper::getCities);
+                .map(CityResultDto::getCities);
     }
 
 }

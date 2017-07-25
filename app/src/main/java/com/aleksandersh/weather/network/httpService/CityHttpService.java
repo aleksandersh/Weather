@@ -1,9 +1,8 @@
 package com.aleksandersh.weather.network.httpService;
 
-import com.aleksandersh.weather.model.city.CityResultWrapper;
+import com.aleksandersh.weather.network.dto.city.CityResultDto;
 
 import io.reactivex.Single;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -23,6 +22,6 @@ public interface CityHttpService {
      *
      */
     @GET("searchJSON")
-    Single<CityResultWrapper> searchByName(@Query("name") String name, @Query("maxRows") int suggestionsNumber);
+    Single<CityResultDto> searchByName(@Query("name") String name, @Query("maxRows") int suggestionsNumber);
 
 }

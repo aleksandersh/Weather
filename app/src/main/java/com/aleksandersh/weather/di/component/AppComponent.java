@@ -11,6 +11,7 @@ import com.aleksandersh.weather.fragment.WeatherFragment;
 import com.aleksandersh.weather.service.WeatherUpdatingJobService;
 import com.aleksandersh.weather.utils.ApiKeyInterceptor;
 import com.aleksandersh.weather.utils.Const;
+import com.aleksandersh.weather.utils.PreferencesHelper;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -37,6 +38,8 @@ public interface AppComponent {
     void inject(WeatherUpdatingJobService jobService);
 
     CitySubcomponent plusCity(CityModule cityModule);
+
+    PreferencesHelper getPreferencesHelper();
 
     GsonConverterFactory getGsonConverterFactory();
 

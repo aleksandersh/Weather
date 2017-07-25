@@ -29,6 +29,12 @@
     <string name="pref_units_default">metric</string>
     <string name="pref_service_interval_default">120</string>
 
+    <string name="pref_current_city_id">current_city_id</string>
+    <string name="pref_current_city_name">current_city_name</string>
+    <string name="pref_current_city_country_name">current_city_country_name</string>
+    <string name="pref_current_city_lng">current_city_lng</string>
+    <string name="pref_current_city_lat">current_city_lat</string>
+
     <string name="api_language_value">en</string>
 
     <string name="city">Moscow</string>

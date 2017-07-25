@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.aleksandersh.weather.model.city.City;
+import com.aleksandersh.weather.network.dto.city.CityDto;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CitiesAdapter extends ArrayAdapter<City> {
+public class CitiesAdapter extends ArrayAdapter<CityDto> {
 
     private static final String TAG = "CitiesAdapter";
 
     private static final int LAYOUT_ID = android.R.layout.two_line_list_item;
 
-    private List<City> data;
+    private List<CityDto> data;
     private LayoutInflater inflater;
 
     public CitiesAdapter(@NonNull Context context) {
@@ -32,14 +32,14 @@ public class CitiesAdapter extends ArrayAdapter<City> {
         Log.i(TAG, "CitiesAdapter: constructor without data");
     }
 
-    public CitiesAdapter(Context context, List<City> cities) {
+    public CitiesAdapter(Context context, List<CityDto> cities) {
         super(context, LAYOUT_ID, cities);
         inflater = LayoutInflater.from(context);
         data = cities;
         Log.i(TAG, "CitiesAdapter: constructor with data");
     }
 
-    public void updateData(List<City> data) {
+    public void updateData(List<CityDto> data) {
         Log.i(TAG, "updateData: updating with " + data.toString());
         this.data = data;
         clear();
@@ -61,7 +61,7 @@ public class CitiesAdapter extends ArrayAdapter<City> {
             holder = (ViewHolder) view.getTag();
         }
 
-        City city = getItem(position);
+        CityDto city = getItem(position);
         if (city != null) holder.setCity(city);
 
         return view;
@@ -74,12 +74,12 @@ public class CitiesAdapter extends ArrayAdapter<City> {
 
     @Nullable
     @Override
-    public City getItem(int position) {
+    public CityDto getItem(int position) {
         return data.get(position);
     }
 
     @Override
-    public int getPosition(@Nullable City item) {
+    public int getPosition(@Nullable CityDto item) {
         return data.indexOf(item);
     }
 
@@ -96,7 +96,7 @@ public class CitiesAdapter extends ArrayAdapter<City> {
             Log.i(TAG, "ViewHolder: constructor");
         }
 
-        public void setCity(City city) {
+        public void setCity(CityDto city) {
             Log.i(TAG, "setCity: setting city in the view holder");
             textViewCity.setText(city.getName());
             textViewCountry.setText(city.getCountryName());

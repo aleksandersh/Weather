@@ -30,11 +30,11 @@
                 />
 
         </android.support.design.widget.TextInputLayout>
+
+
     -->
-
-
     <AutoCompleteTextView
-        android:id="@+id/textview_city_chooser_city"
+        android:id="@+id/textview_city"
         android:layout_width="0dp"
         android:layout_height="@dimen/city_chooser_textview_height"
         android:hint="@string/city_chooser_hint_city_name"
@@ -48,7 +48,7 @@
         />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_select_city"
         style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
