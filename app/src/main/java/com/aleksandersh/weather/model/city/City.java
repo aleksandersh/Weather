@@ -9,10 +9,10 @@ public class City {
     private int id;
     private String name;
     private String countryName;
-    private String lng;
-    private String lat;
+    private double lng;
+    private double lat;
 
-    public City(int id, String name, String countryName, String lng, String lat) {
+    public City(int id, String name, String countryName, double lng, double lat) {
         this.id = id;
         this.name = name;
         this.countryName = countryName;
@@ -32,11 +32,11 @@ public class City {
         return countryName;
     }
 
-    public String getLng() {
+    public double getLng() {
         return lng;
     }
 
-    public String getLat() {
+    public double getLat() {
         return lat;
     }
 }

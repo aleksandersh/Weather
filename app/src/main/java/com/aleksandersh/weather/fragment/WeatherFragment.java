@@ -26,6 +26,7 @@ import com.aleksandersh.weather.database.WeatherDao;
 import com.aleksandersh.weather.domain.WeatherManager;
 import com.aleksandersh.weather.fragment.loader.StoredWeatherLoader;
 import com.aleksandersh.weather.fragment.loader.UpdateWeatherProcessor;
+import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.model.weather.WeatherStorableState;
 import com.aleksandersh.weather.utils.ErrorsHelper;
@@ -60,20 +61,30 @@ public class WeatherFragment extends Fragment
     private BroadcastReceiver mReceiver;
     private long mCityId;
 
+    @BindView(R.id.city_text_view)
+    TextView mTextViewCity;
+
     @BindView(R.id.temperature_text_view)
     TextView mTemperatureTextView;
+
     @BindView(R.id.weather_condition_text_view)
     TextView mConditionTextView;
+
     @BindView(R.id.pressure_text_view)
     TextView mPressureTextView;
+
     @BindView(R.id.humidity_text_view)
     TextView mHumidityTextView;
+
     @BindView(R.id.cloudiness_text_view)
     TextView mCloudinessTextView;
+
     @BindView(R.id.error_text_view)
     TextView mErrorTextView;
+
     @BindView(R.id.weather_group_image_view)
     ImageView mWeatherGroupImageView;
+
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -92,7 +103,8 @@ public class WeatherFragment extends Fragment
 
         ((WeatherApplication) getActivity().getApplication()).getAppComponent().inject(this);
 
-        mCityId = MOSCOW_ID; // Moscow hardcoded
+        mCityId = mWeatherManager.getCity().getId();
+
         mReceiver = new WeatherUpdatingBroadcastReceiver();
 
         mUpdateWeatherProcessor = new UpdateWeatherProcessor(mWeatherManager);
@@ -110,6 +122,8 @@ public class WeatherFragment extends Fragment
         setHasOptionsMenu(true);
 
         mUnbinder = ButterKnife.bind(this, view);
+
+        mTextViewCity.setText(mWeatherManager.getCity().getName());
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
@@ -131,6 +145,11 @@ public class WeatherFragment extends Fragment
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 CityDialogFragment cityChooserDialogFragment = CityDialogFragment.newInstance();
                 cityChooserDialogFragment.show(fragmentManager, CityDialogFragment.TAG);
+                cityChooserDialogFragment.setOnCitySelectedListener(city -> {
+                    mCityId = city.getCityId();
+                    mTextViewCity.setText(city.getName());
+                    mUpdateWeatherProcessor.requestUpdate(mCityId);
+                });
                 return true;
             }
             default: {
@@ -142,7 +161,6 @@ public class WeatherFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-
         IntentFilter filter = new IntentFilter(WeatherUpdateBroadcastHelper.WEATHER_UPDATE_ACTION);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, filter);
     }
@@ -150,7 +168,6 @@ public class WeatherFragment extends Fragment
     @Override
     public void onPause() {
         super.onPause();
-
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
     }
 
@@ -170,6 +187,7 @@ public class WeatherFragment extends Fragment
 
     @Override
     public void onRefresh() {
+        mCityId = mWeatherManager.getCity().getId();
         mUpdateWeatherProcessor.requestUpdate(mCityId);
     }
 
@@ -196,6 +214,10 @@ public class WeatherFragment extends Fragment
 
     @Override
     public void onLoaderReset(Loader<WeatherStorableState> loader) {
+    }
+
+    private void onCityUpdated(City city) {
+
     }
 
     private void updateUi(Weather weather) {

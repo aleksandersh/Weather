@@ -38,6 +38,10 @@ public class WeatherApplication extends Application {
         return citySubcomponent;
     }
 
+    public static void clearCitySubcomponent() {
+        citySubcomponent = null;
+    }
+
     protected AppComponent buildAppComponent() {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))

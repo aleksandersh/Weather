@@ -37,7 +37,8 @@
 
     <string name="api_language_value">en</string>
 
-    <string name="city">Moscow</string>
+    <string name="default_city">Moscow</string>
+    <string name="default_country">Russia</string>
     <string name="pressure_title">pressure</string>
     <string name="humidity_title">humidity</string>
     <string name="cloudiness_title">cloudiness</string>

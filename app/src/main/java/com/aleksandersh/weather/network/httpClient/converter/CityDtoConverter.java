@@ -11,7 +11,9 @@ public class CityDtoConverter implements DtoConverter<City, CityDto> {
 
     @Override
     public City convert(CityDto dto) {
-        return new City(dto.getCityId(), dto.getName(), dto.getCountryName(), dto.getLng(), dto.getLat());
+        double lng = Double.parseDouble(dto.getLng());
+        double lat = Double.parseDouble(dto.getLat());
+        return new City(dto.getCityId(), dto.getName(), dto.getCountryName(), lng, lat);
     }
 
 }

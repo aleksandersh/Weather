@@ -66,7 +66,7 @@ public class PreferencesHelper {
      * @return Сформированный запрос.
      */
     public WeatherRequest getWeatherRequest() {
-        return new WeatherRequest(getUnits(), getLanguage(), getCityId());
+        return getWeatherRequest(getCityId());
     }
 
     /**
@@ -109,22 +109,51 @@ public class PreferencesHelper {
         editor.apply();
     }
 
+    public int getId() {
+        return mDefaultPreferences.getInt(mCurrentCityId, 0);
+    }
+
+    public double getLng() {
+        return Double.valueOf(mDefaultPreferences.getString(mCurrentCityLng, "0"));
+    }
+
+    public double getLat() {
+        return Double.parseDouble(mDefaultPreferences.getString(mCurrentCityLat, "0"));
+    }
+
     public void saveCity(CityDto city) {
+        float lng = Float.parseFloat(city.getLng());
+        float lat = Float.parseFloat(city.getLat());
         Editor editor = mDefaultPreferences.edit();
         editor.putInt(mCurrentCityId, city.getCityId());
         editor.putString(mCurrentCityName, city.getName());
         editor.putString(mCurrentCityCountryName, city.getCountryName());
-        editor.putString(mCurrentCityLng, city.getLng());
-        editor.putString(mCurrentCityLat, city.getLat());
+        editor.putFloat(mCurrentCityLng, lng);
+        editor.putFloat(mCurrentCityLat, lat);
+        editor.apply();
+    }
+
+    public void saveCity(City city) {
+        Editor editor = mDefaultPreferences.edit();
+        editor.putInt(mCurrentCityId, city.getId());
+        editor.putString(mCurrentCityName, city.getName());
+        editor.putString(mCurrentCityCountryName, city.getCountryName());
+        editor.putFloat(mCurrentCityLng, (float) city.getLng());
+        editor.putFloat(mCurrentCityLat, ((float) city.getLat()));
         editor.apply();
     }
 
     public City getSelectedCity() {
+        if (!mDefaultPreferences.contains(mCurrentCityId)) {
+            City defaultCity = new City(2643743, mContext.getString(R.string.default_city), mContext.getString(R.string.default_country), -0.12574, 51.50853);
+            saveCity(defaultCity);
+            return defaultCity;
+        }
         int id = mDefaultPreferences.getInt(mCurrentCityId, 0);
         String name = mDefaultPreferences.getString(mCurrentCityName, "");
         String countryName = mDefaultPreferences.getString(mCurrentCityCountryName, "");
-        String lng = mDefaultPreferences.getString(mCurrentCityLng, "");
-        String lat = mDefaultPreferences.getString(mCurrentCityLat, "");
+        double lng = mDefaultPreferences.getFloat(mCurrentCityLng, 0);
+        double lat = mDefaultPreferences.getFloat(mCurrentCityLat, 0);
         return new City(id, name, countryName, lng, lat);
     }
 

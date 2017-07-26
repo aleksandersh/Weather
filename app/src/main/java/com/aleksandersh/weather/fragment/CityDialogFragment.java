@@ -15,6 +15,7 @@ import com.aleksandersh.weather.WeatherApplication;
 import com.aleksandersh.weather.domain.CityManager;
 import com.aleksandersh.weather.network.dto.city.CityDto;
 import com.aleksandersh.weather.utils.CitiesAdapter;
+import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Фрагмент с поиском города, погоду для которого нужно отображать.
@@ -32,6 +34,8 @@ import butterknife.Unbinder;
 public class CityDialogFragment extends DialogFragment implements CityView {
 
     public static final String TAG = "cityChooserFragment";
+
+    private OnCitySelectedListener onCitySelectedListener;
 
     private Unbinder mUnbinder;
 
@@ -41,11 +45,14 @@ public class CityDialogFragment extends DialogFragment implements CityView {
     @BindView(R.id.textview_city)
     public AppCompatAutoCompleteTextView textViewCity;
 
-    private CitiesAdapter citiesSuggestAdapter;
+    private CompositeDisposable compositeDisposable;
+
+    private CitiesAdapter citiesSuggestAdapter = null;
 
     private CityDto selectedCity = null;
 
-    public CityDialogFragment() {}
+    public CityDialogFragment() {
+    }
 
     public static CityDialogFragment newInstance() {
         return new CityDialogFragment();
@@ -55,39 +62,53 @@ public class CityDialogFragment extends DialogFragment implements CityView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_city_chooser_dialog, container, false);
+
         WeatherApplication.plus(this).inject(this);
         mUnbinder = ButterKnife.bind(this, rootView);
-        citiesSuggestAdapter = new CitiesAdapter(getContext());
-        citiesSuggestAdapter.setNotifyOnChange(true);
-        textViewCity.setAdapter(citiesSuggestAdapter);
-        textViewCity.setOnItemClickListener((adapterView, view, i, l) -> {
-            selectItem(citiesSuggestAdapter.getItem(i));
-        });
-        RxTextView.textChanges(textViewCity)
-                .skipInitialValue()
-                .filter(charSequence -> charSequence.length() >= 2)
+        compositeDisposable = new CompositeDisposable();
+
+        compositeDisposable.add(RxAutoCompleteTextView.itemClickEvents(textViewCity).subscribe(adapterViewItemClickEvent -> {
+            selectItem(citiesSuggestAdapter.getItem(adapterViewItemClickEvent.position()));
+        }));
+
+        textViewCity.setThreshold(1);
+        compositeDisposable.add(RxTextView.textChanges(textViewCity)
+//                .skipInitialValue()
+                .filter(charSequence -> charSequence.length() > 0)
 //                .debounce(250, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .map(String::trim)
-                .subscribe(manager::onQueryUpdated);
-        return rootView;
-    }
+                .subscribe(manager::onQueryUpdated));
 
-    @OnClick(R.id.button_select_city)
-    public void selectCity() {
-        manager.onCitySelected(selectedCity);
-        dismiss();
+        return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        compositeDisposable.dispose();
+        WeatherApplication.clearCitySubcomponent();
+    }
+
+    @OnClick(R.id.button_select_city)
+    public void selectCity() {
+        if (selectedCity != null) {
+            manager.onCitySelected(selectedCity);
+            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(selectedCity);
+        }
+        dismiss();
     }
 
     @Override
     public void updateData(List<CityDto> cities) {
-        citiesSuggestAdapter.updateData(cities);
+        if (citiesSuggestAdapter == null) {
+            citiesSuggestAdapter = new CitiesAdapter(this.getContext(), cities);
+            citiesSuggestAdapter.setNotifyOnChange(true);
+            textViewCity.setAdapter(citiesSuggestAdapter);
+        } else {
+            citiesSuggestAdapter.updateData(cities);
+        }
     }
 
     @Override
@@ -95,8 +116,17 @@ public class CityDialogFragment extends DialogFragment implements CityView {
         Log.e(TAG, throwable.getMessage(), throwable);
     }
 
+    public void setOnCitySelectedListener(OnCitySelectedListener listener) {
+        onCitySelectedListener = listener;
+    }
+
     private void selectItem(CityDto city) {
         textViewCity.setText(city.getName());
         selectedCity = city;
     }
+
+    public interface OnCitySelectedListener {
+        void onSelected(CityDto city);
+    }
+
 }
