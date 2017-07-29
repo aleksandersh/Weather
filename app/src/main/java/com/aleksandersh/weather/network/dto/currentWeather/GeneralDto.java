@@ -13,7 +13,7 @@ public class GeneralDto {
     private Double mTemperature;
     @SerializedName("pressure")
     @Expose
-    private Integer mPressure;
+    private Double mPressure;
     @SerializedName("humidity")
     @Expose
     private Integer mHumidity;
@@ -28,7 +28,7 @@ public class GeneralDto {
         return mTemperature;
     }
 
-    public Integer getPressure() {
+    public Double getPressure() {
         return mPressure;
     }
 

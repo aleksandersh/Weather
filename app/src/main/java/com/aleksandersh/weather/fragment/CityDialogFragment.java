@@ -19,6 +19,7 @@ import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -50,8 +51,6 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
 
     private CitiesAdapter citiesSuggestAdapter = null;
 
-    private CityDto selectedCity = null;
-
     public CityDialogFragment() {
     }
 
@@ -74,9 +73,8 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
 
         textViewCity.setThreshold(1);
         compositeDisposable.add(RxTextView.textChanges(textViewCity)
-//                .skipInitialValue()
                 .filter(charSequence -> charSequence.length() > 0)
-//                .debounce(250, TimeUnit.MILLISECONDS)
+                .debounce(250, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .map(String::trim)
                 .subscribe(manager::onQueryUpdated));
@@ -114,10 +112,8 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
 
     private void selectItem(CityDto city) {
         if (city != null) {
-//        textViewCity.setText(city.getName());
-            selectedCity = city;
-            manager.onCitySelected(selectedCity);
-            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(selectedCity);
+            manager.onCitySelected(city);
+            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
         }
         dismiss();
     }

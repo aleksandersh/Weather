@@ -22,6 +22,6 @@ public interface CityHttpService {
      *
      */
     @GET("searchJSON")
-    Single<CityResultDto> searchByName(@Query("name") String name, @Query("maxRows") int suggestionsNumber);
+    Single<CityResultDto> searchByName(@Query("name") String name, @Query("name_startsWith") String startsWith, @Query("maxRows") int suggestionsNumber);
 
 }
