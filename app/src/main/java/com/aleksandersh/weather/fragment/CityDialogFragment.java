@@ -2,7 +2,7 @@ package com.aleksandersh.weather.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,14 +24,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
+
+;
 
 /**
  * Фрагмент с поиском города, погоду для которого нужно отображать.
  */
-public class CityDialogFragment extends DialogFragment implements CityView {
+public class CityDialogFragment extends BottomSheetDialogFragment implements CityView {
 
     public static final String TAG = "cityChooserFragment";
 
@@ -91,15 +92,6 @@ public class CityDialogFragment extends DialogFragment implements CityView {
         WeatherApplication.clearCitySubcomponent();
     }
 
-    @OnClick(R.id.button_select_city)
-    public void selectCity() {
-        if (selectedCity != null) {
-            manager.onCitySelected(selectedCity);
-            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(selectedCity);
-        }
-        dismiss();
-    }
-
     @Override
     public void updateData(List<CityDto> cities) {
         if (citiesSuggestAdapter == null) {
@@ -121,8 +113,13 @@ public class CityDialogFragment extends DialogFragment implements CityView {
     }
 
     private void selectItem(CityDto city) {
-        textViewCity.setText(city.getName());
-        selectedCity = city;
+        if (city != null) {
+//        textViewCity.setText(city.getName());
+            selectedCity = city;
+            manager.onCitySelected(selectedCity);
+            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(selectedCity);
+        }
+        dismiss();
     }
 
     public interface OnCitySelectedListener {

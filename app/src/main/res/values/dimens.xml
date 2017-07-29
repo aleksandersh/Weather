@@ -4,4 +4,5 @@
     <dimen name="city_chooser_width">300dp</dimen>
     <dimen name="city_chooser_padding">16dp</dimen>
     <dimen name="city_chooser_textview_height">56dp</dimen>
+    <dimen name="city_chooser_dropdown_height">112dp</dimen>
 </resources>
