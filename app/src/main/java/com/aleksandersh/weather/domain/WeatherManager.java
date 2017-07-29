@@ -70,25 +70,11 @@ public class WeatherManager {
             return;
         }
 
-        /*
-        HttpClientResponse<Weather> response = mHttpClient.getCurrentWeatherByCityId(
-                request.getLang(),
-                request.getUnits(),
-                request.getCityId());
-        */
-
-        HttpClientResponse<Weather> response = mHttpClient.getCurrentWeatherByCityId(
-                request.getLang(),
-                request.getUnits(),
-                getCity().getId());
-
-        /* WORKS
         HttpClientResponse<Weather> response = mHttpClient.getCurrentWeatherByLocation(
                 request.getLang(),
                 request.getUnits(),
                 getCity().getLat(),
                 getCity().getLng());
-                */
 
         if (response.isSuccessful()) {
             mWeatherDao.saveWeather(new WeatherStorableState(

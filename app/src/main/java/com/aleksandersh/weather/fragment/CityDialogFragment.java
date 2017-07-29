@@ -2,7 +2,7 @@ package com.aleksandersh.weather.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,19 +19,21 @@ import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
+
+;
 
 /**
  * Фрагмент с поиском города, погоду для которого нужно отображать.
  */
-public class CityDialogFragment extends DialogFragment implements CityView {
+public class CityDialogFragment extends BottomSheetDialogFragment implements CityView {
 
     public static final String TAG = "cityChooserFragment";
 
@@ -48,8 +50,6 @@ public class CityDialogFragment extends DialogFragment implements CityView {
     private CompositeDisposable compositeDisposable;
 
     private CitiesAdapter citiesSuggestAdapter = null;
-
-    private CityDto selectedCity = null;
 
     public CityDialogFragment() {
     }
@@ -73,9 +73,8 @@ public class CityDialogFragment extends DialogFragment implements CityView {
 
         textViewCity.setThreshold(1);
         compositeDisposable.add(RxTextView.textChanges(textViewCity)
-//                .skipInitialValue()
                 .filter(charSequence -> charSequence.length() > 0)
-//                .debounce(250, TimeUnit.MILLISECONDS)
+                .debounce(250, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .map(String::trim)
                 .subscribe(manager::onQueryUpdated));
@@ -89,15 +88,6 @@ public class CityDialogFragment extends DialogFragment implements CityView {
         mUnbinder.unbind();
         compositeDisposable.dispose();
         WeatherApplication.clearCitySubcomponent();
-    }
-
-    @OnClick(R.id.button_select_city)
-    public void selectCity() {
-        if (selectedCity != null) {
-            manager.onCitySelected(selectedCity);
-            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(selectedCity);
-        }
-        dismiss();
     }
 
     @Override
@@ -121,8 +111,11 @@ public class CityDialogFragment extends DialogFragment implements CityView {
     }
 
     private void selectItem(CityDto city) {
-        textViewCity.setText(city.getName());
-        selectedCity = city;
+        if (city != null) {
+            manager.onCitySelected(city);
+            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
+        }
+        dismiss();
     }
 
     public interface OnCitySelectedListener {

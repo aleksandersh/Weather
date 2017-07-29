@@ -212,6 +212,11 @@ public class CityDto extends Dto implements Parcelable
         this.fcode = fcode;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s, %s", name, countryCode);
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(adminCode1);
         dest.writeValue(lng);

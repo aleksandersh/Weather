@@ -7,11 +7,11 @@ package com.aleksandersh.weather.model.weather;
 public class Weather {
     private long mCityId;
     private double mTemperature;
-    private int mPressure;
-    private int mHumidity;
+    private double mPressure;
+    private double mHumidity;
     private int mCloudiness;
     private double mWindSpeed;
-    private int mWindDirection;
+    private double mWindDirection;
     private String mDescription;
     private String mGroup;
 
@@ -31,19 +31,19 @@ public class Weather {
         mTemperature = temperature;
     }
 
-    public int getPressure() {
+    public double getPressure() {
         return mPressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(double pressure) {
         mPressure = pressure;
     }
 
-    public int getHumidity() {
+    public double getHumidity() {
         return mHumidity;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(double humidity) {
         mHumidity = humidity;
     }
 
@@ -63,11 +63,11 @@ public class Weather {
         mWindSpeed = windSpeed;
     }
 
-    public int getWindDirection() {
+    public double getWindDirection() {
         return mWindDirection;
     }
 
-    public void setWindDirection(int windDirection) {
+    public void setWindDirection(double windDirection) {
         mWindDirection = windDirection;
     }
 

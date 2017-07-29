@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_city_chooser_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="@dimen/city_chooser_height"
@@ -14,32 +15,15 @@
         android:id="@+id/textview_city"
         android:layout_width="0dp"
         android:layout_height="@dimen/city_chooser_textview_height"
-        android:maxLines="1"
+        android:dropDownHeight="@dimen/city_chooser_dropdown_height"
         android:hint="@string/city_chooser_hint_city_name"
+        android:maxLines="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.99"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1"
-        />
-
-    <Button
-        android:id="@+id/button_select_city"
-        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="0dp"
-        android:text="@string/city_chooser_action_select"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_layout"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginRight="8dp"
         />
 
 </android.support.constraint.ConstraintLayout>
