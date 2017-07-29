@@ -14,6 +14,7 @@ import javax.inject.Inject;
  * Фрагмент, содержащий настройки приложения.
  */
 public class SettingsFragment extends PreferenceFragmentCompat {
+
     @Inject
     SharedPreferences.OnSharedPreferenceChangeListener mChangeListener;
 
@@ -29,7 +30,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ((WeatherApplication) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
