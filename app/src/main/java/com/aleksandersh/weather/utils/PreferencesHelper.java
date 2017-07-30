@@ -10,6 +10,8 @@ import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.model.weather.WeatherRequest;
 import com.aleksandersh.weather.network.dto.city.CityDto;
 
+import java.util.function.Consumer;
+
 /**
  * Created by AleksanderSh on 19.07.2017.
  * <p>
@@ -104,9 +106,7 @@ public class PreferencesHelper {
      */
     public void saveCityId(long cityId) {
         String cityIdKey = mContext.getString(R.string.pref_last_city_id_key);
-        Editor editor = mDefaultPreferences.edit();
-        editor.putLong(cityIdKey, cityId);
-        editor.apply();
+        put(editor -> editor.putLong(cityIdKey, cityId));
     }
 
     public int getId() {
@@ -124,23 +124,23 @@ public class PreferencesHelper {
     public void saveCity(CityDto city) {
         float lng = Float.parseFloat(city.getLng());
         float lat = Float.parseFloat(city.getLat());
-        Editor editor = mDefaultPreferences.edit();
-        editor.putInt(mCurrentCityId, city.getCityId());
-        editor.putString(mCurrentCityName, city.getName());
-        editor.putString(mCurrentCityCountryName, city.getCountryName());
-        editor.putFloat(mCurrentCityLng, lng);
-        editor.putFloat(mCurrentCityLat, lat);
-        editor.apply();
+        put(editor -> {
+            editor.putInt(mCurrentCityId, city.getCityId());
+            editor.putString(mCurrentCityName, city.getName());
+            editor.putString(mCurrentCityCountryName, city.getCountryName());
+            editor.putFloat(mCurrentCityLng, lng);
+            editor.putFloat(mCurrentCityLat, lat);
+        });
     }
 
     public void saveCity(City city) {
-        Editor editor = mDefaultPreferences.edit();
-        editor.putInt(mCurrentCityId, city.getId());
-        editor.putString(mCurrentCityName, city.getName());
-        editor.putString(mCurrentCityCountryName, city.getCountryName());
-        editor.putFloat(mCurrentCityLng, (float) city.getLng());
-        editor.putFloat(mCurrentCityLat, ((float) city.getLat()));
-        editor.apply();
+        put(editor -> {
+            editor.putInt(mCurrentCityId, city.getId());
+            editor.putString(mCurrentCityName, city.getName());
+            editor.putString(mCurrentCityCountryName, city.getCountryName());
+            editor.putFloat(mCurrentCityLng, (float) city.getLng());
+            editor.putFloat(mCurrentCityLat, ((float) city.getLat()));
+        });
     }
 
     public City getSelectedCity() {
@@ -155,6 +155,12 @@ public class PreferencesHelper {
         double lng = mDefaultPreferences.getFloat(mCurrentCityLng, 0);
         double lat = mDefaultPreferences.getFloat(mCurrentCityLat, 0);
         return new City(id, name, countryName, lng, lat);
+    }
+
+    private void put(Consumer<Editor> f) {
+        Editor editor = mDefaultPreferences.edit();
+        f.accept(editor);
+        editor.apply();
     }
 
 }
