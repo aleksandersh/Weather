@@ -2,10 +2,9 @@ package com.aleksandersh.weather.network.httpClient;
 
 import android.util.Log;
 
-import com.aleksandersh.weather.model.Weather;
+import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.httpClient.converter.DtoConverter;
-import com.aleksandersh.weather.network.httpClient.converter.OpenWeatherMapDtoConverter;
 import com.aleksandersh.weather.network.httpClient.strategy.CityByIdStrategy;
 import com.aleksandersh.weather.network.httpClient.strategy.CityByNameStrategy;
 import com.aleksandersh.weather.network.httpClient.strategy.HttpClientStrategy;
@@ -18,8 +17,6 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by AleksanderSh on 14.07.2017.
@@ -32,11 +29,11 @@ public class OpenWeatherMapHttpClient implements WeatherHttpClient {
     private static final String API_KEY = "7eb42e583dff5e64a589739dd927bd0c";
 
     private CurrentWeatherHttpService mCurrentWeatherHttpService;
-    private DtoConverter<CurrentWeatherDto> mConverter;
+    private DtoConverter<Weather, CurrentWeatherDto> mConverter;
 
     @Inject
     public OpenWeatherMapHttpClient(CurrentWeatherHttpService currentWeatherHttpService,
-                                    DtoConverter<CurrentWeatherDto> converter) {
+                                    DtoConverter<Weather, CurrentWeatherDto> converter) {
         mCurrentWeatherHttpService = currentWeatherHttpService;
         mConverter = converter;
     }

@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.model;
+package com.aleksandersh.weather.model.weather;
 
 /**
  * Created by AleksanderSh on 16.07.2017.
@@ -7,14 +7,19 @@ package com.aleksandersh.weather.model;
  */
 
 public class WeatherRequest {
+
+    private long mOpenWeatherCityId;
     private String mUnits;
     private String mLang;
-    private long mCityId;
 
     public WeatherRequest(String units, String lang, long cityId) {
         mUnits = units;
         mLang = lang;
-        mCityId = cityId;
+        mOpenWeatherCityId = cityId;
+    }
+
+    public long getCityId() {
+        return mOpenWeatherCityId;
     }
 
     public String getUnits() {
@@ -25,10 +30,6 @@ public class WeatherRequest {
         return mLang;
     }
 
-    public long getCityId() {
-        return mCityId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,7 +37,7 @@ public class WeatherRequest {
 
         WeatherRequest that = (WeatherRequest) o;
 
-        if (mCityId != that.mCityId) return false;
+        if (mOpenWeatherCityId != that.mOpenWeatherCityId) return false;
         if (!mUnits.equals(that.mUnits)) return false;
         return mLang.equals(that.mLang);
     }
@@ -45,7 +46,7 @@ public class WeatherRequest {
     public int hashCode() {
         int result = mUnits.hashCode();
         result = 31 * result + mLang.hashCode();
-        result = 31 * result + (int) (mCityId ^ (mCityId >>> 32));
+        result = 31 * result + (int) (mOpenWeatherCityId ^ (mOpenWeatherCityId >>> 32));
         return result;
     }
 }

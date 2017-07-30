@@ -1,53 +1,84 @@
-apply plugin: 'com.android.application'
+apply plugin: "com.android.application"
+apply plugin: "me.tatarka.retrolambda"
 
 android {
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
+            storeFile file("debug.keystore")
         }
     }
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId 'com.aleksandersh.weather'
+        applicationId "com.aleksandersh.weather"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName '1.0'
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
         debug {
             minifyEnabled false
             signingConfig signingConfigs.debug
         }
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 ext {
-    supportLibraryVersion = '26.0.0-alpha1'
-    butterknifeVersion = '8.7.0'
-    retrofitVersion = '2.3.0'
+    supportLibraryVersion = "26.0.0-alpha1"
+    butterknifeVersion = "8.7.0"
+    retrofitVersion = "2.3.0"
+    rxAndroidVersion = "2.0.1"
+    rxJavaVersion = "2.1.1"
+    rxBindingVersion = "2.0.0"
 }
 
 dependencies {
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
+    androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
+        exclude group: "com.android.support", module: "support-annotations"
     })
+
+    // Butterknife
+    compile "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    // Support
+
+    compile "com.android.support:support-v4:$supportLibraryVersion"
     compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
     compile "com.android.support:preference-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:support-v4:$supportLibraryVersion"
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+    compile "com.android.support:support-annotations:$supportLibraryVersion"
+    compile "com.android.support.constraint:constraint-layout:1.0.2"
+
+    // Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile 'com.firebase:firebase-jobdispatcher:0.7.0'
-    testCompile 'junit:junit:4.12'
-    compile 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+
+    // Dagger
+    compile "com.google.dagger:dagger:2.11"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
+
+    // Rx
+    compile "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion"
+
+    // Misc
+    compile "com.firebase:firebase-jobdispatcher:0.7.0"
+
+    testCompile "junit:junit:4.12"
 }

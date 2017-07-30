@@ -1,6 +1,7 @@
 package com.aleksandersh.weather.network.httpClient.converter;
 
-import com.aleksandersh.weather.model.Weather;
+import com.aleksandersh.weather.model.weather.Weather;
+import com.aleksandersh.weather.network.dto.Dto;
 
 /**
  * Created by AleksanderSh on 15.07.2017.
@@ -10,6 +11,6 @@ import com.aleksandersh.weather.model.Weather;
  * но объекты передачи данных из http-сервиса могут отличаться.
  */
 
-public interface DtoConverter<T> {
-    Weather convert(T dto);
+public interface DtoConverter<O, T extends Dto> {
+    O convert(T dto);
 }

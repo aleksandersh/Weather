@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 
 import com.aleksandersh.weather.database.cursorWrapper.CurrentWeatherCursorWrapper;
-import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.model.WeatherRequest;
-import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.model.weather.Weather;
+import com.aleksandersh.weather.model.weather.WeatherRequest;
+import com.aleksandersh.weather.model.weather.WeatherStorableState;
 
 /**
  * Created by AleksanderSh on 20.07.2017.

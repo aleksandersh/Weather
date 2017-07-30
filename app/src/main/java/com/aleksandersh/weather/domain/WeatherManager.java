@@ -6,9 +6,10 @@ import android.net.ConnectivityManager;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.aleksandersh.weather.database.WeatherDao;
-import com.aleksandersh.weather.model.Weather;
-import com.aleksandersh.weather.model.WeatherRequest;
-import com.aleksandersh.weather.model.WeatherStorableState;
+import com.aleksandersh.weather.model.city.City;
+import com.aleksandersh.weather.model.weather.Weather;
+import com.aleksandersh.weather.model.weather.WeatherRequest;
+import com.aleksandersh.weather.model.weather.WeatherStorableState;
 import com.aleksandersh.weather.network.httpClient.HttpClientResponse;
 import com.aleksandersh.weather.network.httpClient.WeatherHttpClient;
 import com.aleksandersh.weather.utils.ErrorsHelper;
@@ -50,7 +51,6 @@ public class WeatherManager {
      */
     public void updateWeather(long cityId) {
         WeatherRequest request = mPreferencesHelper.getWeatherRequest(cityId);
-        mPreferencesHelper.saveCityId(cityId);
         updateWeatherByRequest(request);
     }
 
@@ -70,10 +70,11 @@ public class WeatherManager {
             return;
         }
 
-        HttpClientResponse<Weather> response = mHttpClient.getCurrentWeatherByCityId(
+        HttpClientResponse<Weather> response = mHttpClient.getCurrentWeatherByLocation(
                 request.getLang(),
                 request.getUnits(),
-                request.getCityId());
+                getCity().getLat(),
+                getCity().getLng());
 
         if (response.isSuccessful()) {
             mWeatherDao.saveWeather(new WeatherStorableState(
@@ -88,6 +89,10 @@ public class WeatherManager {
                     .getWeatherUpdateUnsuccessfulIntent(request.getCityId(),
                             response.getErrorCode()));
         }
+    }
+
+    public City getCity() {
+        return mPreferencesHelper.getSelectedCity();
     }
 
     private void sendLocalBroadcast(Intent intent) {

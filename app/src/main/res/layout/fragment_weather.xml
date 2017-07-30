@@ -5,28 +5,30 @@
     android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aleksandersh.weather.fragment.WeatherFragment">
+    tools:context="com.aleksandersh.weather.fragment.WeatherFragment"
+    >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/city_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="@string/city"
             android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/weather_group_image_view"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:text="Moscow"
-            app:layout_constraintHorizontal_bias="0.501"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/weather_group_image_view"/>
+            />
 
         <ImageView
             android:id="@+id/weather_group_image_view"
@@ -38,7 +40,8 @@
             android:src="@drawable/clear_icon"
             app:layout_constraintBottom_toTopOf="@+id/temperature_text_view"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
         <TextView
             android:id="@+id/temperature_text_view"
@@ -58,7 +61,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/pressure_title_text_view"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="+24"/>
+            tools:text="+24"
+            />
 
         <TextView
             android:id="@+id/weather_condition_text_view"
@@ -74,7 +78,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/temperature_text_view"
             app:layout_constraintRight_toRightOf="@+id/temperature_text_view"
             app:layout_constraintTop_toBottomOf="@+id/temperature_text_view"
-            tools:text="Rain, snow Rain, snow Rain, snow Rain, "/>
+            tools:text="Rain, snow Rain, snow Rain, snow Rain, "
+            />
 
         <TextView
             android:id="@+id/pressure_title_text_view"
@@ -90,7 +95,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.501"
-            tools:text="Pressure"/>
+            tools:text="Pressure"
+            />
 
         <TextView
             android:id="@+id/pressure_text_view"
@@ -103,7 +109,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
             app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
             app:layout_constraintTop_toBottomOf="@+id/pressure_title_text_view"
-            tools:text="1000"/>
+            tools:text="1000"
+            />
 
         <TextView
             android:id="@+id/humidity_title_text_view"
@@ -120,7 +127,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
             app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
             app:layout_constraintTop_toBottomOf="@+id/pressure_text_view"
-            tools:text="Humidity"/>
+            tools:text="Humidity"
+            />
 
         <TextView
             android:id="@+id/humidity_text_view"
@@ -131,7 +139,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
             app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
             app:layout_constraintTop_toBottomOf="@+id/humidity_title_text_view"
-            tools:text="80"/>
+            tools:text="80"
+            />
 
         <TextView
             android:id="@+id/cloudiness_title_text_view"
@@ -144,7 +153,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
             app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
             app:layout_constraintTop_toBottomOf="@+id/humidity_text_view"
-            tools:text="cloudiness"/>
+            tools:text="cloudiness"
+            />
 
         <TextView
             android:id="@+id/cloudiness_text_view"
@@ -155,7 +165,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/pressure_title_text_view"
             app:layout_constraintRight_toRightOf="@+id/pressure_title_text_view"
             app:layout_constraintTop_toBottomOf="@+id/cloudiness_title_text_view"
-            tools:text="1000"/>
+            tools:text="1000"
+            />
 
         <TextView
             android:id="@+id/error_text_view"
@@ -171,7 +182,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

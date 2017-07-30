@@ -1,6 +1,6 @@
 package com.aleksandersh.weather.network.httpClient.converter;
 
-import com.aleksandersh.weather.model.Weather;
+import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.network.dto.currentWeather.CloudsDto;
 import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.dto.currentWeather.GeneralDto;
@@ -17,7 +17,7 @@ import java.util.List;
  * используемую в приложении.
  */
 
-public class OpenWeatherMapDtoConverter implements DtoConverter<CurrentWeatherDto> {
+public class OpenWeatherMapDtoConverter implements DtoConverter<Weather, CurrentWeatherDto> {
     @Override
     public Weather convert(CurrentWeatherDto dto) {
         Weather weather = new Weather();

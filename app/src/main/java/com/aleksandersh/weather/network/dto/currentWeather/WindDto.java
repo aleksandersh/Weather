@@ -13,13 +13,13 @@ public class WindDto {
     private Double mSpeed;
     @SerializedName("deg")
     @Expose
-    private Integer mDirection;
+    private Double mDirection;
 
     public Double getSpeed() {
         return mSpeed;
     }
 
-    public Integer getDirection() {
+    public Double getDirection() {
         return mDirection;
     }
 }
