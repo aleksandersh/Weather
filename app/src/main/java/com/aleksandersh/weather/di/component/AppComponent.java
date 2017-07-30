@@ -12,6 +12,7 @@ import com.aleksandersh.weather.service.WeatherUpdatingJobService;
 import com.aleksandersh.weather.utils.ApiKeyInterceptor;
 import com.aleksandersh.weather.utils.Const;
 import com.aleksandersh.weather.utils.PreferencesHelper;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -29,6 +30,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Singleton
 public interface AppComponent {
 
+    CitySubcomponent plusCity(CityModule cityModule);
+
+    PreferencesHelper getPreferencesHelper();
+
+    GsonConverterFactory getGsonConverterFactory();
+
+    OkHttpClient getHttpClient();
+
+    StethoInterceptor getStethoInterceptor();
+
+    @Named(Const.DI_API_SCOPE_CITY)
+    ApiKeyInterceptor getApiKeyInterceptor();
+
+    @Named(Const.DI_API_SCOPE_CITY)
+    Retrofit getCityRetrofit();
+
     void inject(WeatherApplication app);
 
     void inject(WeatherFragment fragment);
@@ -36,19 +53,5 @@ public interface AppComponent {
     void inject(SettingsFragment fragment);
 
     void inject(WeatherUpdatingJobService jobService);
-
-    CitySubcomponent plusCity(CityModule cityModule);
-
-    PreferencesHelper getPreferencesHelper();
-
-    GsonConverterFactory getGsonConverterFactory();
-
-    @Named(Const.DI_API_SCOPE_CITY)
-    ApiKeyInterceptor getApiKeyInterceptor();
-
-    OkHttpClient getHttpClient();
-
-    @Named(Const.DI_API_SCOPE_CITY)
-    Retrofit getCityRetrofit();
 
 }

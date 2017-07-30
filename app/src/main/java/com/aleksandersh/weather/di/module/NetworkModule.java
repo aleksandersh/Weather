@@ -1,5 +1,6 @@
 package com.aleksandersh.weather.di.module;
 
+import com.aleksandersh.weather.BuildConfig;
 import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
 import com.aleksandersh.weather.network.httpClient.OpenWeatherMapHttpClient;
@@ -9,6 +10,7 @@ import com.aleksandersh.weather.network.httpClient.converter.OpenWeatherMapDtoCo
 import com.aleksandersh.weather.network.httpService.CurrentWeatherHttpService;
 import com.aleksandersh.weather.utils.ApiKeyInterceptor;
 import com.aleksandersh.weather.utils.Const;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -42,10 +44,17 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideHttpClient(@Named(Const.DI_API_SCOPE_CITY) ApiKeyInterceptor apiKeyInterceptor) {
-        return new OkHttpClient.Builder()
-                .addInterceptor(apiKeyInterceptor)
-                .build();
+    public StethoInterceptor provideStethoInterceptor() {
+        return new StethoInterceptor();
+    }
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideHttpClient(@Named(Const.DI_API_SCOPE_CITY) ApiKeyInterceptor apiKeyInterceptor, StethoInterceptor stethoInterceptor) {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .addInterceptor(apiKeyInterceptor);
+        if (BuildConfig.DEBUG) clientBuilder.addNetworkInterceptor(stethoInterceptor);
+        return clientBuilder.build();
     }
 
     @Provides

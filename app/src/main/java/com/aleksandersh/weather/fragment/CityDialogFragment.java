@@ -64,6 +64,7 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
         View rootView = inflater.inflate(R.layout.fragment_city_chooser_dialog, container, false);
 
         WeatherApplication.plus(this).inject(this);
+        manager.onAttach(this);
         mUnbinder = ButterKnife.bind(this, rootView);
         compositeDisposable = new CompositeDisposable();
 
@@ -85,6 +86,7 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        manager.onDetach();
         mUnbinder.unbind();
         compositeDisposable.dispose();
         WeatherApplication.clearCitySubcomponent();

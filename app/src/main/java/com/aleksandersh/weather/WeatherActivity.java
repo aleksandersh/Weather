@@ -97,11 +97,11 @@ public class WeatherActivity extends AppCompatActivity
             case R.id.nav_weather_fragment:
                 fragment = WeatherFragment.newInstance();
                 break;
-            case R.id.nav_about_fragment:
-                fragment = AboutFragment.newInstance();
-                break;
             case R.id.nav_settings_fragment:
                 fragment = SettingsFragment.newInstance();
+                break;
+            case R.id.nav_about_fragment:
+                fragment = AboutFragment.newInstance();
                 break;
             default:
                 throw new IllegalArgumentException("Menu item Id did not processed.");

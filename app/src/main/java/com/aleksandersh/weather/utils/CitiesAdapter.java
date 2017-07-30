@@ -14,6 +14,9 @@ import com.aleksandersh.weather.network.dto.city.CityDto;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CitiesAdapter extends ArrayAdapter<CityDto> {
 
     private static final String TAG = "CitiesAdapter";
@@ -81,16 +84,14 @@ public class CitiesAdapter extends ArrayAdapter<CityDto> {
 
     static class ViewHolder {
 
-//        @BindView(android.R.id.text1)
+        @BindView(android.R.id.text1)
         TextView textViewCity;
 
-//        @BindView(android.R.id.text2)
+        @BindView(android.R.id.text2)
         TextView textViewCountry;
 
         public ViewHolder(View view) {
-            textViewCity = view.findViewById(android.R.id.text1);
-            textViewCountry = view.findViewById(android.R.id.text2);
-//            ButterKnife.bind(this, view);
+            ButterKnife.bind(this, view);
         }
 
         public void setCity(CityDto city) {

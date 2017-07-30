@@ -28,40 +28,76 @@ android {
         }
     }
     packagingOptions {
-        exclude 'META-INF/rxjava.properties'
+        exclude "META-INF/rxjava.properties"
     }
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-}
-ext {
-    supportLibraryVersion = "26.0.0-alpha1"
-    butterknifeVersion = "8.7.0"
-    retrofitVersion = "2.3.0"
-    rxAndroidVersion = "2.0.1"
-    rxJavaVersion = "2.1.1"
-    rxBindingVersion = "2.0.0"
+    sourceSets {
+        def prodFiles = new File("$projectDir/src/main/java")
+        def testFiles = new File("$projectDir/src/testSources/java/")
+        androidTest {
+            java {
+                srcDirs += testFiles
+                prodFiles.eachFileRecurse {
+                    if (testFiles.list().contains(it.name)) {
+                        srcDirs -= it
+                    }
+                }
+            }
+        }
+        test {
+            java.srcDirs += 'src/testUtils/java'
+        }
+    }
 }
 
+
+ext {
+    supportLibraryVersion = '26.0.0-alpha1'
+    butterknifeVersion = '8.7.0'
+    retrofitVersion = '2.3.0'
+    daggerVersion = '2.11'
+    constraintLayoutVersion = '1.0.2'
+    firebaseJobDispatcherVersion = '0.7.0'
+    rxAndroidVersion = '2.0.1'
+    rxJavaVersion = '2.1.1'
+    rxBindingVersion = '2.0.0'
+    junitVersion = '4.12'
+    testRunnerVersion = '1.0.0'
+    mockitoVersion = '2.8.9'
+    espressoVersion = '3.0.0'
+    robolectricVersion = '3.4'
+    okhttp3IdlingResourceVersion = '1.0.0'
+    stethoVersion = '1.5.0'
+}
+
+
+
 dependencies {
-    androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
-        exclude group: "com.android.support", module: "support-annotations"
-    })
+    def androidTestCompileExclude = { String lib, Map<String, String> additionalExcludedModules = null ->
+        androidTestCompile(lib) {
+            exclude group: "com.android.support"
+            exclude module: "support-annotations"
+            exclude module: "support-core-ui"
+            exclude module: "recyclerview-v7"
+            if (additionalExcludedModules != null) exclude(additionalExcludedModules)
+        }
+    }
 
     // Butterknife
     compile "com.jakewharton:butterknife:$butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
 
     // Support
-
     compile "com.android.support:support-v4:$supportLibraryVersion"
-    compile "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:preference-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:support-v4:$supportLibraryVersion"
     compile "com.android.support:support-annotations:$supportLibraryVersion"
-    compile "com.android.support.constraint:constraint-layout:1.0.2"
+    compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
     // Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -69,8 +105,8 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
 
     // Dagger
-    compile "com.google.dagger:dagger:2.11"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
+    compile "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Rx
     compile "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
@@ -78,7 +114,32 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion"
 
     // Misc
-    compile "com.firebase:firebase-jobdispatcher:0.7.0"
+    compile "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
 
-    testCompile "junit:junit:4.12"
+    // Debug
+
+    debugCompile "com.facebook.stetho:stetho:$stethoVersion"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
+    // Testing
+
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.robolectric:robolectric:$robolectricVersion"
+
+    testCompile "junit:junit:$junitVersion"
+
+    androidTestCompileExclude "com.android.support.test:runner:$testRunnerVersion"
+    androidTestCompileExclude "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    androidTestCompileExclude "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
+    compile "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    compile("com.jakewharton.espresso:okhttp3-idling-resource:$okhttp3IdlingResourceVersion", {
+        exclude module: "okio"
+        exclude module: "okhttp"
+    })
+
 }
+
+
+
+
+

@@ -85,7 +85,7 @@ public class WeatherFragment extends Fragment
     @BindView(R.id.weather_group_image_view)
     ImageView mWeatherGroupImageView;
 
-    @BindView(R.id.swipe_refresh_layout)
+    @BindView(R.id.weather_swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
