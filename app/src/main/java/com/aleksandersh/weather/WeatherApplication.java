@@ -10,6 +10,7 @@ import com.aleksandersh.weather.di.module.CityModule;
 import com.aleksandersh.weather.di.module.DomainModule;
 import com.aleksandersh.weather.di.module.NetworkModule;
 import com.aleksandersh.weather.di.module.ServiceModule;
+import com.facebook.stetho.Stetho;
 
 /**
  * Created by AleksanderSh on 21.07.2017.
@@ -26,10 +27,11 @@ public class WeatherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (com.aleksandersh.weather.BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
         mAppComponent = buildAppComponent();
     }
 
-    public AppComponent getAppComponent() {
+    public static AppComponent getAppComponent() {
         return mAppComponent;
     }
 
