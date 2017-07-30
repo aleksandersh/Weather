@@ -47,25 +47,30 @@ android {
                 }
             }
         }
+        test {
+            java.srcDirs += 'src/testUtils/java'
+        }
     }
 }
 
 
 ext {
-    supportLibraryVersion = "26.0.0-alpha1"
-    butterknifeVersion = "8.7.0"
-    retrofitVersion = "2.3.0"
-    daggerVersion = "2.11"
-    constraintLayoutVersion = "1.0.2"
-    firebaseJobDispatcherVersion = "0.7.0"
-    rxAndroidVersion = "2.0.1"
-    rxJavaVersion = "2.1.1"
-    rxBindingVersion = "2.0.0"
-    espressoVersion = "3.0.0"
-    junitVersion = "4.12"
-    testRunnerVersion = "1.0.0"
-    okhttp3IdlingResourceVersion = "1.0.0"
-    stethoVersion = "1.5.0"
+    supportLibraryVersion = '26.0.0-alpha1'
+    butterknifeVersion = '8.7.0'
+    retrofitVersion = '2.3.0'
+    daggerVersion = '2.11'
+    constraintLayoutVersion = '1.0.2'
+    firebaseJobDispatcherVersion = '0.7.0'
+    rxAndroidVersion = '2.0.1'
+    rxJavaVersion = '2.1.1'
+    rxBindingVersion = '2.0.0'
+    junitVersion = '4.12'
+    testRunnerVersion = '1.0.0'
+    mockitoVersion = '2.8.9'
+    espressoVersion = '3.0.0'
+    robolectricVersion = '3.4'
+    okhttp3IdlingResourceVersion = '1.0.0'
+    stethoVersion = '1.5.0'
 }
 
 
@@ -117,6 +122,9 @@ dependencies {
     debugCompile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 
     // Testing
+
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.robolectric:robolectric:$robolectricVersion"
 
     testCompile "junit:junit:$junitVersion"
 

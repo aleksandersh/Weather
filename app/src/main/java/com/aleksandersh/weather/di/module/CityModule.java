@@ -55,7 +55,7 @@ public class CityModule {
     @Provides
     @ScreenScope
     public CityManager provideCityManager(CityView view, CityHttpClient client, CityDtoConverter dtoConverter, PreferencesHelper preferencesHelper) {
-        return new CityManager(view, client, dtoConverter, preferencesHelper);
+        return new CityManager(client, preferencesHelper);
     }
 
 }
