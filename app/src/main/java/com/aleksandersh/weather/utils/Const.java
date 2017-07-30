@@ -19,6 +19,8 @@ public class Const {
     public static final String DI_API_SCOPE_WEATHER = "client_weather";
     public static final String DI_API_SCOPE_CITY = "client_city";
 
+    public static final String OKHTTP_IDLING_RESOURCE_NAME = "OkHttp";
+
     public static final int DEFAULT_SUGGESTIONS_NUMBER = 10;
 
 }
