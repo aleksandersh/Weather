@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.fragment.loader;
+package com.aleksandersh.weather.ui.loader;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -14,26 +14,26 @@ import com.aleksandersh.weather.domain.WeatherManager;
  */
 
 public class UpdateWeatherProcessor extends HandlerThread {
+
     private static final String TAG = "UpdateWeatherProcessor";
     private static final int MESSAGE_UPDATE = 0;
 
-    private Handler mHandler;
-    private WeatherManager mWeatherManager;
+    private Handler handler;
+    private WeatherManager weatherManager;
 
     public UpdateWeatherProcessor(WeatherManager weatherManager) {
         super(TAG);
-
-        mWeatherManager = weatherManager;
+        this.weatherManager = weatherManager;
     }
 
     @Override
     protected void onLooperPrepared() {
-        mHandler = new Handler() {
+        handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == MESSAGE_UPDATE) {
                     long cityId = (long) msg.obj;
-                    mWeatherManager.updateWeather(cityId);
+                    weatherManager.updateWeather(cityId);
                 }
             }
         };
@@ -45,6 +45,7 @@ public class UpdateWeatherProcessor extends HandlerThread {
      * @param cityId Идентификатор города, для которого обновляется погода.
      */
     public void requestUpdate(long cityId) {
-        mHandler.obtainMessage(MESSAGE_UPDATE, cityId).sendToTarget();
+        handler.obtainMessage(MESSAGE_UPDATE, cityId).sendToTarget();
     }
+
 }

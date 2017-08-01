@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.fragment;
+package com.aleksandersh.weather.ui.about;
 
 
 import android.os.Bundle;

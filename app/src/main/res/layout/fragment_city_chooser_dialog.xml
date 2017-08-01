@@ -8,7 +8,7 @@
     android:minHeight="@dimen/city_chooser_height"
     android:minWidth="@dimen/city_chooser_width"
     android:padding="@dimen/city_chooser_padding"
-    tools:context="com.aleksandersh.weather.fragment.CityDialogFragment"
+    tools:context="com.aleksandersh.weather.ui.CityDialogFragment"
     >
 
     <android.support.v7.widget.AppCompatAutoCompleteTextView

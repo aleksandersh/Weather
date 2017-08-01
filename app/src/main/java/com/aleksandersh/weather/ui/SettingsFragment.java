@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.fragment;
+package com.aleksandersh.weather.ui;
 
 
 import android.content.SharedPreferences;

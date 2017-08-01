@@ -9,6 +9,7 @@ import android.content.Intent;
  */
 
 public class WeatherUpdateBroadcastHelper {
+
     public static final String WEATHER_UPDATE_ACTION = "weather_update_action";
     public static final String CITY_ID_EXTRA = "cityId";
     public static final String SUCCESSFUL_EXTRA = "successful";

@@ -16,6 +16,7 @@ import javax.inject.Inject;
  */
 
 public class WeatherServiceScheduler implements ServiceScheduler {
+
     private static final String TAG = "WeatherServiceScheduler";
     private static final int SYNC_FLEXTIME_SECONDS = 30;
 
@@ -43,7 +44,6 @@ public class WeatherServiceScheduler implements ServiceScheduler {
                 .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .build();
-
         mDispatcher.mustSchedule(job);
     }
 
@@ -51,4 +51,5 @@ public class WeatherServiceScheduler implements ServiceScheduler {
     public void stopService() {
         mDispatcher.cancel(WeatherUpdatingJobService.TAG);
     }
+
 }

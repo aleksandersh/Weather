@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.fragment.loader;
+package com.aleksandersh.weather.ui.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
@@ -14,19 +14,19 @@ import com.aleksandersh.weather.model.weather.WeatherStorableState;
  */
 
 public class StoredWeatherLoader extends AsyncTaskLoader<WeatherStorableState> {
-    private WeatherDao mWeatherDao;
-    private long mCityId;
+
+    private WeatherDao weatherDao;
+    private long cityId;
 
     public StoredWeatherLoader(Context context, WeatherDao weatherDao, long cityId) {
         super(context);
-
-        mCityId = cityId;
-        mWeatherDao = weatherDao;
+        this.cityId = cityId;
+        this.weatherDao = weatherDao;
     }
 
     @Override
     public WeatherStorableState loadInBackground() {
-        return mWeatherDao.getWeatherByCityId(mCityId);
+        return weatherDao.getWeatherByCityId(cityId);
     }
 
     @Override
@@ -38,4 +38,5 @@ public class StoredWeatherLoader extends AsyncTaskLoader<WeatherStorableState> {
     protected void onStopLoading() {
         cancelLoad();
     }
+
 }

@@ -38,7 +38,6 @@ public class WeatherManager {
     public WeatherManager(Context context, PreferencesHelper preferencesHelper,
                           WeatherHttpClient httpClient, WeatherDao weatherDao) {
         mContext = context;
-
         mPreferencesHelper = preferencesHelper;
         mHttpClient = httpClient;
         mWeatherDao = weatherDao;

@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import com.aleksandersh.weather.database.WeatherDao;
 import com.aleksandersh.weather.database.WeatherDatabaseDao;
 import com.aleksandersh.weather.domain.WeatherManager;
-import com.aleksandersh.weather.fragment.SettingsChangeListener;
 import com.aleksandersh.weather.network.httpClient.WeatherHttpClient;
 import com.aleksandersh.weather.service.WeatherServiceScheduler;
 import com.aleksandersh.weather.utils.PreferencesHelper;
+import com.aleksandersh.weather.utils.SettingsChangeListener;
 
 import javax.inject.Singleton;
 

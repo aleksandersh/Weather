@@ -11,6 +11,7 @@ import com.aleksandersh.weather.R;
  */
 
 public class IconsHelper {
+
     public static final String GROUP_STORM = "storm";
     public static final String GROUP_RAIN = "rain";
     public static final String GROUP_SNOW = "snow";

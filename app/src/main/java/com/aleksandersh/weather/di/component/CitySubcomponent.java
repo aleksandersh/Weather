@@ -2,9 +2,7 @@ package com.aleksandersh.weather.di.component;
 
 import com.aleksandersh.weather.di.ScreenScope;
 import com.aleksandersh.weather.di.module.CityModule;
-import com.aleksandersh.weather.fragment.CityDialogFragment;
-
-import javax.inject.Singleton;
+import com.aleksandersh.weather.ui.CityDialogFragment;
 
 import dagger.Subcomponent;
 

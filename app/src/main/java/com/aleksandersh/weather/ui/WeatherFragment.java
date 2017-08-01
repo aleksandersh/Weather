@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.fragment;
+package com.aleksandersh.weather.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,11 +24,11 @@ import com.aleksandersh.weather.R;
 import com.aleksandersh.weather.WeatherApplication;
 import com.aleksandersh.weather.database.WeatherDao;
 import com.aleksandersh.weather.domain.WeatherManager;
-import com.aleksandersh.weather.fragment.loader.StoredWeatherLoader;
-import com.aleksandersh.weather.fragment.loader.UpdateWeatherProcessor;
 import com.aleksandersh.weather.model.city.City;
 import com.aleksandersh.weather.model.weather.Weather;
 import com.aleksandersh.weather.model.weather.WeatherStorableState;
+import com.aleksandersh.weather.ui.loader.StoredWeatherLoader;
+import com.aleksandersh.weather.ui.loader.UpdateWeatherProcessor;
 import com.aleksandersh.weather.utils.ErrorsHelper;
 import com.aleksandersh.weather.utils.IconsHelper;
 import com.aleksandersh.weather.utils.WeatherUpdateBroadcastHelper;

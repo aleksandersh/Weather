@@ -15,9 +15,9 @@ import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.aleksandersh.weather.fragment.AboutFragment;
-import com.aleksandersh.weather.fragment.SettingsFragment;
-import com.aleksandersh.weather.fragment.WeatherFragment;
+import com.aleksandersh.weather.ui.SettingsFragment;
+import com.aleksandersh.weather.ui.WeatherFragment;
+import com.aleksandersh.weather.ui.about.AboutFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +29,7 @@ public class WeatherActivity extends AppCompatActivity
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawer;
+    DrawerLayout drawer;
     @BindView(R.id.navigation_view)
     NavigationView mNavigationView;
     private ActionBarDrawerToggle mToggle;
@@ -44,7 +44,7 @@ public class WeatherActivity extends AppCompatActivity
 
         // Toggle обеспечивает совместную работу DrawerLayout с ActionBar
         mToggle = setupDrawerToggle();
-        mDrawer.addDrawerListener(mToggle);
+        drawer.addDrawerListener(mToggle);
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
@@ -73,8 +73,8 @@ public class WeatherActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
-            mDrawer.closeDrawer(GravityCompat.START);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -110,7 +110,7 @@ public class WeatherActivity extends AppCompatActivity
         replaceFragment(fragment);
         // Установка нового заголовка, для начала хватит названия пункта меню
         setTitle(item.getTitle());
-        mDrawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
@@ -123,7 +123,7 @@ public class WeatherActivity extends AppCompatActivity
     protected ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(
                 this,
-                mDrawer,
+                drawer,
                 mToolbar,
                 R.string.drawer_open,
                 R.string.drawer_close
