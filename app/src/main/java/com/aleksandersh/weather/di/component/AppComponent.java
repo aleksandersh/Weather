@@ -1,17 +1,18 @@
 package com.aleksandersh.weather.di.component;
 
+
 import com.aleksandersh.weather.WeatherApplication;
 import com.aleksandersh.weather.di.module.AppModule;
 import com.aleksandersh.weather.di.module.CityModule;
 import com.aleksandersh.weather.di.module.DomainModule;
 import com.aleksandersh.weather.di.module.NetworkModule;
 import com.aleksandersh.weather.di.module.ServiceModule;
+import com.aleksandersh.weather.features.settings.SettingsFragment;
+import com.aleksandersh.weather.features.weather.presentation.WeatherFragment;
+import com.aleksandersh.weather.network.interceptors.ApiKeyInterceptor;
 import com.aleksandersh.weather.service.WeatherUpdatingJobService;
-import com.aleksandersh.weather.ui.SettingsFragment;
-import com.aleksandersh.weather.ui.WeatherFragment;
-import com.aleksandersh.weather.utils.ApiKeyInterceptor;
-import com.aleksandersh.weather.utils.Const;
-import com.aleksandersh.weather.utils.PreferencesHelper;
+import com.aleksandersh.weather.storage.Const;
+import com.aleksandersh.weather.storage.PreferencesHelper;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;
@@ -21,6 +22,7 @@ import dagger.Component;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 /**
  * Created by AleksanderSh on 21.07.2017.

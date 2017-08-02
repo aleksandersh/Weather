@@ -1,5 +1,6 @@
 package com.aleksandersh.weather.service;
 
+
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.Job;
@@ -8,6 +9,7 @@ import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 
 import javax.inject.Inject;
+
 
 /**
  * Created by AleksanderSh on 18.07.2017.
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 public class WeatherServiceScheduler implements ServiceScheduler {
 
     private static final String TAG = "WeatherServiceScheduler";
+
     private static final int SYNC_FLEXTIME_SECONDS = 30;
 
     private FirebaseJobDispatcher mDispatcher;

@@ -10,7 +10,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.aleksandersh.weather.di.component.AppComponent;
-import com.aleksandersh.weather.utils.Const;
+import com.aleksandersh.weather.features.main.MainActivity;
+import com.aleksandersh.weather.storage.Const;
 import com.jakewharton.espresso.OkHttp3IdlingResource;
 
 import org.junit.After;
@@ -48,7 +49,7 @@ import static org.junit.Assert.assertEquals;
 public class WeatherTest {
 
     @Rule
-    public ActivityTestRule<WeatherActivity> activityTestRule = new ActivityTestRule(WeatherActivity.class);
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule(MainActivity.class);
 
     private static OkHttp3IdlingResource idlingResource;
 

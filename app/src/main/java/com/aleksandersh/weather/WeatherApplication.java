@@ -1,5 +1,6 @@
 package com.aleksandersh.weather;
 
+
 import android.app.Application;
 
 import com.aleksandersh.weather.di.component.AppComponent;
@@ -10,7 +11,9 @@ import com.aleksandersh.weather.di.module.CityModule;
 import com.aleksandersh.weather.di.module.DomainModule;
 import com.aleksandersh.weather.di.module.NetworkModule;
 import com.aleksandersh.weather.di.module.ServiceModule;
+import com.aleksandersh.weather.features.city.presentation.CityView;
 import com.facebook.stetho.Stetho;
+
 
 /**
  * Created by AleksanderSh on 21.07.2017.
@@ -36,7 +39,8 @@ public class WeatherApplication extends Application {
     }
 
     public static CitySubcomponent plus(CityView view) {
-        if (citySubcomponent == null) citySubcomponent = mAppComponent.plusCity(new CityModule(view));
+        if (citySubcomponent == null)
+            citySubcomponent = mAppComponent.plusCity(new CityModule(view));
         return citySubcomponent;
     }
 

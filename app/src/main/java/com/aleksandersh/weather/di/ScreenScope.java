@@ -1,11 +1,12 @@
 package com.aleksandersh.weather.di;
 
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
-import javax.inject.Singleton;
+
 
 /**
  * Created by Vladimir Kondenko on 24.07.17.
@@ -14,4 +15,6 @@ import javax.inject.Singleton;
 @Scope
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ScreenScope {}
+public @interface ScreenScope {
+
+}

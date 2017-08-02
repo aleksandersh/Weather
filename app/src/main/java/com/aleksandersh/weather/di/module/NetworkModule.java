@@ -1,15 +1,16 @@
 package com.aleksandersh.weather.di.module;
 
+
 import com.aleksandersh.weather.BuildConfig;
-import com.aleksandersh.weather.model.weather.Weather;
-import com.aleksandersh.weather.network.dto.currentWeather.CurrentWeatherDto;
-import com.aleksandersh.weather.network.httpClient.OpenWeatherMapHttpClient;
-import com.aleksandersh.weather.network.httpClient.WeatherHttpClient;
-import com.aleksandersh.weather.network.httpClient.converter.DtoConverter;
-import com.aleksandersh.weather.network.httpClient.converter.OpenWeatherMapDtoConverter;
-import com.aleksandersh.weather.network.httpService.CurrentWeatherHttpService;
-import com.aleksandersh.weather.utils.ApiKeyInterceptor;
-import com.aleksandersh.weather.utils.Const;
+import com.aleksandersh.weather.features.weather.data.WeatherDtoConverter;
+import com.aleksandersh.weather.features.weather.data.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.transferable.CurrentWeatherDto;
+import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepository;
+import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepositoryImpl;
+import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherHttpService;
+import com.aleksandersh.weather.network.interceptors.ApiKeyInterceptor;
+import com.aleksandersh.weather.storage.Const;
+import com.aleksandersh.weather.storage.DtoConverter;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;
@@ -21,6 +22,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 /**
  * Created by AleksanderSh on 21.07.2017.
@@ -90,13 +92,13 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public DtoConverter<Weather, CurrentWeatherDto> provideDtoConverter() {
-        return new OpenWeatherMapDtoConverter();
+    public DtoConverter<CurrentWeatherDto, Weather> provideDtoConverter() {
+        return new WeatherDtoConverter();
     }
 
     @Provides
     @Singleton
-    public WeatherHttpClient provideWeatherHttpClient(CurrentWeatherHttpService service, DtoConverter<Weather, CurrentWeatherDto> converter) {
-        return new OpenWeatherMapHttpClient(service, converter);
+    public CurrentWeatherRepository provideWeatherHttpClient(CurrentWeatherHttpService service, DtoConverter<CurrentWeatherDto, Weather> converter) {
+        return new CurrentWeatherRepositoryImpl(service, converter);
     }
 }

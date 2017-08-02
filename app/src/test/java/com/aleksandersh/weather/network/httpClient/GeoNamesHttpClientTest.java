@@ -1,8 +1,10 @@
 package com.aleksandersh.weather.network.httpClient;
 
+
 import com.aleksandersh.weather.RxJavaRule;
-import com.aleksandersh.weather.network.dto.city.CityResultDto;
-import com.aleksandersh.weather.network.httpService.CityHttpService;
+import com.aleksandersh.weather.features.city.data.transferable.CityResultDto;
+import com.aleksandersh.weather.features.city.domain.repository.CityRepositoryImpl;
+import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,12 +25,12 @@ public class GeoNamesHttpClientTest {
     public RxJavaRule rxJavaRule = new RxJavaRule();
 
     private CityHttpService service;
-    private GeoNamesHttpClient client;
+    private CityRepositoryImpl client;
 
     @Before
     public void setUp() throws Exception {
         service = mock(CityHttpService.class);
-        client = new GeoNamesHttpClient(service);
+        client = new CityRepositoryImpl(service);
     }
 
     @Test
