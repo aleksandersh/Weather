@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 
 public class PreferencesHelper {
 
-    private Context mContext;
+    private Context context;
 
     private SharedPreferences defaultPreferences;
 
@@ -43,8 +43,8 @@ public class PreferencesHelper {
     private String currentCityLat;
 
     public PreferencesHelper(Context context) {
-        mContext = context;
-        defaultPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        this.context = context;
+        defaultPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         serviceEnabledKey = context.getString(R.string.pref_service_enabled_key);
         serviceIntervalKey = context.getString(R.string.pref_service_interval_key);
@@ -91,20 +91,20 @@ public class PreferencesHelper {
     }
 
     private String getLanguage() {
-        return mContext.getString(R.string.api_language_value);
+        return context.getString(R.string.api_language_value);
     }
 
     private String getUnits() {
-        String unitsKey = mContext.getString(R.string.pref_units_key);
-        String unitsDefault = mContext.getString(R.string.pref_units_default);
-        return PreferenceManager.getDefaultSharedPreferences(mContext)
+        String unitsKey = context.getString(R.string.pref_units_key);
+        String unitsDefault = context.getString(R.string.pref_units_default);
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(unitsKey, unitsDefault);
     }
 
     private long getCityId() {
-        String cityIdKey = mContext.getString(R.string.pref_last_city_id_key);
-        long cityIdDefault = Long.parseLong(mContext.getString(R.string.pref_last_city_id_default));
-        return PreferenceManager.getDefaultSharedPreferences(mContext)
+        String cityIdKey = context.getString(R.string.pref_last_city_id_key);
+        long cityIdDefault = Long.parseLong(context.getString(R.string.pref_last_city_id_default));
+        return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(cityIdKey, cityIdDefault);
     }
 
@@ -114,7 +114,7 @@ public class PreferencesHelper {
      * @param cityId Идентификатор города.
      */
     public void saveCityId(long cityId) {
-        String cityIdKey = mContext.getString(R.string.pref_last_city_id_key);
+        String cityIdKey = context.getString(R.string.pref_last_city_id_key);
         put(editor -> editor.putLong(cityIdKey, cityId));
     }
 
@@ -154,7 +154,7 @@ public class PreferencesHelper {
 
     public City getSelectedCity() {
         if (!defaultPreferences.contains(currentCityId)) {
-            City defaultCity = new City(2643743, mContext.getString(R.string.default_city), mContext.getString(R.string.default_country), -0.12574, 51.50853);
+            City defaultCity = new City(2643743, context.getString(R.string.default_city), context.getString(R.string.default_country), -0.12574, 51.50853);
             saveCity(defaultCity);
             return defaultCity;
         }

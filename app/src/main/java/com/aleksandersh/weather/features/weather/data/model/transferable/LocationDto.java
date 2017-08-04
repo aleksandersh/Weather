@@ -13,17 +13,17 @@ public class LocationDto {
 
     @SerializedName("lon")
     @Expose
-    private Double mLongitude;
+    private Double longitude;
 
     @SerializedName("lat")
     @Expose
-    private Double mLatitude;
+    private Double latitude;
 
     public Double getLongitude() {
-        return mLongitude;
+        return longitude;
     }
 
     public Double getLatitude() {
-        return mLatitude;
+        return latitude;
     }
 }

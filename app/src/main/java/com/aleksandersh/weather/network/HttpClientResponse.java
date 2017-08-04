@@ -9,11 +9,11 @@ package com.aleksandersh.weather.network;
 
 public class HttpClientResponse<T> {
 
-    private T mModel;
+    private T model;
 
-    private boolean mSuccessful;
+    private boolean successful;
 
-    private int mErrorCode;
+    private int errorCode;
 
     /**
      * Получение обработанных данных из сервиса.
@@ -22,11 +22,11 @@ public class HttpClientResponse<T> {
      * не удалось - возвращает {@code null}.
      */
     public T getModel() {
-        return mModel;
+        return model;
     }
 
     public void setModel(T model) {
-        mModel = model;
+        this.model = model;
     }
 
     /**
@@ -36,11 +36,11 @@ public class HttpClientResponse<T> {
      * иначе {@code false}.
      */
     public boolean isSuccessful() {
-        return mSuccessful;
+        return successful;
     }
 
     public void setSuccessful(boolean successful) {
-        mSuccessful = successful;
+       this.successful = successful;
     }
 
     /**
@@ -49,11 +49,11 @@ public class HttpClientResponse<T> {
      * @return Код ошибки.
      */
     public int getErrorCode() {
-        return mErrorCode;
+        return errorCode;
     }
 
     public void setErrorCode(int errorCode) {
-        mErrorCode = errorCode;
+       this.errorCode = errorCode;
     }
 
 }

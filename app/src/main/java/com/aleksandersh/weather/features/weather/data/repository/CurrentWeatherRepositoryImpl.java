@@ -32,15 +32,15 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
 
     private static final String TAG = "OwmHttpClient";
 
-    private CurrentWeatherHttpService mCurrentWeatherHttpService;
+    private CurrentWeatherHttpService currentWeatherHttpService;
 
-    private DtoConverter<CurrentWeatherDto, Weather> mConverter;
+    private DtoConverter<CurrentWeatherDto, Weather> converter;
 
     @Inject
     public CurrentWeatherRepositoryImpl(CurrentWeatherHttpService currentWeatherHttpService,
                                         DtoConverter<CurrentWeatherDto, Weather> converter) {
-        mCurrentWeatherHttpService = currentWeatherHttpService;
-        mConverter = converter;
+       this.currentWeatherHttpService = currentWeatherHttpService;
+       this.converter = converter;
     }
 
     /**
@@ -54,7 +54,7 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
     public HttpClientResponse<Weather> getCurrentWeatherByCityId(String lang, String units,
                                                                  long cityId) {
         WeatherByCityIdStrategy strategy =
-                new WeatherByCityIdStrategy(mCurrentWeatherHttpService, cityId);
+                new WeatherByCityIdStrategy(currentWeatherHttpService, cityId);
         return getCurrentWeather(lang, units, strategy);
     }
 
@@ -69,7 +69,7 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
     public HttpClientResponse<Weather> getCurrentWeatherByCityName(String lang, String units,
                                                                    String cityName) {
         WeatherByCityNameStrategy strategy =
-                new WeatherByCityNameStrategy(mCurrentWeatherHttpService);
+                new WeatherByCityNameStrategy(currentWeatherHttpService);
         strategy.setCityName(cityName);
         return getCurrentWeather(lang, units, strategy);
     }
@@ -88,7 +88,7 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
             String units,
             double latitude,
             double longitude) {
-        WeatherByLocationStrategy strategy = new WeatherByLocationStrategy(mCurrentWeatherHttpService);
+        WeatherByLocationStrategy strategy = new WeatherByLocationStrategy(currentWeatherHttpService);
         strategy.setLatitude(latitude);
         strategy.setLongitude(longitude);
         return getCurrentWeather(lang, units, strategy);
@@ -102,7 +102,7 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
         try {
             Response<CurrentWeatherDto> serviceResponse = strategy.getWeather(lang, units);
             if (serviceResponse.isSuccessful()) {
-                Weather weather = mConverter.convert(serviceResponse.body());
+                Weather weather = converter.convert(serviceResponse.body());
                 clientResponse.setSuccessful(true);
                 clientResponse.setModel(weather);
             } else {

@@ -17,29 +17,29 @@ public class WeatherConditionDto {
 
     @SerializedName("main")
     @Expose
-    private String mGroup;
+    private String group;
 
     @SerializedName("description")
     @Expose
-    private String mDescription;
+    private String description;
 
     @SerializedName("icon")
     @Expose
-    private String mIcon;
+    private String icon;
 
     public Integer getId() {
         return mId;
     }
 
     public String getGroup() {
-        return mGroup;
+        return group;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public String getIcon() {
-        return mIcon;
+        return icon;
     }
 }

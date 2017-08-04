@@ -7,94 +7,94 @@ package com.aleksandersh.weather.features.weather.data.model.storable;
 
 public class Weather {
 
-    private long mCityId;
+    private long cityId;
 
-    private double mTemperature;
+    private double temperature;
 
-    private double mPressure;
+    private double pressure;
 
-    private double mHumidity;
+    private double humidity;
 
-    private int mCloudiness;
+    private int cloudiness;
 
-    private double mWindSpeed;
+    private double windSpeed;
 
-    private double mWindDirection;
+    private double windDirection;
 
-    private String mDescription;
+    private String description;
 
-    private String mGroup;
+    private String group;
 
     public long getCityId() {
-        return mCityId;
+        return cityId;
     }
 
     public void setCityId(long cityId) {
-        mCityId = cityId;
+        this.cityId = cityId;
     }
 
     public double getTemperature() {
-        return mTemperature;
+        return temperature;
     }
 
     public void setTemperature(double temperature) {
-        mTemperature = temperature;
+       this.temperature = temperature;
     }
 
     public double getPressure() {
-        return mPressure;
+        return pressure;
     }
 
     public void setPressure(double pressure) {
-        mPressure = pressure;
+       this.pressure = pressure;
     }
 
     public double getHumidity() {
-        return mHumidity;
+        return humidity;
     }
 
     public void setHumidity(double humidity) {
-        mHumidity = humidity;
+       this.humidity = humidity;
     }
 
     public int getCloudiness() {
-        return mCloudiness;
+        return cloudiness;
     }
 
     public void setCloudiness(int cloudiness) {
-        mCloudiness = cloudiness;
+       this.cloudiness = cloudiness;
     }
 
     public double getWindSpeed() {
-        return mWindSpeed;
+        return windSpeed;
     }
 
     public void setWindSpeed(double windSpeed) {
-        mWindSpeed = windSpeed;
+        this.windSpeed = windSpeed;
     }
 
     public double getWindDirection() {
-        return mWindDirection;
+        return windDirection;
     }
 
     public void setWindDirection(double windDirection) {
-        mWindDirection = windDirection;
+        this.windDirection = windDirection;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public void setDescription(String description) {
-        mDescription = description;
+       this.description = description;
     }
 
     public String getGroup() {
-        return mGroup;
+        return group;
     }
 
     public void setGroup(String group) {
-        mGroup = group;
+       this.group = group;
     }
 
 }

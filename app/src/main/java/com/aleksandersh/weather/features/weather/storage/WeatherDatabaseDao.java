@@ -21,10 +21,10 @@ public class WeatherDatabaseDao implements WeatherDao {
 
     private static final String TAG = "WeatherDatabaseDao";
 
-    private SQLiteDatabase mDatabase;
+    private SQLiteDatabase database;
 
     public WeatherDatabaseDao(Context context) {
-        mDatabase = new WeatherDbHelper(context).getWritableDatabase();
+        database = new WeatherDbHelper(context).getWritableDatabase();
     }
 
     /**
@@ -35,19 +35,19 @@ public class WeatherDatabaseDao implements WeatherDao {
      */
     @Override
     public void saveWeather(WeatherStorableState storableState) {
-        mDatabase.beginTransaction();
+        database.beginTransaction();
         try {
             String selection = WeatherDbSchema.CurrentWeatherTable.Cols.CITY_ID + " = ?";
             String[] selectionArgs = new String[]{
                     String.valueOf(storableState.getWeather().getCityId())};
-            mDatabase.delete(WeatherDbSchema.CurrentWeatherTable.NAME, selection, selectionArgs);
+            database.delete(WeatherDbSchema.CurrentWeatherTable.NAME, selection, selectionArgs);
 
             ContentValues values = getWeatherStorableStateContentValues(storableState);
-            mDatabase.insert(WeatherDbSchema.CurrentWeatherTable.NAME, null, values);
+            database.insert(WeatherDbSchema.CurrentWeatherTable.NAME, null, values);
 
-            mDatabase.setTransactionSuccessful();
+            database.setTransactionSuccessful();
         } finally {
-            mDatabase.endTransaction();
+            database.endTransaction();
         }
     }
 
@@ -80,7 +80,7 @@ public class WeatherDatabaseDao implements WeatherDao {
     private CurrentWeatherCursorWrapper getCurrentWeatherCursor(String selection,
                                                                 String[] selectionArgs) {
         return new CurrentWeatherCursorWrapper(
-                mDatabase.query(WeatherDbSchema.CurrentWeatherTable.NAME,
+                database.query(WeatherDbSchema.CurrentWeatherTable.NAME,
                         null,
                         selection,
                         selectionArgs,

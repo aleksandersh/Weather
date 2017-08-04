@@ -21,19 +21,19 @@ public class SystemDto {
 
     @SerializedName("message")
     @Expose
-    private Double mMessage;
+    private Double message;
 
     @SerializedName("country")
     @Expose
-    private String mCountryCode;
+    private String countryCode;
 
     @SerializedName("sunrise")
     @Expose
-    private Integer mSunriseTime;
+    private Integer sunriseTime;
 
     @SerializedName("sunset")
     @Expose
-    private Integer mSunsetTime;
+    private Integer sunsetTime;
 
     public Integer getType() {
         return mType;
@@ -44,18 +44,18 @@ public class SystemDto {
     }
 
     public Double getMessage() {
-        return mMessage;
+        return message;
     }
 
     public String getCountryCode() {
-        return mCountryCode;
+        return countryCode;
     }
 
     public Integer getSunriseTime() {
-        return mSunriseTime;
+        return sunriseTime;
     }
 
     public Integer getSunsetTime() {
-        return mSunsetTime;
+        return sunsetTime;
     }
 }

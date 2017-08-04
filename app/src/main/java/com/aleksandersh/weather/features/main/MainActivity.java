@@ -31,15 +31,15 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "WeatherActivity";
 
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
     @BindView(R.id.navigation_view)
-    NavigationView mNavigationView;
+    NavigationView navigationView;
 
-    private ActionBarDrawerToggle mToggle;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_weather);
 
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
 
         // Toggle обеспечивает совместную работу DrawerLayout с ActionBar
-        mToggle = setupDrawerToggle();
-        drawer.addDrawerListener(mToggle);
+        toggle = setupDrawerToggle();
+        drawer.addDrawerListener(toggle);
 
-        mNavigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
             PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         super.onPostCreate(savedInstanceState);
 
         // Синхронизация индикатора с состоянием DrawerLayout
-        mToggle.syncState();
+        toggle.syncState();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         super.onConfigurationChanged(newConfig);
 
         // Новая конфигурация передается Toggle, хотя я не совсем понял зачем это здесь
-        mToggle.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)) {
+        if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         return new ActionBarDrawerToggle(
                 this,
                 drawer,
-                mToolbar,
+                toolbar,
                 R.string.drawer_open,
                 R.string.drawer_close
         );
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity
      * @throws IllegalArgumentException Исключение возникает, если пункт с таким Id не найден .
      */
     private void selectNavigationMenuItem(@IdRes int itemId) {
-        MenuItem item = mNavigationView.getMenu().findItem(itemId);
+        MenuItem item = navigationView.getMenu().findItem(itemId);
         if (item != null) {
             onNavigationItemSelected(item);
             item.setChecked(true);

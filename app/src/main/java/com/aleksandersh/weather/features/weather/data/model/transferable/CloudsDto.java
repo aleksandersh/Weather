@@ -13,9 +13,9 @@ public class CloudsDto {
 
     @SerializedName("all")
     @Expose
-    private Integer mCloudiness;
+    private Integer cloudiness;
 
     public Integer getCloudiness() {
-        return mCloudiness;
+        return cloudiness;
     }
 }

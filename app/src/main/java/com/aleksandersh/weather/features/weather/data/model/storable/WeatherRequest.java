@@ -9,28 +9,28 @@ package com.aleksandersh.weather.features.weather.data.model.storable;
 
 public class WeatherRequest {
 
-    private long mOpenWeatherCityId;
+    private long openWeatherCityId;
 
-    private String mUnits;
+    private String units;
 
-    private String mLang;
+    private String lang;
 
     public WeatherRequest(String units, String lang, long cityId) {
-        mUnits = units;
-        mLang = lang;
-        mOpenWeatherCityId = cityId;
+        this.units = units;
+        this.lang = lang;
+        openWeatherCityId = cityId;
     }
 
     public long getCityId() {
-        return mOpenWeatherCityId;
+        return openWeatherCityId;
     }
 
     public String getUnits() {
-        return mUnits;
+        return units;
     }
 
     public String getLang() {
-        return mLang;
+        return lang;
     }
 
     @Override
@@ -40,16 +40,16 @@ public class WeatherRequest {
 
         WeatherRequest that = (WeatherRequest) o;
 
-        if (mOpenWeatherCityId != that.mOpenWeatherCityId) return false;
-        if (!mUnits.equals(that.mUnits)) return false;
-        return mLang.equals(that.mLang);
+        if (openWeatherCityId != that.openWeatherCityId) return false;
+        if (!units.equals(that.units)) return false;
+        return lang.equals(that.lang);
     }
 
     @Override
     public int hashCode() {
-        int result = mUnits.hashCode();
-        result = 31 * result + mLang.hashCode();
-        result = 31 * result + (int) (mOpenWeatherCityId ^ (mOpenWeatherCityId >>> 32));
+        int result = units.hashCode();
+        result = 31 * result + lang.hashCode();
+        result = 31 * result + (int) (openWeatherCityId ^ (openWeatherCityId >>> 32));
         return result;
     }
 }

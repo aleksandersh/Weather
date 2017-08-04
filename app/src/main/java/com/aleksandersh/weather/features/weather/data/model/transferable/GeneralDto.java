@@ -13,15 +13,15 @@ public class GeneralDto {
 
     @SerializedName("temp")
     @Expose
-    private Double mTemperature;
+    private Double temperature;
 
     @SerializedName("pressure")
     @Expose
-    private Double mPressure;
+    private Double pressure;
 
     @SerializedName("humidity")
     @Expose
-    private Integer mHumidity;
+    private Integer humidity;
 
     @SerializedName("temp_min")
     @Expose
@@ -29,18 +29,18 @@ public class GeneralDto {
 
     @SerializedName("temp_max")
     @Expose
-    private Double mMaximumTemperature;
+    private Double maximumTemperature;
 
     public Double getTemperature() {
-        return mTemperature;
+        return temperature;
     }
 
     public Double getPressure() {
-        return mPressure;
+        return pressure;
     }
 
     public Integer getHumidity() {
-        return mHumidity;
+        return humidity;
     }
 
     public Double getMinimumTemperature() {
@@ -48,6 +48,6 @@ public class GeneralDto {
     }
 
     public Double getMaximumTemperature() {
-        return mMaximumTemperature;
+        return maximumTemperature;
     }
 }

@@ -32,21 +32,21 @@ public class WeatherPresenter {
 
     private static final String TAG = "WeatherManager";
 
-    private PreferencesHelper mPreferencesHelper;
+    private PreferencesHelper preferencesHelper;
 
-    private CurrentWeatherRepository mHttpClient;
+    private CurrentWeatherRepository httpClient;
 
-    private WeatherDao mWeatherDao;
+    private WeatherDao weatherDao;
 
-    private Context mContext;
+    private Context context;
 
     @Inject
     public WeatherPresenter(Context context, PreferencesHelper preferencesHelper,
                             CurrentWeatherRepository httpClient, WeatherDao weatherDao) {
-        mContext = context;
-        mPreferencesHelper = preferencesHelper;
-        mHttpClient = httpClient;
-        mWeatherDao = weatherDao;
+        this.context = context;
+        this.preferencesHelper = preferencesHelper;
+        this.httpClient = httpClient;
+        this.weatherDao = weatherDao;
     }
 
     /**
@@ -55,7 +55,7 @@ public class WeatherPresenter {
      * @param cityId Идентификатор города, для которого осуществляется обновление погоды.
      */
     public void updateWeather(long cityId) {
-        WeatherRequest request = mPreferencesHelper.getWeatherRequest(cityId);
+        WeatherRequest request = preferencesHelper.getWeatherRequest(cityId);
         updateWeatherByRequest(request);
     }
 
@@ -63,26 +63,26 @@ public class WeatherPresenter {
      * Инициализация обновления погоды по сохраненным параметрам.
      */
     public void updateWeather() {
-        WeatherRequest request = mPreferencesHelper.getWeatherRequest();
+        WeatherRequest request = preferencesHelper.getWeatherRequest();
         updateWeatherByRequest(request);
     }
 
     private void updateWeatherByRequest(WeatherRequest request) {
-        if (!NetworkUtils.isNetworkAvailable(mContext)) {
+        if (!NetworkUtils.isNetworkAvailable(context)) {
             sendLocalBroadcast(WeatherUpdateBroadcastHelper
                     .getWeatherUpdateUnsuccessfulIntent(request.getCityId(),
                             ErrorMapper.ERROR_INTERNET_DISCONNECTED));
             return;
         }
 
-        HttpClientResponse<Weather> response = mHttpClient.getCurrentWeatherByLocation(
+        HttpClientResponse<Weather> response = httpClient.getCurrentWeatherByLocation(
                 request.getLang(),
                 request.getUnits(),
                 getCity().getLat(),
                 getCity().getLng());
 
         if (response.isSuccessful()) {
-            mWeatherDao.saveWeather(new WeatherStorableState(
+            weatherDao.saveWeather(new WeatherStorableState(
                     response.getModel(),
                     request,
                     new Date()));
@@ -97,11 +97,11 @@ public class WeatherPresenter {
     }
 
     public City getCity() {
-        return mPreferencesHelper.getSelectedCity();
+        return preferencesHelper.getSelectedCity();
     }
 
     private void sendLocalBroadcast(Intent intent) {
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
 }

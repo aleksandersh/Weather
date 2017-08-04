@@ -16,97 +16,97 @@ public class CurrentWeatherDto extends Dto {
 
     @SerializedName("coord")
     @Expose
-    private LocationDto mLocationDto;
+    private LocationDto locationDto;
 
     @SerializedName("weather")
     @Expose
-    private List<WeatherConditionDto> mWeatherConditionDtoList = null;
+    private List<WeatherConditionDto> weatherConditionDtoList = null;
 
     @SerializedName("base")
     @Expose
-    private String mBase;
+    private String base;
 
     @SerializedName("main")
     @Expose
-    private GeneralDto mGeneralDto;
+    private GeneralDto generalDto;
 
     @SerializedName("visibility")
     @Expose
-    private Integer mVisibility;
+    private Integer visibility;
 
     @SerializedName("wind")
     @Expose
-    private WindDto mWindDto;
+    private WindDto windDto;
 
     @SerializedName("clouds")
     @Expose
-    private CloudsDto mCloudsDto;
+    private CloudsDto cloudsDto;
 
     @SerializedName("dt")
     @Expose
-    private Integer mTime;
+    private Integer time;
 
     @SerializedName("sys")
     @Expose
-    private SystemDto mSystemDto;
+    private SystemDto systemDto;
 
     @SerializedName("id")
     @Expose
-    private Integer mCityId;
+    private Integer cityId;
 
     @SerializedName("name")
     @Expose
-    private String mCityName;
+    private String cityName;
 
     @SerializedName("cod")
     @Expose
-    private Integer mCod;
+    private Integer cod;
 
     public LocationDto getLocation() {
-        return mLocationDto;
+        return locationDto;
     }
 
     public List<WeatherConditionDto> getWeatherConditions() {
-        return mWeatherConditionDtoList;
+        return weatherConditionDtoList;
     }
 
     public String getBase() {
-        return mBase;
+        return base;
     }
 
     public GeneralDto getGeneral() {
-        return mGeneralDto;
+        return generalDto;
     }
 
     public Integer getVisibility() {
-        return mVisibility;
+        return visibility;
     }
 
     public WindDto getWind() {
-        return mWindDto;
+        return windDto;
     }
 
     public CloudsDto getClouds() {
-        return mCloudsDto;
+        return cloudsDto;
     }
 
     public Integer getTime() {
-        return mTime;
+        return time;
     }
 
     public SystemDto getSystem() {
-        return mSystemDto;
+        return systemDto;
     }
 
     public Integer getCityId() {
-        return mCityId;
+        return cityId;
     }
 
     public String getCityName() {
-        return mCityName;
+        return cityName;
     }
 
     public Integer getCod() {
-        return mCod;
+        return cod;
     }
 }

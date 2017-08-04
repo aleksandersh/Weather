@@ -25,7 +25,7 @@ import com.facebook.stetho.Stetho;
 
 public class App extends Application {
 
-    private static AppComponent mAppComponent;
+    private static AppComponent appComponent;
 
     private static CitySubcomponent citySubcomponent = null;
 
@@ -35,11 +35,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         if (com.aleksandersh.weather.BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
-        mAppComponent = buildAppComponent();
+        appComponent = buildAppComponent();
     }
 
     public static AppComponent getAppComponent() {
-        return mAppComponent;
+        return appComponent;
     }
 
     protected AppComponent buildAppComponent() {
@@ -56,7 +56,7 @@ public class App extends Application {
 
     public static WeatherComponent plus(WeatherView view) {
         if (weatherSubcomponent == null)
-            weatherSubcomponent = mAppComponent.plusWeather(new WeatherModule(view));
+            weatherSubcomponent = appComponent.plusWeather(new WeatherModule(view));
         return weatherSubcomponent;
     }
 
@@ -68,7 +68,7 @@ public class App extends Application {
 
     public static CitySubcomponent plus(CityView view) {
         if (citySubcomponent == null)
-            citySubcomponent = mAppComponent.plusCity(new CityModule(view));
+            citySubcomponent = appComponent.plusCity(new CityModule(view));
         return citySubcomponent;
     }
 

@@ -12,27 +12,27 @@ import java.util.Date;
 
 public class WeatherStorableState {
 
-    private Weather mWeather;
+    private Weather weather;
 
-    private WeatherRequest mRequest;
+    private WeatherRequest request;
 
-    private Date mDate;
+    private Date date;
 
     public WeatherStorableState(Weather weather, WeatherRequest request, Date date) {
-        mWeather = weather;
-        mRequest = request;
-        mDate = date;
+       this.weather = weather;
+       this.request = request;
+       this.date = date;
     }
 
     public Weather getWeather() {
-        return mWeather;
+        return weather;
     }
 
     public WeatherRequest getRequest() {
-        return mRequest;
+        return request;
     }
 
     public Date getDate() {
-        return new Date(mDate.getTime());
+        return new Date(date.getTime());
     }
 }

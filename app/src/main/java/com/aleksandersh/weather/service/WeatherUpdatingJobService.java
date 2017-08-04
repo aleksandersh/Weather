@@ -22,49 +22,49 @@ public class WeatherUpdatingJobService extends JobService {
     static final String TAG = "WeatherUpdatingJobS";
 
     @Inject
-    WeatherPresenter mWeatherPresenter;
+    WeatherPresenter weatherPresenter;
 
-    private UpdatingWeatherTask mBackgroundTask;
+    private UpdatingWeatherTask backgroundTask;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        ((App) getApplication()).getAppComponent().inject(this);
+        App.getAppComponent().inject(this);
     }
 
     @Override
     public boolean onStartJob(final JobParameters job) {
-        mBackgroundTask = new UpdatingWeatherTask(job);
-        mBackgroundTask.execute();
+        backgroundTask = new UpdatingWeatherTask(job);
+        backgroundTask.execute();
 
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters job) {
-        if (mBackgroundTask != null) {
-            mBackgroundTask.cancel(true);
+        if (backgroundTask != null) {
+            backgroundTask.cancel(true);
         }
         return true;
     }
 
     private class UpdatingWeatherTask extends AsyncTask<Void, Void, Void> {
 
-        private JobParameters mJobParameters;
+        private JobParameters jobParameters;
 
         public UpdatingWeatherTask(JobParameters jobParameters) {
-            mJobParameters = jobParameters;
+           this.jobParameters = jobParameters;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mWeatherPresenter.updateWeather();
+            weatherPresenter.updateWeather();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            jobFinished(mJobParameters, false);
+            jobFinished(jobParameters, false);
         }
     }
 }

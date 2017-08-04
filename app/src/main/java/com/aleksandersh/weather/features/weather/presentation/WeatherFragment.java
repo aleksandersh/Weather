@@ -58,45 +58,45 @@ public class WeatherFragment extends Fragment
     private static final int LOADER_ID = 1;
 
     @Inject
-    WeatherDao mWeatherDao;
+    WeatherDao weatherDao;
 
     @Inject
-    WeatherPresenter mWeatherPresenter;
+    WeatherPresenter weatherPresenter;
 
-    private Unbinder mUnbinder;
+    private Unbinder unbinder;
 
-    private UpdateWeatherProcessor mUpdateWeatherProcessor;
+    private UpdateWeatherProcessor updateWeatherProcessor;
 
-    private BroadcastReceiver mReceiver;
+    private BroadcastReceiver receiver;
 
     private long mCityId;
 
     @BindView(R.id.city_text_view)
-    TextView mTextViewCity;
+    TextView textViewCity;
 
     @BindView(R.id.temperature_text_view)
-    TextView mTemperatureTextView;
+    TextView temperatureTextView;
 
     @BindView(R.id.weather_condition_text_view)
-    TextView mConditionTextView;
+    TextView conditionTextView;
 
     @BindView(R.id.pressure_text_view)
-    TextView mPressureTextView;
+    TextView pressureTextView;
 
     @BindView(R.id.humidity_text_view)
-    TextView mHumidityTextView;
+    TextView humidityTextView;
 
     @BindView(R.id.cloudiness_text_view)
-    TextView mCloudinessTextView;
+    TextView cloudinessTextView;
 
     @BindView(R.id.error_text_view)
-    TextView mErrorTextView;
+    TextView errorTextView;
 
     @BindView(R.id.weather_group_image_view)
-    ImageView mWeatherGroupImageView;
+    ImageView weatherGroupImageView;
 
     @BindView(R.id.weather_swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     /**
      * Создает новый экземпляр фрагмента {@link WeatherFragment}.
@@ -113,13 +113,13 @@ public class WeatherFragment extends Fragment
 
         App.getAppComponent().inject(this);
 
-        mCityId = mWeatherPresenter.getCity().getId();
+        mCityId = weatherPresenter.getCity().getId();
 
-        mReceiver = new WeatherUpdatingBroadcastReceiver();
+        receiver = new WeatherUpdatingBroadcastReceiver();
 
-        mUpdateWeatherProcessor = new UpdateWeatherProcessor(mWeatherPresenter);
-        mUpdateWeatherProcessor.start();
-        mUpdateWeatherProcessor.getLooper();
+        updateWeatherProcessor = new UpdateWeatherProcessor(weatherPresenter);
+        updateWeatherProcessor.start();
+        updateWeatherProcessor.getLooper();
 
         getLoaderManager().initLoader(LOADER_ID, savedInstanceState, this);
     }
@@ -131,11 +131,11 @@ public class WeatherFragment extends Fragment
 
         setHasOptionsMenu(true);
 
-        mUnbinder = ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
-        mTextViewCity.setText(mWeatherPresenter.getCity().getName());
+        textViewCity.setText(weatherPresenter.getCity().getName());
 
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         return view;
     }
@@ -157,8 +157,8 @@ public class WeatherFragment extends Fragment
                 cityChooserDialogFragment.show(fragmentManager, CityDialogFragment.TAG);
                 cityChooserDialogFragment.setOnCitySelectedListener(city -> {
                     mCityId = city.getCityId();
-                    mTextViewCity.setText(city.getName());
-                    mUpdateWeatherProcessor.requestUpdate(mCityId);
+                    textViewCity.setText(city.getName());
+                    updateWeatherProcessor.requestUpdate(mCityId);
                 });
                 return true;
             }
@@ -172,40 +172,40 @@ public class WeatherFragment extends Fragment
     public void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter(WeatherUpdateBroadcastHelper.WEATHER_UPDATE_ACTION);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, filter);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        mUnbinder.unbind();
+        unbinder.unbind();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        mUpdateWeatherProcessor.quit();
+        updateWeatherProcessor.quit();
     }
 
     @Override
     public void onRefresh() {
-        mCityId = mWeatherPresenter.getCity().getId();
-        mUpdateWeatherProcessor.requestUpdate(mCityId);
+        mCityId = weatherPresenter.getCity().getId();
+        updateWeatherProcessor.requestUpdate(mCityId);
     }
 
     @Override
     public Loader<WeatherStorableState> onCreateLoader(int id, Bundle args) {
         Loader<WeatherStorableState> loader = null;
         if (id == LOADER_ID) {
-            loader = new StoredWeatherLoader(getActivity(), mWeatherDao, mCityId);
+            loader = new StoredWeatherLoader(getActivity(), weatherDao, mCityId);
         }
 
         return loader;
@@ -215,11 +215,11 @@ public class WeatherFragment extends Fragment
     public void onLoadFinished(Loader<WeatherStorableState> loader, WeatherStorableState data) {
         if (data != null) {
             updateUi(data.getWeather());
-            mErrorTextView.setVisibility(View.GONE);
+            errorTextView.setVisibility(View.GONE);
         } else {
-            mUpdateWeatherProcessor.requestUpdate(mCityId);
+            updateWeatherProcessor.requestUpdate(mCityId);
         }
-        mSwipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -231,21 +231,21 @@ public class WeatherFragment extends Fragment
     }
 
     private void updateUi(Weather weather) {
-        mTemperatureTextView.setText(String.format(Locale.US, "%.1f", weather.getTemperature()));
-        mConditionTextView.setText(weather.getDescription());
-        mPressureTextView.setText(String.valueOf(weather.getPressure()));
-        mHumidityTextView.setText(String.valueOf(weather.getHumidity()));
-        mCloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
+        temperatureTextView.setText(String.format(Locale.US, "%.1f", weather.getTemperature()));
+        conditionTextView.setText(weather.getDescription());
+        pressureTextView.setText(String.valueOf(weather.getPressure()));
+        humidityTextView.setText(String.valueOf(weather.getHumidity()));
+        cloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
         int iconId = IconMapper.getDrawableResourceByGroup(weather.getGroup());
         if (iconId != 0) {
-            mWeatherGroupImageView.setImageDrawable(getResources().getDrawable(iconId));
+            weatherGroupImageView.setImageDrawable(getResources().getDrawable(iconId));
         }
     }
 
     private void onFailedLoading(String error) {
-        mErrorTextView.setText(error);
-        mErrorTextView.setVisibility(View.VISIBLE);
-        mSwipeRefreshLayout.setRefreshing(false);
+        errorTextView.setText(error);
+        errorTextView.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private class WeatherUpdatingBroadcastReceiver extends BroadcastReceiver {
