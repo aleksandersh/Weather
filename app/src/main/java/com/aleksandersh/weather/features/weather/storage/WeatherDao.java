@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.features.weather.storage;
 
 
-import com.aleksandersh.weather.features.weather.data.storable.WeatherStorableState;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 
 
 /**

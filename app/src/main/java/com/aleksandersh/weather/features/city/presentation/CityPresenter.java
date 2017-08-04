@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.features.city.presentation;
 
 
-import com.aleksandersh.weather.features.city.data.transferable.CityDto;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
 import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
 import com.aleksandersh.weather.storage.PreferencesHelper;
 

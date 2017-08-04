@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.WeatherApplication;
-import com.aleksandersh.weather.features.city.data.transferable.CityDto;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
 import com.jakewharton.rxbinding2.widget.RxAutoCompleteTextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -61,7 +61,7 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_city_chooser_dialog, container, false);
 
-        WeatherApplication.plus(this).inject(this);
+        App.plus(this).inject(this);
         manager.onAttach(this);
         mUnbinder = ButterKnife.bind(this, rootView);
         compositeDisposable = new CompositeDisposable();
@@ -87,7 +87,7 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
         manager.onDetach();
         mUnbinder.unbind();
         compositeDisposable.dispose();
-        WeatherApplication.clearCitySubcomponent();
+        App.clearCitySubcomponent();
     }
 
     @Override

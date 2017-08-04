@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.WeatherApplication;
 
 import javax.inject.Inject;
 
@@ -31,7 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((WeatherApplication) getActivity().getApplication()).getAppComponent().inject(this);
+        ((App) getActivity().getApplication()).getAppComponent().inject(this);
     }
 
     @Override

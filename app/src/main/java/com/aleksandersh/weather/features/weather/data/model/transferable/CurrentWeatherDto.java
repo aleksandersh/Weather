@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.features.weather.data.transferable;
+package com.aleksandersh.weather.features.weather.data.model.transferable;
 
 
 import com.aleksandersh.weather.storage.Dto;

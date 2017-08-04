@@ -3,7 +3,7 @@ package com.aleksandersh.weather.service;
 
 import android.os.AsyncTask;
 
-import com.aleksandersh.weather.WeatherApplication;
+import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.features.weather.presentation.WeatherPresenter;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -29,7 +29,7 @@ public class WeatherUpdatingJobService extends JobService {
     @Override
     public void onCreate() {
         super.onCreate();
-        ((WeatherApplication) getApplication()).getAppComponent().inject(this);
+        ((App) getApplication()).getAppComponent().inject(this);
     }
 
     @Override
@@ -59,7 +59,6 @@ public class WeatherUpdatingJobService extends JobService {
         @Override
         protected Void doInBackground(Void... voids) {
             mWeatherPresenter.updateWeather();
-
             return null;
         }
 

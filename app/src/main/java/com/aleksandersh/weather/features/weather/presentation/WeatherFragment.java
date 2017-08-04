@@ -21,12 +21,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.WeatherApplication;
-import com.aleksandersh.weather.features.city.data.storable.City;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.aleksandersh.weather.features.city.presentation.CityDialogFragment;
-import com.aleksandersh.weather.features.weather.data.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.storable.WeatherStorableState;
+import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 import com.aleksandersh.weather.features.weather.framework.WeatherUpdateBroadcastHelper;
 import com.aleksandersh.weather.features.weather.framework.loader.StoredWeatherLoader;
 import com.aleksandersh.weather.features.weather.framework.loader.UpdateWeatherProcessor;
@@ -48,7 +48,8 @@ import butterknife.Unbinder;
  */
 public class WeatherFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener,
-        LoaderManager.LoaderCallbacks<WeatherStorableState> {
+        LoaderManager.LoaderCallbacks<WeatherStorableState>,
+        WeatherView {
 
     private static final String TAG = "WeatherFragment";
 
@@ -110,7 +111,7 @@ public class WeatherFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((WeatherApplication) getActivity().getApplication()).getAppComponent().inject(this);
+        App.getAppComponent().inject(this);
 
         mCityId = mWeatherPresenter.getCity().getId();
 

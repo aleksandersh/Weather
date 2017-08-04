@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.features.weather.domain.strategy;
 
 
-import com.aleksandersh.weather.features.weather.data.transferable.CurrentWeatherDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.CurrentWeatherDto;
 import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherHttpService;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.features.weather.data.storable;
+package com.aleksandersh.weather.features.weather.data.model.storable;
 
 
 import java.util.Date;

@@ -7,9 +7,9 @@ import android.content.SharedPreferences.Editor;
 import android.support.v7.preference.PreferenceManager;
 
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.features.city.data.storable.City;
-import com.aleksandersh.weather.features.city.data.transferable.CityDto;
-import com.aleksandersh.weather.features.weather.data.storable.WeatherRequest;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherRequest;
 
 import java.util.function.Consumer;
 

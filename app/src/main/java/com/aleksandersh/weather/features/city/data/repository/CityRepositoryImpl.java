@@ -1,8 +1,9 @@
-package com.aleksandersh.weather.features.city.domain.repository;
+package com.aleksandersh.weather.features.city.data.repository;
 
 
-import com.aleksandersh.weather.features.city.data.transferable.CityDto;
-import com.aleksandersh.weather.features.city.data.transferable.CityResultDto;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityResultDto;
+import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
 import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 import com.aleksandersh.weather.storage.Const;
 

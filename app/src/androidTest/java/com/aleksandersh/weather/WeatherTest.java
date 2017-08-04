@@ -55,7 +55,7 @@ public class WeatherTest {
 
     @BeforeClass
     public static void setUpClass() {
-        AppComponent appComponent = WeatherApplication.getAppComponent();
+        AppComponent appComponent = App.getAppComponent();
         OkHttpClient client = appComponent.getHttpClient();
         idlingResource = OkHttp3IdlingResource.create(Const.OKHTTP_IDLING_RESOURCE_NAME, client);
     }

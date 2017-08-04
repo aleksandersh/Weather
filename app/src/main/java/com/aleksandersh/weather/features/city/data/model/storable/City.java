@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.features.city.data.storable;
+package com.aleksandersh.weather.features.city.data.model.storable;
 
 
 /**

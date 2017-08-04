@@ -3,18 +3,18 @@ package com.aleksandersh.weather.features.weather.presentation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.aleksandersh.weather.features.city.data.storable.City;
-import com.aleksandersh.weather.features.weather.data.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.storable.WeatherRequest;
-import com.aleksandersh.weather.features.weather.data.storable.WeatherStorableState;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
+import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherRequest;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepository;
 import com.aleksandersh.weather.features.weather.framework.WeatherUpdateBroadcastHelper;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
 import com.aleksandersh.weather.network.ErrorMapper;
 import com.aleksandersh.weather.network.HttpClientResponse;
+import com.aleksandersh.weather.network.NetworkUtils;
 import com.aleksandersh.weather.storage.PreferencesHelper;
 
 import java.util.Date;
@@ -68,7 +68,7 @@ public class WeatherPresenter {
     }
 
     private void updateWeatherByRequest(WeatherRequest request) {
-        if (!isNetworkAvailable()) {
+        if (!NetworkUtils.isNetworkAvailable(mContext)) {
             sendLocalBroadcast(WeatherUpdateBroadcastHelper
                     .getWeatherUpdateUnsuccessfulIntent(request.getCityId(),
                             ErrorMapper.ERROR_INTERNET_DISCONNECTED));
@@ -104,10 +104,4 @@ public class WeatherPresenter {
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager manager = (ConnectivityManager)
-                mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return manager.getActiveNetworkInfo() != null
-                && manager.getActiveNetworkInfo().isConnected();
-    }
 }

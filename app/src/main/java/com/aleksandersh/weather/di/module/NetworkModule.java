@@ -2,15 +2,8 @@ package com.aleksandersh.weather.di.module;
 
 
 import com.aleksandersh.weather.BuildConfig;
-import com.aleksandersh.weather.features.weather.data.WeatherDtoConverter;
-import com.aleksandersh.weather.features.weather.data.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.transferable.CurrentWeatherDto;
-import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepository;
-import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepositoryImpl;
-import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherHttpService;
 import com.aleksandersh.weather.network.interceptors.ApiKeyInterceptor;
 import com.aleksandersh.weather.storage.Const;
-import com.aleksandersh.weather.storage.DtoConverter;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;
@@ -82,23 +75,4 @@ public class NetworkModule {
                 .build();
     }
 
-    // TODO: Переместить в отдельный Submodule
-
-    @Provides
-    @Singleton
-    public CurrentWeatherHttpService provideCurrentWeatherHttpService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
-        return retrofit.create(CurrentWeatherHttpService.class);
-    }
-
-    @Provides
-    @Singleton
-    public DtoConverter<CurrentWeatherDto, Weather> provideDtoConverter() {
-        return new WeatherDtoConverter();
-    }
-
-    @Provides
-    @Singleton
-    public CurrentWeatherRepository provideWeatherHttpClient(CurrentWeatherHttpService service, DtoConverter<CurrentWeatherDto, Weather> converter) {
-        return new CurrentWeatherRepositoryImpl(service, converter);
-    }
 }

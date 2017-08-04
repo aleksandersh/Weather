@@ -1,8 +1,7 @@
-package com.aleksandersh.weather.di.component;
+package com.aleksandersh.weather.features.city.di;
 
 
 import com.aleksandersh.weather.di.ScreenScope;
-import com.aleksandersh.weather.di.module.CityModule;
 import com.aleksandersh.weather.features.city.presentation.CityDialogFragment;
 
 import dagger.Subcomponent;

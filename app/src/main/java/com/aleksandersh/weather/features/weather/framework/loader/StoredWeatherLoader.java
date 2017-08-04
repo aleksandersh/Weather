@@ -4,7 +4,7 @@ package com.aleksandersh.weather.features.weather.framework.loader;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.aleksandersh.weather.features.weather.data.storable.WeatherStorableState;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
 
 

@@ -1,10 +1,11 @@
-package com.aleksandersh.weather.features.weather.domain.repository;
+package com.aleksandersh.weather.features.weather.data.repository;
 
 
 import android.util.Log;
 
-import com.aleksandersh.weather.features.weather.data.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.transferable.CurrentWeatherDto;
+import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.model.transferable.CurrentWeatherDto;
+import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepository;
 import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherHttpService;
 import com.aleksandersh.weather.features.weather.domain.strategy.WeatherByCityIdStrategy;
 import com.aleksandersh.weather.features.weather.domain.strategy.WeatherByCityNameStrategy;

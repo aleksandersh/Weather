@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.aleksandersh.weather.features.city.data.transferable.CityDto;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
 
 import java.util.List;
 

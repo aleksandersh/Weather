@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.features.weather.domain.repository;
 
 
-import com.aleksandersh.weather.features.weather.data.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.network.HttpClientResponse;
 
 

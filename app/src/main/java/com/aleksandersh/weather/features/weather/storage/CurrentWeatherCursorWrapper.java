@@ -4,9 +4,9 @@ package com.aleksandersh.weather.features.weather.storage;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.aleksandersh.weather.features.weather.data.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.storable.WeatherRequest;
-import com.aleksandersh.weather.features.weather.data.storable.WeatherStorableState;
+import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherRequest;
+import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 import com.aleksandersh.weather.features.weather.storage.WeatherDbSchema.CurrentWeatherTable.Cols;
 
 import java.util.Date;

@@ -2,8 +2,8 @@ package com.aleksandersh.weather.network.httpClient;
 
 
 import com.aleksandersh.weather.RxJavaRule;
-import com.aleksandersh.weather.features.city.data.transferable.CityResultDto;
-import com.aleksandersh.weather.features.city.domain.repository.CityRepositoryImpl;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityResultDto;
+import com.aleksandersh.weather.features.city.data.repository.CityRepositoryImpl;
 import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 
 import org.junit.Before;

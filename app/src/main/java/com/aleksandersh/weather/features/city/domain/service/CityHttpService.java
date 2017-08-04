@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.features.city.domain.service;
 
 
-import com.aleksandersh.weather.features.city.data.transferable.CityResultDto;
+import com.aleksandersh.weather.features.city.data.model.transferable.CityResultDto;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

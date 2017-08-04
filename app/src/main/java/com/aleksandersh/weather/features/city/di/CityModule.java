@@ -1,10 +1,10 @@
-package com.aleksandersh.weather.di.module;
+package com.aleksandersh.weather.features.city.di;
 
 
 import com.aleksandersh.weather.di.ScreenScope;
-import com.aleksandersh.weather.features.city.data.CityDtoConverter;
+import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
+import com.aleksandersh.weather.features.city.data.repository.CityRepositoryImpl;
 import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
-import com.aleksandersh.weather.features.city.domain.repository.CityRepositoryImpl;
 import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
 import com.aleksandersh.weather.features.city.presentation.CityView;

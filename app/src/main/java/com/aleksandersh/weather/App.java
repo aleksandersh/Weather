@@ -4,14 +4,16 @@ package com.aleksandersh.weather;
 import android.app.Application;
 
 import com.aleksandersh.weather.di.component.AppComponent;
-import com.aleksandersh.weather.di.component.CitySubcomponent;
 import com.aleksandersh.weather.di.component.DaggerAppComponent;
 import com.aleksandersh.weather.di.module.AppModule;
-import com.aleksandersh.weather.di.module.CityModule;
-import com.aleksandersh.weather.di.module.DomainModule;
+import com.aleksandersh.weather.di.module.DataModule;
 import com.aleksandersh.weather.di.module.NetworkModule;
 import com.aleksandersh.weather.di.module.ServiceModule;
+import com.aleksandersh.weather.features.city.di.CityModule;
+import com.aleksandersh.weather.features.city.di.CitySubcomponent;
 import com.aleksandersh.weather.features.city.presentation.CityView;
+import com.aleksandersh.weather.features.weather.di.WeatherComponent;
+import com.aleksandersh.weather.features.weather.di.WeatherModule;
 import com.facebook.stetho.Stetho;
 
 
@@ -21,11 +23,13 @@ import com.facebook.stetho.Stetho;
  * Внедрен компонент Dagger.
  */
 
-public class WeatherApplication extends Application {
+public class App extends Application {
 
     private static AppComponent mAppComponent;
 
     private static CitySubcomponent citySubcomponent = null;
+
+    private static WeatherComponent weatherSubcomponent = null;
 
     @Override
     public void onCreate() {
@@ -38,6 +42,30 @@ public class WeatherApplication extends Application {
         return mAppComponent;
     }
 
+    protected AppComponent buildAppComponent() {
+        return DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .dataModule(new DataModule())
+                .networkModule(new NetworkModule())
+                .serviceModule(new ServiceModule())
+                .weatherModule(new WeatherModule())
+                .build();
+    }
+
+    /*
+
+    public static WeatherComponent plus(WeatherView view) {
+        if (weatherSubcomponent == null)
+            weatherSubcomponent = mAppComponent.plusWeather(new WeatherModule(view));
+        return weatherSubcomponent;
+    }
+
+    public static void clearWeatherSubcomponent() {
+        weatherSubcomponent = null;
+    }
+
+    */
+
     public static CitySubcomponent plus(CityView view) {
         if (citySubcomponent == null)
             citySubcomponent = mAppComponent.plusCity(new CityModule(view));
@@ -48,12 +76,4 @@ public class WeatherApplication extends Application {
         citySubcomponent = null;
     }
 
-    protected AppComponent buildAppComponent() {
-        return DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .domainModule(new DomainModule())
-                .networkModule(new NetworkModule())
-                .serviceModule(new ServiceModule())
-                .build();
-    }
 }

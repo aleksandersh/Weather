@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.features.city.data.transferable;
+package com.aleksandersh.weather.features.city.data.model.transferable;
 
 
 import android.os.Parcel;
