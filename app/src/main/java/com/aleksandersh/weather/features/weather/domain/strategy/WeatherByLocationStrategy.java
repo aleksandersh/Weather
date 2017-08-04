@@ -28,9 +28,9 @@ public class WeatherByLocationStrategy implements WeatherStrategy<CurrentWeather
     }
 
     @Override
-    public Response<CurrentWeatherDto> getWeather(String apiKey, String lang, String units)
+    public Response<CurrentWeatherDto> getWeather(String lang, String units)
             throws IOException {
-        return mHttpService.getCurrentWeatherByLocation(apiKey, lang, units, latitude, longitude)
+        return mHttpService.getCurrentWeatherByLocation(lang, units, latitude, longitude)
                 .execute();
     }
 

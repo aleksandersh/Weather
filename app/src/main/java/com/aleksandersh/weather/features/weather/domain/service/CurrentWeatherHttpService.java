@@ -20,7 +20,6 @@ public interface CurrentWeatherHttpService {
     /**
      * Получение погоды в городе с заданным названием.
      *
-     * @param apiKey API-ключ для работы с сервисом.
      * @param lang   Язык возвращаемых данных.
      * @param units  Единица измерения температур.
      * @param name   Название города.
@@ -28,7 +27,6 @@ public interface CurrentWeatherHttpService {
      */
     @GET("weather")
     Call<CurrentWeatherDto> getCurrentWeatherByCityName(
-            @Query("APPID") String apiKey,
             @Query("lang") String lang,
             @Query("units") String units,
             @Query("q") String name
@@ -37,7 +35,6 @@ public interface CurrentWeatherHttpService {
     /**
      * Получение погоды в городе с заданным идентификатором.
      *
-     * @param apiKey API-ключ для работы с сервисом.
      * @param lang   Язык возвращаемых данных.
      * @param units  Единица измерения температур.
      * @param id     Идентификатор города.
@@ -45,7 +42,6 @@ public interface CurrentWeatherHttpService {
      */
     @GET("weather")
     Call<CurrentWeatherDto> getCurrentWeatherByCityId(
-            @Query("APPID") String apiKey,
             @Query("lang") String lang,
             @Query("units") String units,
             @Query("id") long id
@@ -54,7 +50,6 @@ public interface CurrentWeatherHttpService {
     /**
      * Получение погоды в локации, заданной координатами.
      *
-     * @param apiKey    API-ключ для работы с сервисом.
      * @param lang      Язык возвращаемых данных.
      * @param units     Единица измерения температур.
      * @param latitude  Широта.
@@ -63,7 +58,6 @@ public interface CurrentWeatherHttpService {
      */
     @GET("weather")
     Call<CurrentWeatherDto> getCurrentWeatherByLocation(
-            @Query("APPID") String apiKey,
             @Query("lang") String lang,
             @Query("units") String units,
             @Query("lat") double latitude,

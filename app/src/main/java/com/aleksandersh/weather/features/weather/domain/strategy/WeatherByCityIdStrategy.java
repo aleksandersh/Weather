@@ -27,8 +27,8 @@ public class WeatherByCityIdStrategy implements WeatherStrategy<CurrentWeatherDt
     }
 
     @Override
-    public Response<CurrentWeatherDto> getWeather(String apiKey, String lang, String units)
+    public Response<CurrentWeatherDto> getWeather(String lang, String units)
             throws IOException {
-        return mHttpService.getCurrentWeatherByCityId(apiKey, lang, units, mCityId).execute();
+        return mHttpService.getCurrentWeatherByCityId(lang, units, mCityId).execute();
     }
 }

@@ -32,8 +32,6 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
 
     private static final String TAG = "OwmHttpClient";
 
-    private static final String API_KEY = "7eb42e583dff5e64a589739dd927bd0c";
-
     private CurrentWeatherHttpService mCurrentWeatherHttpService;
 
     private DtoConverter<CurrentWeatherDto, Weather> mConverter;
@@ -102,7 +100,7 @@ public class CurrentWeatherRepositoryImpl implements CurrentWeatherRepository {
             WeatherStrategy<CurrentWeatherDto> strategy) {
         HttpClientResponse<Weather> clientResponse = new HttpClientResponse<>();
         try {
-            Response<CurrentWeatherDto> serviceResponse = strategy.getWeather(API_KEY, lang, units);
+            Response<CurrentWeatherDto> serviceResponse = strategy.getWeather(lang, units);
             if (serviceResponse.isSuccessful()) {
                 Weather weather = mConverter.convert(serviceResponse.body());
                 clientResponse.setSuccessful(true);

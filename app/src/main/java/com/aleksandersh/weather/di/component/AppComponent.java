@@ -42,15 +42,26 @@ public interface AppComponent {
 
     GsonConverterFactory getGsonConverterFactory();
 
-    OkHttpClient getHttpClient();
+    @Named(Const.DI_API_SCOPE_CITY)
+    OkHttpClient getCityHttpClient();
+
+    @Named(Const.DI_API_SCOPE_WEATHER)
+    OkHttpClient getWeatherHttpClient();
 
     StethoInterceptor getStethoInterceptor();
 
     @Named(Const.DI_API_SCOPE_CITY)
-    ApiKeyInterceptor getApiKeyInterceptor();
+    ApiKeyInterceptor getCityApiKeyInterceptor();
 
     @Named(Const.DI_API_SCOPE_CITY)
     Retrofit getCityRetrofit();
+
+    @Named(Const.DI_API_SCOPE_WEATHER)
+    ApiKeyInterceptor getWeatherApiKeyInterceptor();
+
+    @Named(Const.DI_API_SCOPE_WEATHER)
+    Retrofit getWeatherRetrofit();
+
 
     void inject(App app);
 

@@ -33,9 +33,17 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_CITY)
-    public ApiKeyInterceptor provideApiKeyInterceptor() {
+    public ApiKeyInterceptor provideCityApiKeyInterceptor() {
         return new ApiKeyInterceptor(Const.API_KEY_PARAM_CITY, Const.API_KEY_CITY);
     }
+
+    @Provides
+    @Singleton
+    @Named(Const.DI_API_SCOPE_WEATHER)
+    public ApiKeyInterceptor provideWeatherApiKeyInterceptor() {
+        return new ApiKeyInterceptor(Const.API_KEY_PARAM_WEATHER, Const.API_KEY_WEATHER);
+    }
+
 
     @Provides
     @Singleton
@@ -45,7 +53,18 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideHttpClient(@Named(Const.DI_API_SCOPE_CITY) ApiKeyInterceptor apiKeyInterceptor, StethoInterceptor stethoInterceptor) {
+    @Named(Const.DI_API_SCOPE_CITY)
+    public OkHttpClient provideCityHttpClient(@Named(Const.DI_API_SCOPE_CITY) ApiKeyInterceptor apiKeyInterceptor, StethoInterceptor stethoInterceptor) {
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .addInterceptor(apiKeyInterceptor);
+        if (BuildConfig.DEBUG) clientBuilder.addNetworkInterceptor(stethoInterceptor);
+        return clientBuilder.build();
+    }
+
+    @Provides
+    @Singleton
+    @Named(Const.DI_API_SCOPE_WEATHER)
+    public OkHttpClient provideWeatherHttpClient(@Named(Const.DI_API_SCOPE_WEATHER) ApiKeyInterceptor apiKeyInterceptor, StethoInterceptor stethoInterceptor) {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .addInterceptor(apiKeyInterceptor);
         if (BuildConfig.DEBUG) clientBuilder.addNetworkInterceptor(stethoInterceptor);
@@ -55,7 +74,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_CITY)
-    public Retrofit provideCityRetrofit(OkHttpClient client, GsonConverterFactory converterFactory) {
+    public Retrofit provideCityRetrofit(@Named(Const.DI_API_SCOPE_CITY) OkHttpClient client, GsonConverterFactory converterFactory) {
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(Const.BASE_URL_CITY)
@@ -68,8 +87,9 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_WEATHER)
-    public Retrofit provideWeatherRetrofit(GsonConverterFactory converterFactory) {
+    public Retrofit provideWeatherRetrofit(@Named(Const.DI_API_SCOPE_WEATHER) OkHttpClient client, GsonConverterFactory converterFactory) {
         return new Retrofit.Builder()
+                .client(client)
                 .baseUrl(Const.BASE_URL_WEATHER)
                 .addConverterFactory(converterFactory)
                 .build();
