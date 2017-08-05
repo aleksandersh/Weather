@@ -40,9 +40,9 @@
 
     <string name="default_city">Moscow</string>
     <string name="default_country">Russia</string>
-    <string name="pressure_title">pressure</string>
-    <string name="humidity_title">humidity</string>
-    <string name="cloudiness_title">cloudiness</string>
-    <string name="wind_title">wind</string>
+
+    <string name="weather_info_title_pressure">Pressure</string>
+    <string name="weather_info_title_humidity">Humidity</string>
+    <string name="weather_info_title_cloudiness">Cloudiness</string>
 
 </resources>

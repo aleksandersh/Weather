@@ -16,4 +16,34 @@
         <item name="android:textColor">@color/colorHeaderText</item>
     </style>
 
+    <style name="AppTheme.Weather.Temperature" parent="AppTheme">
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Display1</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="AppTheme.Weather.Condition" parent="AppTheme">
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Headline</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="AppTheme.Weather.Info.Title" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="AppTheme.Weather.Info.Value" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body2</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="AppTheme.Weather.Info.Error" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Subhead</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/colorTextSecondary</item>
+    </style>
+
+
 </resources>

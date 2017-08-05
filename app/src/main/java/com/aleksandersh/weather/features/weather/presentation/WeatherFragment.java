@@ -76,25 +76,25 @@ public class WeatherFragment extends Fragment
     @BindView(R.id.city_text_view)
     TextView textViewCity;
 
-    @BindView(R.id.temperature_text_view)
+    @BindView(R.id.weather_textview_temperature)
     TextView temperatureTextView;
 
-    @BindView(R.id.weather_condition_text_view)
+    @BindView(R.id.weather_textview_condition)
     TextView conditionTextView;
 
-    @BindView(R.id.pressure_text_view)
+    @BindView(R.id.weather_info_value_pressure)
     TextView pressureTextView;
 
-    @BindView(R.id.humidity_text_view)
+    @BindView(R.id.weather_info_value_humidity)
     TextView humidityTextView;
 
-    @BindView(R.id.cloudiness_text_view)
+    @BindView(R.id.weather_info_value_cloudiness)
     TextView cloudinessTextView;
 
     @BindView(R.id.error_text_view)
     TextView errorTextView;
 
-    @BindView(R.id.weather_group_image_view)
+    @BindView(R.id.weather_imageview_condition)
     ImageView weatherGroupImageView;
 
     @BindView(R.id.weather_swipe_refresh_layout)
