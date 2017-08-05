@@ -1,11 +1,19 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+    <style name="AppTheme.Main.Toolbar" parent="AppTheme">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.Main.Container" parent="AppTheme">
+        <item name="android:background">@color/colorBackground</item>
+    </style>
+
+    <style name="AppTheme.Drawer.Header" parent="AppTheme">
+        <item name="android:padding">@dimen/header_padding</item>
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:gravity">bottom|start</item>
+        <item name="android:textColor">@color/colorHeaderText</item>
     </style>
 
 </resources>

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
@@ -110,17 +112,12 @@ public class WeatherFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         App.getAppComponent().inject(this);
-
         mCityId = weatherPresenter.getCity().getId();
-
         receiver = new WeatherUpdatingBroadcastReceiver();
-
         updateWeatherProcessor = new UpdateWeatherProcessor(weatherPresenter);
         updateWeatherProcessor.start();
         updateWeatherProcessor.getLooper();
-
         getLoaderManager().initLoader(LOADER_ID, savedInstanceState, this);
     }
 
@@ -128,15 +125,31 @@ public class WeatherFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
-
         setHasOptionsMenu(true);
-
         unbinder = ButterKnife.bind(this, view);
-
-        textViewCity.setText(weatherPresenter.getCity().getName());
-
         swipeRefreshLayout.setOnRefreshListener(this);
+        textViewCity.setText(weatherPresenter.getCity().getName());
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(textViewCity);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                switch (i) {
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        view.setBackgroundResource(R.color.colorPrimary);
+                        break;
+                    }
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        view.setBackgroundResource(R.color.colorAccent);
+                        break;
+                    }
+                }
+            }
 
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
         return view;
     }
 

@@ -7,8 +7,8 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +21,12 @@ import com.aleksandersh.weather.features.about.AboutFragment;
 import com.aleksandersh.weather.features.settings.SettingsFragment;
 import com.aleksandersh.weather.features.weather.presentation.WeatherFragment;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.R.attr.id;
 
 
 public class MainActivity extends AppCompatActivity
@@ -44,17 +48,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
-
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-
+        setupToolbar();
         // Toggle обеспечивает совместную работу DrawerLayout с ActionBar
-        toggle = setupDrawerToggle();
+        toggle = createDrawerToggle();
         drawer.addDrawerListener(toggle);
-
         navigationView.setNavigationItemSelectedListener(this);
-
         if (savedInstanceState == null) {
             PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
             // При запуске приложения необходимо загрузить стандартный фрагмент
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         // Синхронизация индикатора с состоянием DrawerLayout
         toggle.syncState();
     }
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
         // Новая конфигурация передается Toggle, хотя я не совсем понял зачем это здесь
         toggle.onConfigurationChanged(newConfig);
     }
@@ -88,33 +86,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
-
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_weather_fragment:
-                fragment = WeatherFragment.newInstance();
+                replaceFragment(WeatherFragment.newInstance());
                 break;
             case R.id.nav_settings_fragment:
-                fragment = SettingsFragment.newInstance();
+                replaceFragment(SettingsFragment.newInstance());
                 break;
             case R.id.nav_about_fragment:
-                fragment = AboutFragment.newInstance();
+                replaceFragment(AboutFragment.newInstance());
                 break;
             default:
-                throw new IllegalArgumentException("Menu item Id did not processed.");
+                throw new IllegalArgumentException("Illegal menu id");
         }
-
-        replaceFragment(fragment);
         // Установка нового заголовка, для начала хватит названия пункта меню
         setTitle(item.getTitle());
         drawer.closeDrawer(GravityCompat.START);
@@ -127,7 +113,7 @@ public class MainActivity extends AppCompatActivity
      *
      * @return Новый экземпляр.
      */
-    protected ActionBarDrawerToggle setupDrawerToggle() {
+    protected ActionBarDrawerToggle createDrawerToggle() {
         return new ActionBarDrawerToggle(
                 this,
                 drawer,
@@ -143,10 +129,15 @@ public class MainActivity extends AppCompatActivity
      * @param fragment Новый фрагмент.
      */
     protected void replaceFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .commit();
+    }
+
+    protected void setupToolbar() {
+        float toolbarElevation = this.getResources().getDimension(R.dimen.all_toolbar_elevation);
+        setSupportActionBar(toolbar);
+        ViewCompat.setElevation(toolbar, toolbarElevation);
     }
 
     /**
@@ -161,7 +152,7 @@ public class MainActivity extends AppCompatActivity
             onNavigationItemSelected(item);
             item.setChecked(true);
         } else {
-            throw new IllegalArgumentException("Can not find menu item by id.");
+            throw new IllegalArgumentException(String.format(Locale.getDefault(), "Navigation menu item with id %d not found", id));
         }
     }
 

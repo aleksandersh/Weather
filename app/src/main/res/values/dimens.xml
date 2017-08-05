@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="all_toolbar_elevation">4dp</dimen>
     <dimen name="city_chooser_height">200dp</dimen>
-    <dimen name="city_chooser_width">300dp</dimen>
     <dimen name="city_chooser_padding">8dp</dimen>
     <dimen name="city_chooser_textview_height">56dp</dimen>
     <dimen name="city_chooser_dropdown_height">112dp</dimen>
+    <dimen name="header_height">88dp</dimen>
+    <dimen name="header_padding">16dp</dimen>
 </resources>

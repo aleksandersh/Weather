@@ -5,8 +5,6 @@
     android:id="@+id/fragment_city_chooser_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="@dimen/city_chooser_height"
-    android:minWidth="@dimen/city_chooser_width"
     android:padding="@dimen/city_chooser_padding"
     tools:context="com.aleksandersh.weather.features.city.presentation.CityDialogFragment"
     >
