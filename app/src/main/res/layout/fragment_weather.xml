@@ -32,7 +32,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:src="@drawable/clear_icon"
+                android:src="@drawable/ic_all_clear"
                 app:layout_constraintBottom_toTopOf="@+id/temperature_text_view"
                 app:layout_constraintLeft_toLeftOf="parent"
                 />
@@ -49,13 +49,13 @@
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
                 android:textSize="64sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintHorizontal_weight="2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/pressure_title_text_view"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="+24"
+                app:layout_constraintBottom_toTopOf="@+id/error_text_view"
                 />
 
             <TextView
@@ -188,8 +188,8 @@
         android:id="@+id/city_text_view"
         android:layout_width="match_parent"
         android:layout_height="560dp"
-        app:behavior_peekHeight="56dp"
         android:textSize="24sp"
+        app:behavior_peekHeight="56dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
         tools:text="Moscow"
         />

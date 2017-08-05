@@ -34,12 +34,21 @@ public class IconMapper {
      */
     @DrawableRes
     public static int getDrawableResourceByGroup(String group) {
-        if (group.equals(GROUP_STORM)) return R.drawable.storm_icon;
-        else if (group.equals(GROUP_RAIN)) return R.drawable.rain_icon;
-        else if (group.equals(GROUP_SNOW)) return R.drawable.snow_icon;
-        else if (group.equals(GROUP_FOG)) return R.drawable.fog_icon;
-        else if (group.equals(GROUP_CLEAR_SKY)) return R.drawable.clear_icon;
-        else if (group.equals(GROUP_CLOUDS)) return R.drawable.cloud_icon;
-        else return 0;
+        switch (group) {
+            case GROUP_STORM:
+                return R.drawable.ic_all_storm;
+            case GROUP_RAIN:
+                return R.drawable.ic_all_rain;
+            case GROUP_SNOW:
+                return R.drawable.ic_all_snow;
+            case GROUP_FOG:
+                return R.drawable.ic_all_fog;
+            case GROUP_CLEAR_SKY:
+                return R.drawable.ic_all_clear;
+            case GROUP_CLOUDS:
+                return R.drawable.ic_all_cloudy;
+            default:
+                return 0;
+        }
     }
 }

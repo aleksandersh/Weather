@@ -2,6 +2,7 @@ package com.aleksandersh.weather;
 
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.aleksandersh.weather.di.component.AppComponent;
 import com.aleksandersh.weather.di.component.DaggerAppComponent;
@@ -35,6 +36,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         if (com.aleksandersh.weather.BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
         appComponent = buildAppComponent();
     }
 
