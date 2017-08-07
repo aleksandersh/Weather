@@ -2,7 +2,7 @@ package com.aleksandersh.weather.features.city.di;
 
 
 import com.aleksandersh.weather.di.ScreenScope;
-import com.aleksandersh.weather.features.city.presentation.CityDialogFragment;
+import com.aleksandersh.weather.features.city.presentation.CityChooserFragment;
 
 import dagger.Subcomponent;
 
@@ -14,6 +14,6 @@ import dagger.Subcomponent;
 @ScreenScope
 public interface CitySubcomponent {
 
-    void inject(CityDialogFragment fragment);
+    void inject(CityChooserFragment fragment);
 
 }

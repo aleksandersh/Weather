@@ -2,7 +2,7 @@ package com.aleksandersh.weather.features.city.presentation;
 
 
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +31,7 @@ import io.reactivex.disposables.CompositeDisposable;
 /**
  * Фрагмент с поиском города, погоду для которого нужно отображать.
  */
-public class CityDialogFragment extends BottomSheetDialogFragment implements CityView {
+public class CityChooserFragment extends Fragment implements CityView {
 
     public static final String TAG = "cityChooserFragment";
 
@@ -49,18 +49,17 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
 
     private CitiesAdapter citiesSuggestAdapter = null;
 
-    public CityDialogFragment() {
+    public CityChooserFragment() {
     }
 
-    public static CityDialogFragment newInstance() {
-        return new CityDialogFragment();
+    public static CityChooserFragment newInstance() {
+        return new CityChooserFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_city_chooser_dialog, container, false);
-
         App.plus(this).inject(this);
         manager.onAttach(this);
         mUnbinder = ButterKnife.bind(this, rootView);
@@ -115,7 +114,7 @@ public class CityDialogFragment extends BottomSheetDialogFragment implements Cit
             manager.onCitySelected(city);
             if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
         }
-        dismiss();
+        // TODO Close bottom sheet
     }
 
     public interface OnCitySelectedListener {

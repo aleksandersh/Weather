@@ -9,15 +9,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,8 +23,7 @@ import android.widget.TextView;
 
 import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.features.city.data.model.storable.City;
-import com.aleksandersh.weather.features.city.presentation.CityDialogFragment;
+import com.aleksandersh.weather.features.city.presentation.CityChooserFragment;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 import com.aleksandersh.weather.features.weather.framework.WeatherUpdateBroadcastHelper;
@@ -67,44 +64,50 @@ public class WeatherFragment extends Fragment
 
     private Unbinder unbinder;
 
-    private UpdateWeatherProcessor updateWeatherProcessor;
-
     private BroadcastReceiver receiver;
+
+    private UpdateWeatherProcessor updateWeatherProcessor;
 
     private long mCityId;
 
-    @BindView(R.id.city_text_view)
+    @BindView(R.id.weather_swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.weather_textview_city)
     TextView textViewCity;
 
     @BindView(R.id.weather_textview_temperature)
-    TextView temperatureTextView;
+    TextView textViewTemperature;
 
     @BindView(R.id.weather_textview_condition)
     TextView conditionTextView;
 
     @BindView(R.id.weather_info_value_pressure)
-    TextView pressureTextView;
+    TextView textViewPressure;
 
     @BindView(R.id.weather_info_value_humidity)
-    TextView humidityTextView;
+    TextView textViewHumidity;
 
     @BindView(R.id.weather_info_value_cloudiness)
-    TextView cloudinessTextView;
+    TextView textViewCloudiness;
 
     @BindView(R.id.error_text_view)
-    TextView errorTextView;
+    TextView textViewError;
 
     @BindView(R.id.weather_imageview_condition)
-    ImageView weatherGroupImageView;
+    ImageView imageViewCondition;
 
-    @BindView(R.id.weather_swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    BottomSheetBehavior behavior;
 
-    /**
-     * Создает новый экземпляр фрагмента {@link WeatherFragment}.
-     *
-     * @return Новый экземпляр.
-     */
+    @BindView(R.id.weather_bottomsheet)
+    View bottomSheet;
+
+    @BindView(R.id.weather_bottomsheet_layout_current_city)
+    View bottomSheetCurrentCityLayout;
+
+    CityChooserFragment fragmentCityChooser;
+
+
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
     }
@@ -125,60 +128,46 @@ public class WeatherFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
-        setHasOptionsMenu(true);
         unbinder = ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        fragmentCityChooser = (CityChooserFragment) getChildFragmentManager().findFragmentById(R.id.weather_bottomsheet_fragment_citychooser);
+        fragmentCityChooser.setOnCitySelectedListener(city -> {
+            mCityId = city.getCityId();
+            textViewCity.setText(city.getName());
+            updateWeatherProcessor.requestUpdate(mCityId);
+        });
+
         textViewCity.setText(weatherPresenter.getCity().getName());
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(textViewCity);
+
+        ViewCompat.setElevation(bottomSheet, getResources().getDimension(R.dimen.weather_elevation_bottomsheet));
+        setBottomSheetLayoutExpanded(false);
+        behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
                 switch (i) {
                     case BottomSheetBehavior.STATE_COLLAPSED: {
-                        view.setBackgroundResource(R.color.colorPrimary);
+                        setBottomSheetLayoutExpanded(false);
                         break;
                     }
                     case BottomSheetBehavior.STATE_EXPANDED: {
-                        view.setBackgroundResource(R.color.colorAccent);
+                        setBottomSheetLayoutExpanded(true);
                         break;
                     }
                 }
             }
-
             @Override
             public void onSlide(@NonNull View view, float v) {
 
             }
         });
+
+        bottomSheet.setOnClickListener(v -> {
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        });
+
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        inflater.inflate(R.menu.weather_toolbar, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_weather_toolbar_change_city: {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                CityDialogFragment cityChooserDialogFragment = CityDialogFragment.newInstance();
-                cityChooserDialogFragment.show(fragmentManager, CityDialogFragment.TAG);
-                cityChooserDialogFragment.setOnCitySelectedListener(city -> {
-                    mCityId = city.getCityId();
-                    textViewCity.setText(city.getName());
-                    updateWeatherProcessor.requestUpdate(mCityId);
-                });
-                return true;
-            }
-            default: {
-                throw new IllegalArgumentException("Unknown menu id");
-            }
-        }
     }
 
     @Override
@@ -197,14 +186,12 @@ public class WeatherFragment extends Fragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         unbinder.unbind();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         updateWeatherProcessor.quit();
     }
 
@@ -228,7 +215,7 @@ public class WeatherFragment extends Fragment
     public void onLoadFinished(Loader<WeatherStorableState> loader, WeatherStorableState data) {
         if (data != null) {
             updateUi(data.getWeather());
-            errorTextView.setVisibility(View.GONE);
+            textViewError.setVisibility(View.GONE);
         } else {
             updateWeatherProcessor.requestUpdate(mCityId);
         }
@@ -239,25 +226,29 @@ public class WeatherFragment extends Fragment
     public void onLoaderReset(Loader<WeatherStorableState> loader) {
     }
 
-    private void onCityUpdated(City city) {
-
+    private void setBottomSheetLayoutExpanded(boolean expanded) {
+        bottomSheetCurrentCityLayout.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        if (expanded) transaction.show(fragmentCityChooser);
+        else transaction.hide(fragmentCityChooser);
+        transaction.commit();
     }
 
     private void updateUi(Weather weather) {
-        temperatureTextView.setText(String.format(Locale.US, "%.1f", weather.getTemperature()));
+        textViewTemperature.setText(String.format(Locale.US, "%.1f", weather.getTemperature()));
         conditionTextView.setText(weather.getDescription());
-        pressureTextView.setText(String.valueOf(weather.getPressure()));
-        humidityTextView.setText(String.valueOf(weather.getHumidity()));
-        cloudinessTextView.setText(String.valueOf(weather.getCloudiness()));
+        textViewPressure.setText(String.valueOf(weather.getPressure()));
+        textViewHumidity.setText(String.valueOf(weather.getHumidity()));
+        textViewCloudiness.setText(String.valueOf(weather.getCloudiness()));
         int iconId = IconMapper.getDrawableResourceByGroup(weather.getGroup());
         if (iconId != 0) {
-            weatherGroupImageView.setImageDrawable(getResources().getDrawable(iconId));
+            imageViewCondition.setImageDrawable(getResources().getDrawable(iconId));
         }
     }
 
     private void onFailedLoading(String error) {
-        errorTextView.setText(error);
-        errorTextView.setVisibility(View.VISIBLE);
+        textViewError.setText(error);
+        textViewError.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
     }
 

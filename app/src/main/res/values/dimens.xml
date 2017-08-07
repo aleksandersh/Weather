@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="all_toolbar_elevation">4dp</dimen>
+    <dimen name="all_elevation_toolbar">4dp</dimen>
+    <dimen name="all_size_icon">24dp</dimen>
 
     <dimen name="city_chooser_height">200dp</dimen>
     <dimen name="city_chooser_padding">8dp</dimen>
@@ -11,8 +12,12 @@
     <dimen name="header_height">88dp</dimen>
     <dimen name="header_padding">16dp</dimen>
 
-    <dimen name="weather_size_icon">72dp</dimen>
+    <dimen name="weather_elevation_bottomsheet">8dp</dimen>
     <dimen name="weather_size_info_icon">24dp</dimen>
     <dimen name="weather_padding_info_text">8dp</dimen>
+    <dimen name="weather_height_bottomsheet_collapsed">?actionBarSize</dimen>
+    <dimen name="weather_height_bottomsheet_expanded">400dp</dimen>
+    <dimen name="weather_margin_bottomsheet_city">32dp</dimen>
+    <dimen name="weather_margin_bottomsheet_side">16dp</dimen>
 
 </resources>

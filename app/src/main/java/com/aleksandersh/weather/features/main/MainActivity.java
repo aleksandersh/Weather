@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     protected void setupToolbar() {
-        float toolbarElevation = this.getResources().getDimension(R.dimen.all_toolbar_elevation);
+        float toolbarElevation = this.getResources().getDimension(R.dimen.all_elevation_toolbar);
         setSupportActionBar(toolbar);
         ViewCompat.setElevation(toolbar, toolbarElevation);
     }
