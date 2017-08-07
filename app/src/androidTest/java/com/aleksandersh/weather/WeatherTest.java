@@ -83,7 +83,7 @@ public class WeatherTest {
     public void shouldDisplaySuggestionEng() {
         onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
         onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
-        onView(withId(R.id.textview_city)).perform(typeText("Moscow"));
+        onView(withId(R.id.citychooser_textview_search_city)).perform(typeText("Moscow"));
         onView(withChild(withText("Moscow"))).check(matches(isDisplayed()));
     }
 
@@ -91,7 +91,7 @@ public class WeatherTest {
     public void shouldDisplaySuggestionRu() {
         onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
         onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
-        onView(withId(R.id.textview_city)).perform(replaceText("Москва"));
+        onView(withId(R.id.citychooser_textview_search_city)).perform(replaceText("Москва"));
         onView(withChild(withText("Москва"))).check(matches(isDisplayed()));
     }
 
@@ -99,7 +99,7 @@ public class WeatherTest {
     public void shouldChangeCity() {
         onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
         onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
-        onView(withId(R.id.textview_city)).perform(typeText("Taganrog"));
+        onView(withId(R.id.citychooser_textview_search_city)).perform(typeText("Taganrog"));
         onView(withText("Taganrog")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView()))))
                 .perform(click());
         onView(withText("Taganrog")).check(matches(isDisplayed()));
@@ -111,7 +111,7 @@ public class WeatherTest {
         String city = "Taganrog";
         onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
         onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
-        onView(withId(R.id.textview_city)).perform(replaceText(city));
+        onView(withId(R.id.citychooser_textview_search_city)).perform(replaceText(city));
         onView(withText(city)).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView()))))
                 .perform(click());
         SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(activityTestRule.getActivity());

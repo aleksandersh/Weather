@@ -11,6 +11,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
@@ -163,9 +164,7 @@ public class WeatherFragment extends Fragment
             }
         });
 
-        bottomSheet.setOnClickListener(v -> {
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        });
+        bottomSheet.setOnClickListener(v -> behavior.setState(BottomSheetBehavior.STATE_EXPANDED));
 
         return view;
     }
@@ -242,7 +241,7 @@ public class WeatherFragment extends Fragment
         textViewCloudiness.setText(String.valueOf(weather.getCloudiness()));
         int iconId = IconMapper.getDrawableResourceByGroup(weather.getGroup());
         if (iconId != 0) {
-            imageViewCondition.setImageDrawable(getResources().getDrawable(iconId));
+            imageViewCondition.setImageDrawable(ContextCompat.getDrawable(getActivity(), iconId));
         }
     }
 
@@ -253,7 +252,6 @@ public class WeatherFragment extends Fragment
     }
 
     private class WeatherUpdatingBroadcastReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             if (mCityId == intent.getLongExtra(WeatherUpdateBroadcastHelper.CITY_ID_EXTRA, 0)) {
@@ -270,4 +268,5 @@ public class WeatherFragment extends Fragment
             }
         }
     }
+
 }

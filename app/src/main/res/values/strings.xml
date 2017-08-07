@@ -11,10 +11,17 @@
     <string name="nav_title_settings_fragment">Settings</string>
     <string name="nav_title_about_fragment">About</string>
 
-    <string name="menu_title_change_city">Change city</string>
+    <!--Weather-->
 
-    <string name="city_chooser_action_select">Select</string>
+    <string name="weather_info_title_pressure">Pressure</string>
+    <string name="weather_info_title_humidity">Humidity</string>
+    <string name="weather_info_title_cloudiness">Cloudiness</string>
+
     <string name="city_chooser_hint_city_name">City name</string>
+    <string name="citychooser_header_current_city">Current city</string>
+    <string name="citychooser_header_add_city">Add city</string>
+
+    <!--Preferences -->
 
     <string name="pref_units_title">Units</string>
     <string name="pref_service_title">Weather auto-update</string>
@@ -41,8 +48,5 @@
     <string name="default_city">Moscow</string>
     <string name="default_country">Russia</string>
 
-    <string name="weather_info_title_pressure">Pressure</string>
-    <string name="weather_info_title_humidity">Humidity</string>
-    <string name="weather_info_title_cloudiness">Cloudiness</string>
 
 </resources>

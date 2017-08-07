@@ -50,6 +50,13 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
+    <style name="AppTheme.Weather.CityChooser.Header" parent="AppTheme">
+    </style>
+
+    <style name="AppTheme.Weather.CityChooser.Header.Title" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Subhead</item>
+        <item name="android:textColor">@color/colorTextSecondary</item>
+    </style>
 
 
 </resources>
