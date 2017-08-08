@@ -12,7 +12,6 @@ import com.aleksandersh.weather.di.module.NetworkModule;
 import com.aleksandersh.weather.di.module.ServiceModule;
 import com.aleksandersh.weather.features.city.di.CityModule;
 import com.aleksandersh.weather.features.city.di.CitySubcomponent;
-import com.aleksandersh.weather.features.city.presentation.CityView;
 import com.aleksandersh.weather.features.weather.di.WeatherComponent;
 import com.aleksandersh.weather.features.weather.di.WeatherModule;
 import com.facebook.stetho.Stetho;
@@ -68,9 +67,9 @@ public class App extends Application {
 
     */
 
-    public static CitySubcomponent plus(CityView view) {
+    public static CitySubcomponent plus() {
         if (citySubcomponent == null)
-            citySubcomponent = appComponent.plusCity(new CityModule(view));
+            citySubcomponent = appComponent.plusCity(new CityModule());
         return citySubcomponent;
     }
 

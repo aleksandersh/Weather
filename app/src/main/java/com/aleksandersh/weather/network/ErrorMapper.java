@@ -17,7 +17,7 @@ public class ErrorMapper {
     /**
      * Нет соединения с интернетом.
      */
-    public static final int ERROR_INTERNET_DISCONNECTED = 20;
+    public static final int ERROR_NO_CONNECTION = 20;
 
     /**
      * Ошибка при обращении к серверу.

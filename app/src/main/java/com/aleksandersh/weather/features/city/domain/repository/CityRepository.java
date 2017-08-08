@@ -1,10 +1,10 @@
 package com.aleksandersh.weather.features.city.domain.repository;
 
 
-import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
 
-import java.util.List;
-
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 
@@ -14,6 +14,14 @@ import io.reactivex.Single;
 
 public interface CityRepository {
 
-    public Single<List<CityDto>> getCity(String name);
+    public Observable<City> getSuggestions(String name, int suggestionsNumber);
+
+    public Flowable<City> getSavedCities();
+
+    public void saveCity(City city);
+
+    public Single<City> getCurrentCity();
+
+    public void setCurrentCity(City city);
 
 }

@@ -73,6 +73,7 @@ ext {
     okhttp3IdlingResourceVersion = "1.0.0"
     stethoVersion = "1.5.0"
     autocompleteVersion = "1.0.1"
+    roomVersion = "1.0.0-alpha5"
 }
 
 
@@ -87,6 +88,12 @@ dependencies {
             if (additionalExcludedModules != null) exclude(additionalExcludedModules)
         }
     }
+
+    // Room
+
+    compile "android.arch.persistence.room:runtime:$roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
+    compile "android.arch.persistence.room:rxjava2:$roomVersion"
 
     // Butterknife
     compile "com.jakewharton:butterknife:$butterknifeVersion"

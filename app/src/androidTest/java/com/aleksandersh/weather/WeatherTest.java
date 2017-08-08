@@ -11,7 +11,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.aleksandersh.weather.di.component.AppComponent;
 import com.aleksandersh.weather.features.main.MainActivity;
-import com.aleksandersh.weather.storage.Const;
+import com.aleksandersh.weather.utils.Const;
 import com.jakewharton.espresso.OkHttp3IdlingResource;
 
 import org.junit.After;

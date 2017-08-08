@@ -3,7 +3,7 @@ package com.aleksandersh.weather.di.module;
 
 import com.aleksandersh.weather.BuildConfig;
 import com.aleksandersh.weather.network.interceptors.ApiKeyInterceptor;
-import com.aleksandersh.weather.storage.Const;
+import com.aleksandersh.weather.utils.Const;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;

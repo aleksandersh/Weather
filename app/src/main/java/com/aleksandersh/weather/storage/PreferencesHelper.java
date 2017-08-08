@@ -154,7 +154,7 @@ public class PreferencesHelper {
 
     public City getSelectedCity() {
         if (!defaultPreferences.contains(currentCityId)) {
-            City defaultCity = new City(2643743, context.getString(R.string.default_city), context.getString(R.string.default_country), -0.12574, 51.50853);
+            City defaultCity = new City(2643743, context.getString(R.string.default_city), context.getString(R.string.default_country), -0.12574, 51.50853, true);
             saveCity(defaultCity);
             return defaultCity;
         }
@@ -163,7 +163,7 @@ public class PreferencesHelper {
         String countryName = defaultPreferences.getString(currentCityCountryName, "");
         double lng = defaultPreferences.getFloat(currentCityLng, 0);
         double lat = defaultPreferences.getFloat(currentCityLat, 0);
-        return new City(id, name, countryName, lng, lat);
+        return new City(id, name, countryName, lng, lat, true);
     }
 
     private void put(Consumer<Editor> f) {

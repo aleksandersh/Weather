@@ -12,9 +12,9 @@ import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherHt
 import com.aleksandersh.weather.features.weather.presentation.WeatherPresenter;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
 import com.aleksandersh.weather.features.weather.storage.WeatherDatabaseDao;
-import com.aleksandersh.weather.storage.Const;
 import com.aleksandersh.weather.storage.DtoConverter;
 import com.aleksandersh.weather.storage.PreferencesHelper;
+import com.aleksandersh.weather.utils.Const;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

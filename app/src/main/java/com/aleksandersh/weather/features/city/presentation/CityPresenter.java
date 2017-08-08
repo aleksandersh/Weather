@@ -1,9 +1,8 @@
 package com.aleksandersh.weather.features.city.presentation;
 
 
-import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
-import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
-import com.aleksandersh.weather.storage.PreferencesHelper;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 
 import javax.inject.Inject;
 
@@ -18,16 +17,13 @@ public class CityPresenter {
 
     private CityView view;
 
-    private CityRepository client;
-
-    private PreferencesHelper preferencesHelper;
+    private CityInteractor interactor;
 
     private Disposable cityDisposable = null;
 
     @Inject
-    public CityPresenter(CityRepository client, PreferencesHelper preferencesHelper) {
-        this.client = client;
-        this.preferencesHelper = preferencesHelper;
+    public CityPresenter(CityInteractor interactor) {
+        this.interactor = interactor;
     }
 
     public void onAttach(CityView view) {
@@ -39,13 +35,13 @@ public class CityPresenter {
         if (cityDisposable != null && !cityDisposable.isDisposed()) cityDisposable.dispose();
     }
 
-    public void onQueryUpdated(String name) {
-        client.getCity(name)
+    public void onSearchQueryUpdated(String name) {
+        interactor.getSuggestions(name)
                 .subscribe(view::updateData, view::showError);
     }
 
-    public void onCitySelected(CityDto city) {
-        preferencesHelper.saveCity(city);
+    public void onCitySelected(City city) {
+        interactor.saveCity(city);
     }
 
 }

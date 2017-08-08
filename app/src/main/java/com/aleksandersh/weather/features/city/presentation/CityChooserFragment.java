@@ -14,10 +14,9 @@ import android.widget.TextView;
 
 import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -71,7 +70,7 @@ public class CityChooserFragment extends Fragment implements CityView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_city_chooser_dialog, container, false);
-        App.plus(this).inject(this);
+        App.plus().inject(this);
         presenter.onAttach(this);
         mUnbinder = ButterKnife.bind(this, rootView);
         compositeDisposable = new CompositeDisposable();
@@ -85,7 +84,7 @@ public class CityChooserFragment extends Fragment implements CityView {
                 .debounce(250, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .map(String::trim)
-                .subscribe(presenter::onQueryUpdated));
+                .subscribe(presenter::onSearchQueryUpdated));
 
 //        Autocomplete.on(editTextSearchCity)
 //                .re
@@ -104,7 +103,7 @@ public class CityChooserFragment extends Fragment implements CityView {
     }
 
     @Override
-    public void updateData(List<CityDto> cities) {
+    public void updateData(City cities) {
         /*
         if (citiesSuggestAdapter == null) {
             citiesSuggestAdapter = new CitiesAdapter(this.getContext(), cities);
@@ -140,7 +139,7 @@ public class CityChooserFragment extends Fragment implements CityView {
         // TODO Update recyclerview data
     }
 
-    private void selectItem(CityDto city) {
+    private void selectItem(City city) {
         if (city != null) {
             presenter.onCitySelected(city);
             if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
@@ -149,7 +148,7 @@ public class CityChooserFragment extends Fragment implements CityView {
     }
 
     public interface OnCitySelectedListener {
-        void onSelected(CityDto city);
+        void onSelected(City city);
     }
 
 }

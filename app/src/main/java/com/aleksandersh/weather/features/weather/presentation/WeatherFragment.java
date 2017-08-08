@@ -134,7 +134,7 @@ public class WeatherFragment extends Fragment
 
         fragmentCityChooser = (CityChooserFragment) getChildFragmentManager().findFragmentById(R.id.weather_bottomsheet_fragment_citychooser);
         fragmentCityChooser.setOnCitySelectedListener(city -> {
-            mCityId = city.getCityId();
+            mCityId = city.getId();
             textViewCity.setText(city.getName());
             updateWeatherProcessor.requestUpdate(mCityId);
         });

@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.storage;
+package com.aleksandersh.weather.utils;
 
 
 /**
@@ -22,5 +22,7 @@ public class Const {
     public static final String OKHTTP_IDLING_RESOURCE_NAME = "OkHttp";
 
     public static final int DEFAULT_SUGGESTIONS_NUMBER = 10;
+
+    public static final String DATABASE_NAME = "WeatherAppDatabase";
 
 }

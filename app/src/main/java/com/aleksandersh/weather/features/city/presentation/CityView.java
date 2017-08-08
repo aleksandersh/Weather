@@ -1,14 +1,12 @@
 package com.aleksandersh.weather.features.city.presentation;
 
 
-import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
-
-import java.util.List;
+import com.aleksandersh.weather.features.city.data.model.storable.City;
 
 
 public interface CityView {
 
-    void updateData(List<CityDto> cities);
+    void updateData(City cities);
 
     void showError(Throwable throwable);
 

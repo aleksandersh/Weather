@@ -13,8 +13,8 @@ import com.aleksandersh.weather.features.weather.di.WeatherModule;
 import com.aleksandersh.weather.features.weather.presentation.WeatherFragment;
 import com.aleksandersh.weather.network.interceptors.ApiKeyInterceptor;
 import com.aleksandersh.weather.service.WeatherUpdatingJobService;
-import com.aleksandersh.weather.storage.Const;
 import com.aleksandersh.weather.storage.PreferencesHelper;
+import com.aleksandersh.weather.utils.Const;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import javax.inject.Named;

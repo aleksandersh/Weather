@@ -2,14 +2,16 @@ package com.aleksandersh.weather.features.city.di;
 
 
 import com.aleksandersh.weather.di.ScreenScope;
+import com.aleksandersh.weather.features.city.data.dao.CityDao;
 import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
 import com.aleksandersh.weather.features.city.data.repository.CityRepositoryImpl;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractorImpl;
 import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
 import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
-import com.aleksandersh.weather.features.city.presentation.CityView;
-import com.aleksandersh.weather.storage.Const;
-import com.aleksandersh.weather.storage.PreferencesHelper;
+import com.aleksandersh.weather.storage.AppDatabase;
+import com.aleksandersh.weather.utils.Const;
 
 import javax.inject.Named;
 
@@ -24,22 +26,10 @@ import retrofit2.Retrofit;
 @Module
 public class CityModule {
 
-    private CityView cityView;
-
-    public CityModule(CityView cityView) {
-        this.cityView = cityView;
-    }
-
     @Provides
     @ScreenScope
     public CityDtoConverter provideCityDtoConverter() {
         return new CityDtoConverter();
-    }
-
-    @Provides
-    @ScreenScope
-    public CityView provideCityDialogView() {
-        return cityView;
     }
 
     @Provides
@@ -50,14 +40,27 @@ public class CityModule {
 
     @Provides
     @ScreenScope
-    public CityRepository provideClient(CityHttpService service) {
-        return new CityRepositoryImpl(service);
+    public CityDao provideCityDao(AppDatabase database) {
+        return database.cityDao();
     }
 
     @Provides
     @ScreenScope
-    public CityPresenter provideCityManager(CityView view, CityRepository client, CityDtoConverter dtoConverter, PreferencesHelper preferencesHelper) {
-        return new CityPresenter(client, preferencesHelper);
+    public CityRepository provideClient(CityHttpService service, CityDao dao, CityDtoConverter dtoConverter) {
+        return new CityRepositoryImpl(service, dao, dtoConverter);
+    }
+
+    @Provides
+    @ScreenScope
+    public CityInteractor provideCityInteractor(CityRepository repository) {
+        return new CityInteractorImpl(repository);
+    }
+
+
+    @Provides
+    @ScreenScope
+    public CityPresenter provideCityPresenter(CityInteractor interactor) {
+        return new CityPresenter(interactor);
     }
 
 }

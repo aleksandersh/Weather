@@ -71,7 +71,7 @@ public class WeatherPresenter {
         if (!NetworkUtils.isNetworkAvailable(context)) {
             sendLocalBroadcast(WeatherUpdateBroadcastHelper
                     .getWeatherUpdateUnsuccessfulIntent(request.getCityId(),
-                            ErrorMapper.ERROR_INTERNET_DISCONNECTED));
+                            ErrorMapper.ERROR_NO_CONNECTION));
             return;
         }
 

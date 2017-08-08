@@ -36,7 +36,7 @@ public class CityPresenterTest {
         cityView = mock(CityView.class);
         client = mock(CityRepository.class);
         preferencesHelper = mock(PreferencesHelper.class);
-        cityPresenter = new CityPresenter(client, preferencesHelper);
+        cityPresenter = new CityPresenter(client);
         cityPresenter.onAttach(cityView);
     }
 
@@ -48,7 +48,7 @@ public class CityPresenterTest {
     @Test
     public void onQueryUpdated() throws Exception {
         when(client.getCity(anyString())).thenReturn(Single.just(new ArrayList<>()));
-        cityPresenter.onQueryUpdated("Moscow");
+        cityPresenter.onSearchQueryUpdated("Moscow");
         verify(cityView).updateData(anyList());
     }
 
