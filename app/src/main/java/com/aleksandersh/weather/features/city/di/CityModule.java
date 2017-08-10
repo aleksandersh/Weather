@@ -4,10 +4,8 @@ package com.aleksandersh.weather.features.city.di;
 import com.aleksandersh.weather.di.ScreenScope;
 import com.aleksandersh.weather.features.city.data.dao.CityDao;
 import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
-import com.aleksandersh.weather.features.city.data.repository.CityRepositoryImpl;
+import com.aleksandersh.weather.features.city.data.repository.CityInteractorImpl;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
-import com.aleksandersh.weather.features.city.domain.interactor.CityInteractorImpl;
-import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
 import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
 import com.aleksandersh.weather.storage.AppDatabase;
@@ -17,6 +15,7 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
 
 
@@ -46,21 +45,14 @@ public class CityModule {
 
     @Provides
     @ScreenScope
-    public CityRepository provideClient(CityHttpService service, CityDao dao, CityDtoConverter dtoConverter) {
-        return new CityRepositoryImpl(service, dao, dtoConverter);
+    public CityInteractor provideInteractor(CityHttpService service, CityDao dao, CityDtoConverter dtoConverter) {
+        return new CityInteractorImpl(service, dao, dtoConverter);
     }
 
     @Provides
     @ScreenScope
-    public CityInteractor provideCityInteractor(CityRepository repository) {
-        return new CityInteractorImpl(repository);
-    }
-
-
-    @Provides
-    @ScreenScope
-    public CityPresenter provideCityPresenter(CityInteractor interactor) {
-        return new CityPresenter(interactor);
+    public CityPresenter provideCityPresenter(CityInteractor interactor, CompositeDisposable compositeDisposable) {
+        return new CityPresenter(interactor, compositeDisposable);
     }
 
 }

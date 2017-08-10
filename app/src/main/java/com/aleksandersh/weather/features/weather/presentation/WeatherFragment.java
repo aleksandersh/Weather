@@ -164,7 +164,7 @@ public class WeatherFragment extends Fragment
             }
         });
 
-        bottomSheet.setOnClickListener(v -> behavior.setState(BottomSheetBehavior.STATE_EXPANDED));
+//        bottomSheet.setOnClickListener(v -> behavior.setState(BottomSheetBehavior.STATE_EXPANDED));
 
         return view;
     }

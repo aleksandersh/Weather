@@ -58,5 +58,25 @@
         <item name="android:textColor">@color/colorTextSecondary</item>
     </style>
 
+    <style name="AppTheme.Weather.CityChooser.Header.City" parent="AppTheme">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Title</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:gravity">start|center_vertical</item>
+    </style>
+
+    <style name="AppTheme.Weather.CityChooser.ListSelected.Item" parent="AppTheme">
+        <item name="android:paddingStart">@dimen/all_margin_regular</item>
+        <item name="android:paddingEnd">@dimen/all_margin_regular</item>
+        <item name="android:paddingBottom">@dimen/all_margin_small</item>
+        <item name="android:paddingTop">@dimen/all_margin_small</item>
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
+    <style name="AppTheme.Weather.CityChooser.ListSelected.CityName" parent="AppTheme.Weather.CityChooser.ListSelected.Item">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Subhead</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:gravity">start|center_vertical</item>
+    </style>
+
 
 </resources>

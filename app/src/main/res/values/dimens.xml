@@ -21,6 +21,6 @@
     <dimen name="citychooser_height_expanded">400dp</dimen>
     <dimen name="citychooser_margin_city">32dp</dimen>
     <dimen name="citychooser_margin_side">16dp</dimen>
-    <dimen name="citychooser_height_header">112dp</dimen>
+    <dimen name="citychooser_height_header">96dp</dimen>
 
 </resources>

@@ -4,7 +4,9 @@ package com.aleksandersh.weather.features.city.presentation;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.aleksandersh.weather.R;
 import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -25,6 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Фрагмент с поиском города, погоду для которого нужно отображать.
@@ -57,7 +63,9 @@ public class CityChooserFragment extends Fragment implements CityView {
 
     private CompositeDisposable compositeDisposable;
 
-    private CitiesAdapter citiesSuggestAdapter = null;
+    private ItemTouchHelper itemTouchHelper;
+    private SavedCitiesAdapter savedCitiesAdapter = null;
+    private CitiesAutosuggestAdapter citiesAutosuggestAdapter = null;
 
     public CityChooserFragment() {
     }
@@ -69,27 +77,42 @@ public class CityChooserFragment extends Fragment implements CityView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_city_chooser_dialog, container, false);
-        App.plus().inject(this);
-        presenter.onAttach(this);
+        View rootView = inflater.inflate(R.layout.fragment_citychooser, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
+        App.plus().inject(this);
         compositeDisposable = new CompositeDisposable();
 
-//        compositeDisposable.add(RxAutoCompleteTextView.itemClickEvents(editTextSearchCity).subscribe(adapterViewItemClickEvent -> {
-//            selectItem(citiesSuggestAdapter.getItem(adapterViewItemClickEvent.position()));
-//        }));
+        recyclerViewCities.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
 
-        compositeDisposable.add(RxTextView.textChanges(editTextSearchCity)
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+                int position = viewHolder.getAdapterPosition();
+                presenter.onSavedCityDeleted(savedCitiesAdapter.getItem(position));
+                savedCitiesAdapter.remove(position);
+            }
+        });
+
+        citiesAutosuggestAdapter = new CitiesAutosuggestAdapter(this.getContext());
+        addDisp(citiesAutosuggestAdapter.clicks()
+                .subscribe(presenter::onSuggestionClick));
+
+        savedCitiesAdapter = new SavedCitiesAdapter(this.getContext());
+        addDisp(savedCitiesAdapter.clicks()
+                .subscribe(presenter::onSelectedCityClick));
+
+        addDisp(RxTextView.textChanges(editTextSearchCity)
                 .filter(charSequence -> charSequence.length() > 0)
-                .debounce(250, TimeUnit.MILLISECONDS)
+                .debounce(200, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .map(String::trim)
                 .subscribe(presenter::onSearchQueryUpdated));
 
-//        Autocomplete.on(editTextSearchCity)
-//                .re
-
-        setSearchLayout(false);
+        presenter.onAttach(this);
         return rootView;
     }
 
@@ -103,16 +126,32 @@ public class CityChooserFragment extends Fragment implements CityView {
     }
 
     @Override
-    public void updateData(City cities) {
-        /*
-        if (citiesSuggestAdapter == null) {
-            citiesSuggestAdapter = new CitiesAdapter(this.getContext(), cities);
-            citiesSuggestAdapter.setNotifyOnChange(true);
-            editTextSearchCity.setAdapter(citiesSuggestAdapter);
-        } else {
-            citiesSuggestAdapter.updateData(cities);
-        }
-        */
+    public void showSuggestions(List<City> cities) {
+        citiesAutosuggestAdapter.setData(new ArrayList<>(cities));
+    }
+
+    @Override
+    public void addSavedCityToList(City city) {
+        savedCitiesAdapter.addItem(city);
+    }
+
+    @Override
+    public void showCurrentCity(City city) {
+        if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
+        textViewCurrentCity.setText(city.getName());
+    }
+
+    @Override
+    public void showSearchState(boolean showSearch) {
+        fab.setOnClickListener(v -> showSearchState(!showSearch));
+        fab.setImageResource(showSearch ? R.drawable.ic_all_close_black_24dp : R.drawable.ic_all_add_black_24dp);
+        textViewTitle.setText(showSearch ? R.string.citychooser_header_add_city : R.string.citychooser_header_current_city);
+        textViewCurrentCity.setVisibility(showSearch ? View.GONE : View.VISIBLE);
+        editTextSearchCity.setVisibility(showSearch ? View.VISIBLE : View.GONE);
+        editTextSearchCity.setText("");
+        recyclerViewCities.setAdapter(showSearch ? citiesAutosuggestAdapter : savedCitiesAdapter);
+        itemTouchHelper.attachToRecyclerView(showSearch ? null : recyclerViewCities);
+        if (showSearch) citiesAutosuggestAdapter.clear();
     }
 
     @Override
@@ -124,30 +163,12 @@ public class CityChooserFragment extends Fragment implements CityView {
         onCitySelectedListener = listener;
     }
 
-    /**
-     * Switches the layout elements between two states: a layout with a list of saved cities
-     * and a layout with a search field.
-     *
-     * @param useSearchLayout whether use search or default layout
-     */
-    private void setSearchLayout(boolean useSearchLayout) {
-        fab.setOnClickListener(v -> setSearchLayout(!useSearchLayout));
-        fab.setImageResource(useSearchLayout ? R.drawable.ic_all_close_black_24dp : R.drawable.ic_all_add_black_24dp);
-        textViewTitle.setText(useSearchLayout ? R.string.citychooser_header_add_city : R.string.citychooser_header_current_city);
-        textViewCurrentCity.setVisibility(useSearchLayout ? View.GONE : View.VISIBLE);
-        editTextSearchCity.setVisibility(useSearchLayout ? View.VISIBLE : View.GONE);
-        // TODO Update recyclerview data
-    }
-
-    private void selectItem(City city) {
-        if (city != null) {
-            presenter.onCitySelected(city);
-            if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
-        }
-        // TODO Close the bottom sheet here
+    private void addDisp(Disposable disposable) {
+        compositeDisposable.add(disposable);
     }
 
     public interface OnCitySelectedListener {
+
         void onSelected(City city);
     }
 

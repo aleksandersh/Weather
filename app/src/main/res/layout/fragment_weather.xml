@@ -23,7 +23,7 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <!--BottomSheetBehaviour won't work with a @dimen reference, so we're using hardcoded values -->
+    <!--BottomSheetBehaviour won't work with references, so we're using hardcoded values -->
     <FrameLayout
         android:id="@+id/weather_bottomsheet"
         android:layout_width="match_parent"

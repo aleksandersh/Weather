@@ -3,17 +3,26 @@ package com.aleksandersh.weather.features.city.domain.interactor;
 
 import com.aleksandersh.weather.features.city.data.model.storable.City;
 
-import io.reactivex.Observable;
+import java.util.List;
+
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 
 /**
- * Created by Vladimir Kondenko on 08.08.17.
+ * Created by Vladimir Kondenko on 23.07.17.
  */
 
 public interface CityInteractor {
 
-    Observable<City> getSuggestions(String name);
+    Single<List<City>> getSuggestions(String name);
 
-    void saveCity(City city);
+    Flowable<City> getSavedCities();
+
+    void addCity(City city);
+
+    void updateCurrentCity(City city);
+
+    void deleteSavedCity(City city);
 
 }

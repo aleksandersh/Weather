@@ -2,7 +2,7 @@ package com.aleksandersh.weather.domain;
 
 
 import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
-import com.aleksandersh.weather.features.city.domain.repository.CityRepository;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
 import com.aleksandersh.weather.features.city.presentation.CityView;
 import com.aleksandersh.weather.storage.PreferencesHelper;
@@ -27,14 +27,14 @@ import static org.mockito.Mockito.when;
 public class CityPresenterTest {
 
     private CityView cityView;
-    private CityRepository client;
+    private CityInteractor client;
     private PreferencesHelper preferencesHelper;
     private CityPresenter cityPresenter;
 
     @Before
     public void setUp() throws Exception {
         cityView = mock(CityView.class);
-        client = mock(CityRepository.class);
+        client = mock(CityInteractor.class);
         preferencesHelper = mock(PreferencesHelper.class);
         cityPresenter = new CityPresenter(client);
         cityPresenter.onAttach(cityView);
@@ -49,13 +49,13 @@ public class CityPresenterTest {
     public void onQueryUpdated() throws Exception {
         when(client.getCity(anyString())).thenReturn(Single.just(new ArrayList<>()));
         cityPresenter.onSearchQueryUpdated("Moscow");
-        verify(cityView).updateData(anyList());
+        verify(cityView).showSuggestions(anyList());
     }
 
     @Test
     public void onCitySelected() throws Exception {
         CityDto city = mock(CityDto.class);
-        cityPresenter.onCitySelected(city);
+        cityPresenter.onSuggestionClick(city);
         verify(preferencesHelper).saveCity(city);
     }
 

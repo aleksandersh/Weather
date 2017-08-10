@@ -61,26 +61,22 @@
                 android:layout_height="wrap_content"
                 >
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/citychooser_header_textview_search_city_parent"
+                <EditText
+                    android:id="@+id/citychooser_textview_search_city"
+                    style="@style/AppTheme.Weather.CityChooser.Header.City"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    >
-
-                    <EditText
-                        android:id="@+id/citychooser_textview_search_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/city_chooser_hint_city_name"
-                        android:maxLines="1"
-                        />
-
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:hint="@string/city_chooser_hint_city_name"
+                    android:maxLines="1"
+                    tools:text="Moscow"
+                    />
 
                 <TextView
                     android:id="@+id/citychooser_textview_current_city"
+                    style="@style/AppTheme.Weather.CityChooser.Header.City"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    tools:text="Moscow"
                     />
 
             </FrameLayout>
