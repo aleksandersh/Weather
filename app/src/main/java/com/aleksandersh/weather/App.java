@@ -2,7 +2,6 @@ package com.aleksandersh.weather;
 
 
 import android.app.Application;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.aleksandersh.weather.di.component.AppComponent;
 import com.aleksandersh.weather.di.component.DaggerAppComponent;
@@ -15,6 +14,9 @@ import com.aleksandersh.weather.features.city.di.CitySubcomponent;
 import com.aleksandersh.weather.features.weather.di.WeatherComponent;
 import com.aleksandersh.weather.features.weather.di.WeatherModule;
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
+
+import timber.log.Timber;
 
 
 /**
@@ -34,8 +36,12 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (com.aleksandersh.weather.BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+        if (LeakCanary.isInAnalyzerProcess(this)) return;
+        if (com.aleksandersh.weather.BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+            Stetho.initializeWithDefaults(this);
+            LeakCanary.install(this);
+        }
         appComponent = buildAppComponent();
     }
 

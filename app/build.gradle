@@ -74,6 +74,8 @@ ext {
     stethoVersion = "1.5.0"
     autocompleteVersion = "1.0.1"
     roomVersion = "1.0.0-alpha5"
+    timberVersion = "4.5.1"
+    leakCanaryVersion = "1.5.2"
 }
 
 
@@ -90,10 +92,9 @@ dependencies {
     }
 
     // Room
-
     compile "android.arch.persistence.room:runtime:$roomVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
     compile "android.arch.persistence.room:rxjava2:$roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
 
     // Butterknife
     compile "com.jakewharton:butterknife:$butterknifeVersion"
@@ -105,6 +106,7 @@ dependencies {
     compile "com.android.support:preference-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:support-annotations:$supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
     compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
     // Retrofit
@@ -120,15 +122,19 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     compile "com.jakewharton.rxbinding2:rxbinding:$rxBindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rxBindingVersion"
 
     // Misc
     compile "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
-    compile "com.otaliastudios:autocomplete:$autocompleteVersion"
+    compile "com.jakewharton.timber:timber:$timberVersion"
 
     // Debug
 
     debugCompile "com.facebook.stetho:stetho:$stethoVersion"
     debugCompile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
 
     // Testing
 
