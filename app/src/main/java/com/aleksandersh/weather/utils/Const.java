@@ -13,7 +13,7 @@ public class Const {
 
     public static final String API_KEY_PARAM_WEATHER = "APPID";
     public static final String API_KEY_PARAM_CITY = "username";
-    public static final String API_KEY_WEATHER = "7eb42e583dff5e64a589739dd927bd0c";
+    public static final String API_KEY_WEATHER = "ebcf125b2965d70aa459c2328d8a1e89";
     public static final String API_KEY_CITY = "vladimirkondenko"; // В сервисе используется имя аккаунта вместо API-ключа
 //    public static final String API_KEY_CITY = "google";
 
