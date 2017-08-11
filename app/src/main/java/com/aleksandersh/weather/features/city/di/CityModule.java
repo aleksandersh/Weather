@@ -8,7 +8,6 @@ import com.aleksandersh.weather.features.city.data.repository.CityInteractorImpl
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
-import com.aleksandersh.weather.storage.AppDatabase;
 import com.aleksandersh.weather.utils.Const;
 
 import javax.inject.Named;
@@ -35,12 +34,6 @@ public class CityModule {
     @ScreenScope
     public CityHttpService provideService(@Named(Const.DI_API_SCOPE_CITY) Retrofit retrofit) {
         return retrofit.create(CityHttpService.class);
-    }
-
-    @Provides
-    @ScreenScope
-    public CityDao provideCityDao(AppDatabase database) {
-        return database.cityDao();
     }
 
     @Provides

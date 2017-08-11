@@ -19,10 +19,12 @@ public interface CityInteractor {
 
     Flowable<City> getSavedCities();
 
-    void addCity(City city);
+    Single<City> getCurrentCity();
 
     void updateCurrentCity(City city);
 
-    void deleteSavedCity(City city);
+    void addCity(City city);
+
+    void deleteCity(City city);
 
 }

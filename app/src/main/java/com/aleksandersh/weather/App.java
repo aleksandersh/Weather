@@ -56,6 +56,7 @@ public class App extends Application {
                 .networkModule(new NetworkModule())
                 .serviceModule(new ServiceModule())
                 .weatherModule(new WeatherModule())
+                .
                 .build();
     }
 

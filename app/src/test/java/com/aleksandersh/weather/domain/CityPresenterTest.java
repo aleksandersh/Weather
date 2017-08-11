@@ -5,7 +5,7 @@ import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
 import com.aleksandersh.weather.features.city.presentation.CityView;
-import com.aleksandersh.weather.storage.PreferencesHelper;
+import com.aleksandersh.weather.storage.SettingsDao;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,14 +28,14 @@ public class CityPresenterTest {
 
     private CityView cityView;
     private CityInteractor client;
-    private PreferencesHelper preferencesHelper;
+    private SettingsDao preferencesHelper;
     private CityPresenter cityPresenter;
 
     @Before
     public void setUp() throws Exception {
         cityView = mock(CityView.class);
         client = mock(CityInteractor.class);
-        preferencesHelper = mock(PreferencesHelper.class);
+        preferencesHelper = mock(SettingsDao.class);
         cityPresenter = new CityPresenter(client);
         cityPresenter.onAttach(cityView);
     }

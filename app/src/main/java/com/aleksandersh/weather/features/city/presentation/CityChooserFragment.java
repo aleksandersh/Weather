@@ -154,17 +154,22 @@ public class CityChooserFragment extends Fragment implements CityView {
         if (showSearch) citiesAutosuggestAdapter.clear();
     }
 
-    @Override
-    public void showError(Throwable throwable) {
-        Log.e(TAG, throwable.getMessage(), throwable);
-    }
-
     public void setOnCitySelectedListener(OnCitySelectedListener listener) {
         onCitySelectedListener = listener;
     }
 
     private void addDisp(Disposable disposable) {
         compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void showLoading(boolean show) {
+
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        Log.e(TAG, throwable.getMessage(), throwable);
     }
 
     public interface OnCitySelectedListener {

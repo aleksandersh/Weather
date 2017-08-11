@@ -3,7 +3,7 @@ package com.aleksandersh.weather.features.city.presentation;
 
 import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
-import com.aleksandersh.weather.utils.Utils;
+import com.aleksandersh.weather.utils.BasePresenter;
 
 import javax.inject.Inject;
 
@@ -15,34 +15,24 @@ import timber.log.Timber;
  * Created by Vladimir Kondenko on 23.07.17.
  */
 
-public class CityPresenter {
-
-    private CityView view;
+public class CityPresenter extends BasePresenter<CityView> {
 
     private CityInteractor interactor;
 
-    private CompositeDisposable disposables = null;
-
     @Inject
     public CityPresenter(CityInteractor interactor, CompositeDisposable compositeDisposable) {
+        super(compositeDisposable);
         this.interactor = interactor;
-        this.disposables = compositeDisposable;
     }
 
     public void onAttach(CityView view) {
-        this.view = view;
-        // Initial state
+        super.onAttach(view);
         view.showSearchState(false);
         onSavedCitiesRequested();
     }
 
-    public void onDetach() {
-        Utils.dispose(disposables);
-        view = null;
-    }
-
     public void onSearchQueryUpdated(String name) {
-        disposables.add(interactor.getSuggestions(name).subscribe(view::showSuggestions, view::showError));
+        disposables.add(interactor.getSuggestions(name).subscribe(view::showSuggestions, (errorMessageId) -> view.showError(errorMessageId)));
     }
 
     public void onSavedCitiesRequested() {
@@ -51,7 +41,7 @@ public class CityPresenter {
                 .doOnNext(city -> {
                     if (city.isCurrent()) view.showCurrentCity(city);
                 })
-                .subscribe(view::addSavedCityToList, view::showError));
+                .subscribe(view::addSavedCityToList, (errorMessageId) -> view.showError(errorMessageId)));
     }
 
     public void onSuggestionClick(City city) {
@@ -66,7 +56,7 @@ public class CityPresenter {
     }
 
     public void onSavedCityDeleted(City city) {
-        interactor.deleteSavedCity(city);
+        interactor.deleteCity(city);
     }
 
 }

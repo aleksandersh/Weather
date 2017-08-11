@@ -1,14 +1,15 @@
 package com.aleksandersh.weather.service;
 
 
-import android.os.AsyncTask;
-
 import com.aleksandersh.weather.App;
-import com.aleksandersh.weather.features.weather.presentation.WeatherPresenter;
+import com.aleksandersh.weather.features.weather.domain.interactor.WeatherInteractor;
+import com.aleksandersh.weather.utils.Utils;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -22,9 +23,9 @@ public class WeatherUpdatingJobService extends JobService {
     static final String TAG = "WeatherUpdatingJobS";
 
     @Inject
-    WeatherPresenter weatherPresenter;
+    WeatherInteractor weatherInteractor;
 
-    private UpdatingWeatherTask backgroundTask;
+    private Disposable weatherDisposable;
 
     @Override
     public void onCreate() {
@@ -34,37 +35,14 @@ public class WeatherUpdatingJobService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters job) {
-        backgroundTask = new UpdatingWeatherTask(job);
-        backgroundTask.execute();
-
+        weatherDisposable = weatherInteractor.getCurrentWeather().subscribe();
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters job) {
-        if (backgroundTask != null) {
-            backgroundTask.cancel(true);
-        }
+        Utils.dispose(weatherDisposable);
         return true;
     }
 
-    private class UpdatingWeatherTask extends AsyncTask<Void, Void, Void> {
-
-        private JobParameters jobParameters;
-
-        public UpdatingWeatherTask(JobParameters jobParameters) {
-           this.jobParameters = jobParameters;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            weatherPresenter.updateWeather();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            jobFinished(jobParameters, false);
-        }
-    }
 }

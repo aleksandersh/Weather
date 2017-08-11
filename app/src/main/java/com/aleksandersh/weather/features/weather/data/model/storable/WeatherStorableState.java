@@ -1,6 +1,10 @@
 package com.aleksandersh.weather.features.weather.data.model.storable;
 
 
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Date;
 
 
@@ -10,12 +14,17 @@ import java.util.Date;
  * Сохраненное состояние погоды. Используется при работе с хранилищем.
  */
 
+@Entity(tableName = "saved_weather")
 public class WeatherStorableState {
 
+    @Embedded
+    @PrimaryKey
     private Weather weather;
 
+    @Embedded
     private WeatherRequest request;
 
+    @Embedded
     private Date date;
 
     public WeatherStorableState(Weather weather, WeatherRequest request, Date date) {

@@ -1,7 +1,13 @@
 package com.aleksandersh.weather.features.weather.storage;
 
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
+
+import io.reactivex.Single;
 
 
 /**
@@ -10,9 +16,13 @@ import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStor
  * Интерфейс для обращения к хранилищу с данными.
  */
 
+@Dao
 public interface WeatherDao {
 
+    @Insert
     void saveWeather(WeatherStorableState storableState);
 
-    WeatherStorableState getWeatherByCityId(long cityId);
+    @Query("SELECT * FROM saved_weather")
+    Single<WeatherStorableState> getSavedWeather();
+
 }

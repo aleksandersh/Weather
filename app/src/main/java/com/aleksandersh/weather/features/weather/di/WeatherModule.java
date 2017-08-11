@@ -1,19 +1,18 @@
 package com.aleksandersh.weather.features.weather.di;
 
 
-import android.content.Context;
-
+import com.aleksandersh.weather.features.city.data.dao.CityDao;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.weather.data.model.WeatherDtoConverter;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.features.weather.data.model.transferable.CurrentWeatherDto;
-import com.aleksandersh.weather.features.weather.data.repository.CurrentWeatherRepositoryImpl;
-import com.aleksandersh.weather.features.weather.domain.repository.CurrentWeatherRepository;
-import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherHttpService;
+import com.aleksandersh.weather.features.weather.domain.interactor.WeatherInteractor;
+import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherService;
 import com.aleksandersh.weather.features.weather.presentation.WeatherPresenter;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
-import com.aleksandersh.weather.features.weather.storage.WeatherDatabaseDao;
+import com.aleksandersh.weather.storage.AppDatabase;
 import com.aleksandersh.weather.storage.DtoConverter;
-import com.aleksandersh.weather.storage.PreferencesHelper;
+import com.aleksandersh.weather.storage.SettingsDao;
 import com.aleksandersh.weather.utils.Const;
 
 import javax.inject.Named;
@@ -21,6 +20,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
 
 
@@ -31,16 +31,10 @@ import retrofit2.Retrofit;
 @Module
 public class WeatherModule {
 
-//    private WeatherView view;
-
-//    public WeatherModule(WeatherView view) {
-//        this.view = view;
-//    }
-
     @Provides
     @Singleton
-    public WeatherDao provideWeatherDao(Context context) {
-        return new WeatherDatabaseDao(context);
+    public WeatherDao provideWeatherDao(AppDatabase database) {
+        return database.weatherDao();
     }
 
     @Provides
@@ -51,24 +45,26 @@ public class WeatherModule {
 
     @Provides
     @Singleton
-    public CurrentWeatherHttpService provideCurrentWeatherHttpService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
-        return retrofit.create(CurrentWeatherHttpService.class);
+    public CurrentWeatherService provideCurrentWeatherHttpService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
+        return retrofit.create(CurrentWeatherService.class);
     }
 
     @Provides
     @Singleton
-    public CurrentWeatherRepository provideWeatherRepository(CurrentWeatherHttpService service, DtoConverter<CurrentWeatherDto, Weather> converter) {
-        return new CurrentWeatherRepositoryImpl(service, converter);
+    public WeatherInteractor provideInteractor(
+            CurrentWeatherService currentWeatherService,
+            SettingsDao settingsDao,
+            WeatherDao weatherDao,
+            CityDao cityDao,
+            DtoConverter<CurrentWeatherDto, Weather> dtoConverter) {
+        return new WeatherInteractor(currentWeatherService, settingsDao, weatherDao, cityDao, dtoConverter);
     }
+
 
     @Provides
     @Singleton
-    public WeatherPresenter provideWeatherPresenter(
-            Context context,
-            PreferencesHelper preferencesHelper,
-            CurrentWeatherRepository httpClient,
-            WeatherDao weatherDao) {
-        return new WeatherPresenter(context, preferencesHelper, httpClient, weatherDao);
+    public WeatherPresenter provideWeatherPresenter(WeatherInteractor weatherInteractor, CityInteractor cityInteractor, CompositeDisposable disposable) {
+        return new WeatherPresenter(weatherInteractor, cityInteractor,  disposable);
     }
 
 }
