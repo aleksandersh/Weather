@@ -9,11 +9,10 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.aleksandersh.weather.features.city.data.model.storable.City;
-import com.aleksandersh.weather.features.city.data.model.storable.LocationTuple;
+import com.aleksandersh.weather.features.city.data.model.storable.CurrentCity;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 
 /**
@@ -26,17 +25,11 @@ public interface CityDao {
     @Query("SELECT * FROM city")
     Flowable<City> getSavedCities();
 
-    @Query("SELECT * FROM city WHERE current='true'")
-    Maybe<City> getCurrentCity();
-
-    @Query("SELECT name FROM city WHERE current='true'")
-    Single<String> getCurrentCityName();
-
-    @Query("SELECT lat, lng FROM city WHERE current='true'")
-    Single<LocationTuple> getCurrentLocation();
+    @Query("SELECT * FROM current_city")
+    Maybe<CurrentCity> getCurrentCity();
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateCurrentCity(City city);
+    void updateCurrentCity(CurrentCity city);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addCity(City city);

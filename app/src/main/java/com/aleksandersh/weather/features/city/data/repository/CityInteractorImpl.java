@@ -4,6 +4,7 @@ package com.aleksandersh.weather.features.city.data.repository;
 import com.aleksandersh.weather.features.city.data.dao.CityDao;
 import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
 import com.aleksandersh.weather.features.city.data.model.storable.City;
+import com.aleksandersh.weather.features.city.data.model.storable.CurrentCity;
 import com.aleksandersh.weather.features.city.data.model.transferable.CityResultDto;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.city.domain.service.CitySearchService;
@@ -69,6 +70,7 @@ public class CityInteractorImpl implements CityInteractor {
         return dao.getCurrentCity()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .map(CurrentCity::getCurrentCity)
                 .defaultIfEmpty(getDefaultCityObject())
                 .toSingle()
                 ;
@@ -76,8 +78,7 @@ public class CityInteractorImpl implements CityInteractor {
 
     @Override
     public void updateCurrentCity(City city) {
-        city.setCurrent(true);
-        Utils.transaction(() -> dao.updateCurrentCity(city));
+        Utils.transaction(() -> dao.updateCurrentCity(converter.convert(city)));
     }
 
     @Override
@@ -106,8 +107,9 @@ public class CityInteractorImpl implements CityInteractor {
     }
 
     private City getDefaultCityObject() {
-        City moscow = new City(524894, "Moscow", "Russia", 37.60667, 55.76167, true);
-        return moscow;
+        City defaultCity = new City(524894, "Moscow", "Russia", 37.60667, 55.76167, true);
+        addCity(defaultCity);
+        return defaultCity;
     }
 
 }

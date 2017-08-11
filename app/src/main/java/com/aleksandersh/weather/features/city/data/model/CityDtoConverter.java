@@ -2,6 +2,7 @@ package com.aleksandersh.weather.features.city.data.model;
 
 
 import com.aleksandersh.weather.features.city.data.model.storable.City;
+import com.aleksandersh.weather.features.city.data.model.storable.CurrentCity;
 import com.aleksandersh.weather.features.city.data.model.transferable.CityDto;
 import com.aleksandersh.weather.storage.DtoConverter;
 
@@ -17,6 +18,10 @@ public class CityDtoConverter implements DtoConverter<CityDto, City> {
         double lng = Double.parseDouble(dto.getLng());
         double lat = Double.parseDouble(dto.getLat());
         return new City(dto.getCityId(), dto.getName(), dto.getCountryName(), lng, lat, false);
+    }
+
+    public CurrentCity convert(City city) {
+        return new CurrentCity(city);
     }
 
 }
