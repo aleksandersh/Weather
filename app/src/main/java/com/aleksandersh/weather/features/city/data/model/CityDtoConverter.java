@@ -17,7 +17,7 @@ public class CityDtoConverter implements DtoConverter<CityDto, City> {
     public City convert(CityDto dto) {
         double lng = Double.parseDouble(dto.getLng());
         double lat = Double.parseDouble(dto.getLat());
-        return new City(dto.getCityId(), dto.getName(), dto.getCountryName(), lng, lat, false);
+        return new City(dto.getCityId(), dto.getName(), dto.getCountryName(), lat, lng);
     }
 
     public CurrentCity convert(City city) {

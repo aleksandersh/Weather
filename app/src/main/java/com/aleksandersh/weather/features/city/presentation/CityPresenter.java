@@ -7,8 +7,6 @@ import com.aleksandersh.weather.utils.BasePresenter;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 
 /**
  * Created by Vladimir Kondenko on 23.07.17.
@@ -31,19 +29,12 @@ public class CityPresenter extends BasePresenter<CityView> {
     }
 
     public void onSearchQueryUpdated(String name) {
-        disposables.add(interactor.getSuggestions(name).subscribe(view::showSuggestions, view::showError));
+        add(interactor.getSuggestions(name).subscribe(view::showSuggestions, view::showError));
     }
 
     public void onSavedCitiesRequested() {
-        disposables.add(interactor.getSavedCities()
-                .doOnNext(city -> {
-                    Timber.i("Saved city: " + city);
-                    if (city.isCurrent()) {
-                        Timber.i("It's current, showing");
-                        view.showCurrentCity(city);
-                    }
-                })
-                .subscribe(view::addSavedCityToList, view::showError));
+        add(interactor.getSavedCities().subscribe(view::addSavedCityToList, view::showError));
+        add(interactor.getCurrentCity().subscribe(view::showCurrentCity, view::showError));
     }
 
     public void onSuggestionClick(City city) {

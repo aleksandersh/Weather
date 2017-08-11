@@ -6,7 +6,9 @@ import com.aleksandersh.weather.features.weather.data.model.WeatherDtoConverter;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherRequest;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
+import com.aleksandersh.weather.features.weather.data.model.transferable.forecast.ForecastResultDto;
 import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherService;
+import com.aleksandersh.weather.features.weather.domain.service.ForecastService;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
 import com.aleksandersh.weather.storage.SettingsDao;
 import com.aleksandersh.weather.utils.Utils;
@@ -28,6 +30,7 @@ import timber.log.Timber;
 public class WeatherInteractor {
 
     private CurrentWeatherService currentWeatherService;
+    private ForecastService forecastService;
     private SettingsDao settingsDao;
     private WeatherDao weatherDao;
     private WeatherDtoConverter converter;
@@ -35,13 +38,24 @@ public class WeatherInteractor {
     @Inject
     public WeatherInteractor(
             CurrentWeatherService currentWeatherService,
+            ForecastService forecastService,
             SettingsDao settingsDao,
             WeatherDao weatherDao,
             WeatherDtoConverter converter) {
         this.currentWeatherService = currentWeatherService;
+        this.forecastService = forecastService;
         this.settingsDao = settingsDao;
         this.weatherDao = weatherDao;
         this.converter = converter;
+    }
+
+    public Single<ForecastResultDto> getForecast(City city) {
+        Timber.i("Getting forecast for " + city.getName());
+        String units = settingsDao.getUnits();
+        String locale = settingsDao.getLocale();
+        return forecastService.getForecast(city.getLat(), city.getLng(), units, locale)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Weather> getCurrentWeather(City city) {
@@ -54,7 +68,7 @@ public class WeatherInteractor {
                 .map(converter::convert)
                 .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale))
                 .doOnSuccess(weather -> Timber.i("Weather found - " + weather.getTemperature()))
-//                .onErrorResumeNext(getSavedWeather())
+                .onErrorResumeNext(getSavedWeather())
                 ;
     }
 

@@ -19,6 +19,7 @@ import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
 import com.aleksandersh.weather.features.city.presentation.CityChooserFragment;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
+import com.aleksandersh.weather.features.weather.data.model.transferable.forecast.ForecastResultDto;
 import com.aleksandersh.weather.utils.IconMapper;
 
 import java.util.Locale;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 
 /**
@@ -144,6 +146,11 @@ public class WeatherFragment extends Fragment implements WeatherView {
         if (iconId != 0) {
             imageViewCondition.setImageDrawable(ContextCompat.getDrawable(getActivity(), iconId));
         }
+    }
+
+    @Override
+    public void showForecast(ForecastResultDto forecast) {
+        Timber.i("Showing forecast " + forecast);
     }
 
     @Override

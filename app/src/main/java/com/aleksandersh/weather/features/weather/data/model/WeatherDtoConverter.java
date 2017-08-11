@@ -2,11 +2,11 @@ package com.aleksandersh.weather.features.weather.data.model;
 
 
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.model.transferable.CloudsDto;
-import com.aleksandersh.weather.features.weather.data.model.transferable.CurrentWeatherDto;
-import com.aleksandersh.weather.features.weather.data.model.transferable.GeneralDto;
-import com.aleksandersh.weather.features.weather.data.model.transferable.WeatherConditionDto;
-import com.aleksandersh.weather.features.weather.data.model.transferable.WindDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.current.CloudsDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.current.CurrentWeatherDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.current.GeneralDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.current.WeatherConditionDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.current.WindDto;
 import com.aleksandersh.weather.storage.DtoConverter;
 import com.aleksandersh.weather.utils.IconMapper;
 

@@ -40,8 +40,7 @@ public class WeatherUpdatingJobService extends JobService {
     @Override
     public boolean onStartJob(final JobParameters job) {
         weatherDisposable = cityInteractor.getCurrentCity()
-                .doAfterSuccess(city -> weatherInteractor.getCurrentWeather(city).subscribe())
-                .subscribe();
+                .subscribe(city -> weatherInteractor.getCurrentWeather(city).subscribe());
         return true;
     }
 

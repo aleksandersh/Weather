@@ -5,6 +5,7 @@ import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.weather.data.model.WeatherDtoConverter;
 import com.aleksandersh.weather.features.weather.domain.interactor.WeatherInteractor;
 import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherService;
+import com.aleksandersh.weather.features.weather.domain.service.ForecastService;
 import com.aleksandersh.weather.features.weather.presentation.WeatherPresenter;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
 import com.aleksandersh.weather.storage.AppDatabase;
@@ -40,18 +41,25 @@ public class WeatherModule {
 
     @Provides
     @Singleton
-    public CurrentWeatherService provideCurrentWeatherHttpService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
+    public CurrentWeatherService provideCurrentWeatherService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
         return retrofit.create(CurrentWeatherService.class);
+    }
+
+    @Provides
+    @Singleton
+    public ForecastService provideForecastService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
+        return retrofit.create(ForecastService.class);
     }
 
     @Provides
     @Singleton
     public WeatherInteractor provideInteractor(
             CurrentWeatherService currentWeatherService,
+            ForecastService forecastService,
             SettingsDao settingsDao,
             WeatherDao weatherDao,
             WeatherDtoConverter dtoConverter) {
-        return new WeatherInteractor(currentWeatherService, settingsDao, weatherDao, dtoConverter);
+        return new WeatherInteractor(currentWeatherService, forecastService, settingsDao, weatherDao, dtoConverter);
     }
 
 

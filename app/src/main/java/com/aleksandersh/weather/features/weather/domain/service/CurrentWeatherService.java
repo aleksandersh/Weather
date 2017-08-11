@@ -1,7 +1,7 @@
 package com.aleksandersh.weather.features.weather.domain.service;
 
 
-import com.aleksandersh.weather.features.weather.data.model.transferable.CurrentWeatherDto;
+import com.aleksandersh.weather.features.weather.data.model.transferable.current.CurrentWeatherDto;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

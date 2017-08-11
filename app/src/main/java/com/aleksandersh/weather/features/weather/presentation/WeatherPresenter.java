@@ -1,6 +1,7 @@
 package com.aleksandersh.weather.features.weather.presentation;
 
 
+import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.weather.domain.interactor.WeatherInteractor;
 import com.aleksandersh.weather.utils.BasePresenter;
@@ -34,20 +35,29 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     }
 
     public void onUpdate() {
-        getCurrentWeather();
+        add(cityInteractor.getCurrentCity()
+                .subscribe(
+                        city -> {
+                            Timber.i("City found: " + city);
+                            view.showCurrentCity(city.getName());
+                            getCurrentWeather(city);
+                            getForecast(city);
+                        },
+                        error -> {
+                            view.showError(error);
+                        })
+        );
     }
 
-    private void getCurrentWeather() {
-        add(cityInteractor.getCurrentCity()
-                .subscribe(city -> {
-                    Timber.i("City found: " + city.getName());
-                    view.showCurrentCity(city.getName());
-                    weatherInteractor.getCurrentWeather(city)
-                            .doOnSuccess(w -> view.showLoading(false))
-                            .subscribe(view::showCurrentWeather, view::showError);
+    private void getForecast(City city) {
+        weatherInteractor.getForecast(city)
+                .subscribe(view::showForecast, view::showError);
+    }
 
-                }, view::showError)
-        );
+    private void getCurrentWeather(City city) {
+        weatherInteractor.getCurrentWeather(city)
+                .doOnSuccess(w -> view.showLoading(false))
+                .subscribe(view::showCurrentWeather, view::showError);
     }
 
 }

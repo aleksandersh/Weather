@@ -107,7 +107,7 @@ public class CityInteractorImpl implements CityInteractor {
     }
 
     private City getDefaultCityObject() {
-        City defaultCity = new City(524894, "Moscow", "Russia", 37.60667, 55.76167, true);
+        City defaultCity = new City(524894, "Moscow", "Russia", 55.76167, 37.60667);
         addCity(defaultCity);
         return defaultCity;
     }

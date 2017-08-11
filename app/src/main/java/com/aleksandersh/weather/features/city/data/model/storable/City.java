@@ -1,7 +1,6 @@
 package com.aleksandersh.weather.features.city.data.model.storable;
 
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -24,16 +23,12 @@ public class City {
 
     private double lat;
 
-    @ColumnInfo(name = "current")
-    private boolean isCurrent;
-
-    public City(int id, String name, String countryName, double lng, double lat, boolean isCurrent) {
+    public City(int id, String name, String countryName, double lat, double lng) {
         this.id = id;
         this.name = name;
         this.countryName = countryName;
         this.lng = lng;
         this.lat = lat;
-        this.isCurrent = isCurrent;
     }
 
     public int getId() {
@@ -56,10 +51,6 @@ public class City {
         return lat;
     }
 
-    public boolean isCurrent() {
-        return isCurrent;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -80,10 +71,6 @@ public class City {
         this.lat = lat;
     }
 
-    public void setCurrent(boolean current) {
-        isCurrent = current;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,7 +79,6 @@ public class City {
         if (id != city.id) return false;
         if (Double.compare(city.lng, lng) != 0) return false;
         if (Double.compare(city.lat, lat) != 0) return false;
-        if (isCurrent != city.isCurrent) return false;
         if (name != null ? !name.equals(city.name) : city.name != null) return false;
         return countryName != null ? countryName.equals(city.countryName) : city.countryName == null;
 
@@ -109,12 +95,11 @@ public class City {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(lat);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (isCurrent ? 1 : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("City (%d): %s, %s, current = %b", id, name, countryName, isCurrent);
+        return String.format("City (%d): %s, %s", id, name, countryName);
     }
 }
