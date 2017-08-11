@@ -32,6 +32,12 @@ public class NetworkModule {
 
     @Provides
     @Singleton
+    public RxJava2CallAdapterFactory provideCallAdapterFactory() {
+        return RxJava2CallAdapterFactory.create();
+    }
+
+    @Provides
+    @Singleton
     @Named(Const.DI_API_SCOPE_CITY)
     public ApiKeyInterceptor provideCityApiKeyInterceptor() {
         return new ApiKeyInterceptor(Const.API_KEY_PARAM_CITY, Const.API_KEY_CITY);
@@ -74,24 +80,23 @@ public class NetworkModule {
     @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_CITY)
-    public Retrofit provideCityRetrofit(@Named(Const.DI_API_SCOPE_CITY) OkHttpClient client, GsonConverterFactory converterFactory) {
+    public Retrofit provideCityRetrofit(@Named(Const.DI_API_SCOPE_CITY) OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory callAdapterFactory) {
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(Const.BASE_URL_CITY)
                 .addConverterFactory(converterFactory)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(callAdapterFactory)
                 .build();
-
     }
 
-    @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_WEATHER)
-    public Retrofit provideWeatherRetrofit(@Named(Const.DI_API_SCOPE_WEATHER) OkHttpClient client, GsonConverterFactory converterFactory) {
+    public Retrofit provideWeatherRetrofit(@Named(Const.DI_API_SCOPE_WEATHER) OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory callAdapterFactory) {
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(Const.BASE_URL_WEATHER)
                 .addConverterFactory(converterFactory)
+                .addCallAdapterFactory(callAdapterFactory)
                 .build();
     }
 

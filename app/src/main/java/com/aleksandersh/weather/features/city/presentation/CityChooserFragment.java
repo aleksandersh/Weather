@@ -79,7 +79,7 @@ public class CityChooserFragment extends Fragment implements CityView {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_citychooser, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
-        App.plus().inject(this);
+        App.getAppComponent().inject(this);
         compositeDisposable = new CompositeDisposable();
 
         recyclerViewCities.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -122,7 +122,6 @@ public class CityChooserFragment extends Fragment implements CityView {
         presenter.onDetach();
         mUnbinder.unbind();
         compositeDisposable.dispose();
-        App.clearCitySubcomponent();
     }
 
     @Override

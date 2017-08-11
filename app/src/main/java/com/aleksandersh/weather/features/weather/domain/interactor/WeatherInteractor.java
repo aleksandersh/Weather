@@ -1,15 +1,13 @@
 package com.aleksandersh.weather.features.weather.domain.interactor;
 
 
-import com.aleksandersh.weather.features.city.data.dao.CityDao;
 import com.aleksandersh.weather.features.city.data.model.storable.City;
+import com.aleksandersh.weather.features.weather.data.model.WeatherDtoConverter;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherRequest;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
-import com.aleksandersh.weather.features.weather.data.model.transferable.CurrentWeatherDto;
 import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherService;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
-import com.aleksandersh.weather.storage.DtoConverter;
 import com.aleksandersh.weather.storage.SettingsDao;
 
 import java.util.Date;
@@ -30,20 +28,17 @@ public class WeatherInteractor {
     private CurrentWeatherService currentWeatherService;
     private SettingsDao settingsDao;
     private WeatherDao weatherDao;
-    private CityDao cityDao;
-    private DtoConverter<CurrentWeatherDto, Weather> converter;
+    private WeatherDtoConverter converter;
 
     @Inject
     public WeatherInteractor(
             CurrentWeatherService currentWeatherService,
             SettingsDao settingsDao,
             WeatherDao weatherDao,
-            CityDao cityDao,
-            DtoConverter<CurrentWeatherDto, Weather> converter) {
+            WeatherDtoConverter converter) {
         this.currentWeatherService = currentWeatherService;
         this.settingsDao = settingsDao;
         this.weatherDao = weatherDao;
-        this.cityDao = cityDao;
         this.converter = converter;
     }
 

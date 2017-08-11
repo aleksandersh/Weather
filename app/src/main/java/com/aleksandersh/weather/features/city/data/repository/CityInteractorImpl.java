@@ -6,7 +6,7 @@ import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
 import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.aleksandersh.weather.features.city.data.model.transferable.CityResultDto;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
-import com.aleksandersh.weather.features.city.domain.service.CityHttpService;
+import com.aleksandersh.weather.features.city.domain.service.CitySearchService;
 import com.aleksandersh.weather.utils.Const;
 import com.aleksandersh.weather.utils.Utils;
 
@@ -26,12 +26,12 @@ import io.reactivex.Single;
 
 public class CityInteractorImpl implements CityInteractor {
 
-    private CityHttpService service;
+    private CitySearchService service;
     private CityDao dao;
     private CityDtoConverter converter;
 
     @Inject
-    public CityInteractorImpl(CityHttpService service, CityDao cityDao, CityDtoConverter cityDtoConverter) {
+    public CityInteractorImpl(CitySearchService service, CityDao cityDao, CityDtoConverter cityDtoConverter) {
         this.service = service;
         this.dao = cityDao;
         this.converter = cityDtoConverter;

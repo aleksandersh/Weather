@@ -2,6 +2,7 @@ package com.aleksandersh.weather.service;
 
 
 import com.aleksandersh.weather.App;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.weather.domain.interactor.WeatherInteractor;
 import com.aleksandersh.weather.utils.Utils;
 import com.firebase.jobdispatcher.JobParameters;
@@ -25,6 +26,9 @@ public class WeatherUpdatingJobService extends JobService {
     @Inject
     WeatherInteractor weatherInteractor;
 
+    @Inject
+    CityInteractor cityInteractor;
+
     private Disposable weatherDisposable;
 
     @Override
@@ -35,7 +39,9 @@ public class WeatherUpdatingJobService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters job) {
-        weatherDisposable = weatherInteractor.getCurrentWeather().subscribe();
+        weatherDisposable = cityInteractor.getCurrentCity()
+                .doAfterSuccess(city -> weatherInteractor.getCurrentWeather(city).subscribe())
+                .subscribe();
         return true;
     }
 

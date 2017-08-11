@@ -12,7 +12,7 @@ import retrofit2.http.Query;
  * Created by Vladimir Kondenko on 22.07.17.
  */
 
-public interface CityHttpService {
+public interface CitySearchService {
 
     /**
      * Поиск города в базе данных GeoNames.

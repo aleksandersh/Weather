@@ -5,7 +5,6 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.aleksandersh.weather.features.city.data.dao.CityDao;
 import com.aleksandersh.weather.service.WeatherServiceScheduler;
 import com.aleksandersh.weather.storage.AppDatabase;
 import com.aleksandersh.weather.storage.SettingsChangeListener;
@@ -28,22 +27,15 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public SettingsDao provideSettingsDao(Context context) {
-        return new SettingsDao(context);
-    }
-
-    @Provides
-    @Singleton
     public AppDatabase provideDatabase(Context context) {
         return Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME).build();
     }
 
     @Provides
     @Singleton
-    public CityDao provideCityDao(AppDatabase database) {
-        return database.cityDao();
+    public SettingsDao provideSettingsDao(Context context) {
+        return new SettingsDao(context);
     }
-
 
     @Provides
     @Singleton

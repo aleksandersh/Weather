@@ -21,7 +21,7 @@ public class AppModule {
     private Context appContext;
 
     public AppModule(@NonNull Context appContext) {
-       this.appContext = appContext;
+        this.appContext = appContext;
     }
 
     @Provides
@@ -31,6 +31,7 @@ public class AppModule {
     }
 
     @Provides
+    // Should not be a singleton
     CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
     }
