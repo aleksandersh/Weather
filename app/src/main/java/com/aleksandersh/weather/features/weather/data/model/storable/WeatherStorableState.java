@@ -17,8 +17,10 @@ import java.util.Date;
 @Entity(tableName = "saved_weather")
 public class WeatherStorableState {
 
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
     @Embedded
-    @PrimaryKey
     private Weather weather;
 
     @Embedded

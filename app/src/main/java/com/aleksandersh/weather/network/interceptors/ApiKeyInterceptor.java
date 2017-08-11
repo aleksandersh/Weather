@@ -14,8 +14,6 @@ import okhttp3.Response;
  */
 public class ApiKeyInterceptor implements Interceptor {
 
-    private static final String TAG = "ApiKeyInterceptor";
-
     private String apiKey;
 
     private String paramName;
@@ -30,7 +28,6 @@ public class ApiKeyInterceptor implements Interceptor {
         Request request = chain.request();
         HttpUrl url = request.url().newBuilder().addQueryParameter(paramName, apiKey).build();
         request = request.newBuilder().url(url).build();
-        Response response = chain.proceed(request);
-        return response;
+        return chain.proceed(request);
     }
 }

@@ -7,7 +7,7 @@ import com.aleksandersh.weather.utils.BasePresenter;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 
 /**
@@ -20,8 +20,8 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     private CityInteractor cityInteractor;
 
     @Inject
-    public WeatherPresenter(WeatherInteractor weatherInteractor, CityInteractor cityInteractor, CompositeDisposable disposables) {
-        super(disposables);
+    public WeatherPresenter(WeatherInteractor weatherInteractor, CityInteractor cityInteractor) {
+        super();
         this.weatherInteractor = weatherInteractor;
         this.cityInteractor = cityInteractor;
     }
@@ -29,6 +29,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     @Override
     public void onAttach(WeatherView view) {
         super.onAttach(view);
+        view.showLoading(true);
         onUpdate();
     }
 
@@ -38,12 +39,14 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
 
     private void getCurrentWeather() {
         add(cityInteractor.getCurrentCity()
-                .doAfterSuccess(city -> {
+                .subscribe(city -> {
+                    Timber.i("City found: " + city.getName());
                     view.showCurrentCity(city.getName());
                     weatherInteractor.getCurrentWeather(city)
+                            .doOnSuccess(w -> view.showLoading(false))
                             .subscribe(view::showCurrentWeather, view::showError);
-                })
-                .subscribe()
+
+                }, view::showError)
         );
     }
 

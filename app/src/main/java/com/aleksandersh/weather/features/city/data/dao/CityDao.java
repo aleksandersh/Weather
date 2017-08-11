@@ -26,16 +26,16 @@ public interface CityDao {
     @Query("SELECT * FROM city")
     Flowable<City> getSavedCities();
 
-    @Query("SELECT * FROM city WHERE iscurrent='true'")
+    @Query("SELECT * FROM city WHERE current='true'")
     Maybe<City> getCurrentCity();
 
-    @Query("SELECT name FROM city WHERE iscurrent='true'")
+    @Query("SELECT name FROM city WHERE current='true'")
     Single<String> getCurrentCityName();
 
-    @Query("SELECT lat, lng FROM city WHERE iscurrent='true'")
+    @Query("SELECT lat, lng FROM city WHERE current='true'")
     Single<LocationTuple> getCurrentLocation();
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateCurrentCity(City city);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

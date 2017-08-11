@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
 
 
@@ -51,8 +50,8 @@ public class CityModule {
     }
 
     @Provides
-    public CityPresenter provideCityPresenter(CityInteractor interactor, CompositeDisposable compositeDisposable) {
-        return new CityPresenter(interactor, compositeDisposable);
+    public CityPresenter provideCityPresenter(CityInteractor interactor) {
+        return new CityPresenter(interactor);
     }
 
 }

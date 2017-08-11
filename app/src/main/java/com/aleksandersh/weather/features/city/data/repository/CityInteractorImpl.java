@@ -15,9 +15,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 /**
@@ -40,8 +42,8 @@ public class CityInteractorImpl implements CityInteractor {
     @Override
     public Single<List<City>> getSuggestions(String name) {
         return service.searchByName(name, name, Const.DEFAULT_SUGGESTIONS_NUMBER)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(CityResultDto::getCities)
                 .toObservable()
                 .flatMap(Observable::fromIterable)
@@ -55,20 +57,26 @@ public class CityInteractorImpl implements CityInteractor {
     @Override
     public Flowable<City> getSavedCities() {
         return dao.getSavedCities()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .defaultIfEmpty(getDefaultCityObject())
                 ;
     }
 
     @Override
     public Single<City> getCurrentCity() {
+        Timber.i("Getting current city");
         return dao.getCurrentCity()
-                .switchIfEmpty(getDefaultCity())
-                .toSingle();
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .defaultIfEmpty(getDefaultCityObject())
+                .toSingle()
+                ;
     }
 
     @Override
     public void updateCurrentCity(City city) {
+        city.setCurrent(true);
         Utils.transaction(() -> dao.updateCurrentCity(city));
     }
 
@@ -83,10 +91,23 @@ public class CityInteractorImpl implements CityInteractor {
     }
 
     // An ugly way to return Moscow as a default city
-    private MaybeSource<City> getDefaultCity() {
+    private Single<City> getDefaultCity() {
+        Timber.i("Using default city");
         return getSuggestions("Moscow")
-                .map(list -> list.get(0))
-                .toMaybe();
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toObservable()
+                .flatMap(Observable::fromIterable)
+                .take(1)
+                .doOnNext(this::addCity)
+                .doOnNext(this::updateCurrentCity)
+                .singleOrError()
+                ;
+    }
+
+    private City getDefaultCityObject() {
+        City moscow = new City(524894, "Moscow", "Russia", 37.60667, 55.76167, true);
+        return moscow;
     }
 
 }

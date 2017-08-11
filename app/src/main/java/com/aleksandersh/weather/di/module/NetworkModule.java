@@ -89,6 +89,7 @@ public class NetworkModule {
                 .build();
     }
 
+    @Provides
     @Singleton
     @Named(Const.DI_API_SCOPE_WEATHER)
     public Retrofit provideWeatherRetrofit(@Named(Const.DI_API_SCOPE_WEATHER) OkHttpClient client, GsonConverterFactory converterFactory, RxJava2CallAdapterFactory callAdapterFactory) {

@@ -1,16 +1,12 @@
 package com.aleksandersh.weather.features.weather.data.model.storable;
 
 
-import android.arch.persistence.room.PrimaryKey;
-
-
 /**
  * Created by AleksanderSh on 14.07.2017.
  */
 
 public class Weather {
 
-    @PrimaryKey
     private long cityId;
 
     private double temperature;

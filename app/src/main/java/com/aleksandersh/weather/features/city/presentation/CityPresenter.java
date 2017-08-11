@@ -7,7 +7,6 @@ import com.aleksandersh.weather.utils.BasePresenter;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 
@@ -20,8 +19,8 @@ public class CityPresenter extends BasePresenter<CityView> {
     private CityInteractor interactor;
 
     @Inject
-    public CityPresenter(CityInteractor interactor, CompositeDisposable compositeDisposable) {
-        super(compositeDisposable);
+    public CityPresenter(CityInteractor interactor) {
+        super();
         this.interactor = interactor;
     }
 
@@ -32,16 +31,19 @@ public class CityPresenter extends BasePresenter<CityView> {
     }
 
     public void onSearchQueryUpdated(String name) {
-        disposables.add(interactor.getSuggestions(name).subscribe(view::showSuggestions, (errorMessageId) -> view.showError(errorMessageId)));
+        disposables.add(interactor.getSuggestions(name).subscribe(view::showSuggestions, view::showError));
     }
 
     public void onSavedCitiesRequested() {
         disposables.add(interactor.getSavedCities()
-                .doOnNext(city -> Timber.i("Emitting " + city))
                 .doOnNext(city -> {
-                    if (city.isCurrent()) view.showCurrentCity(city);
+                    Timber.i("Saved city: " + city);
+                    if (city.isCurrent()) {
+                        Timber.i("It's current, showing");
+                        view.showCurrentCity(city);
+                    }
                 })
-                .subscribe(view::addSavedCityToList, (errorMessageId) -> view.showError(errorMessageId)));
+                .subscribe(view::addSavedCityToList, view::showError));
     }
 
     public void onSuggestionClick(City city) {
@@ -50,7 +52,7 @@ public class CityPresenter extends BasePresenter<CityView> {
         view.showCurrentCity(city);
     }
 
-    public void onSelectedCityClick(City city) {
+    public void onSavedCityClick(City city) {
         interactor.updateCurrentCity(city);
         view.showCurrentCity(city);
     }

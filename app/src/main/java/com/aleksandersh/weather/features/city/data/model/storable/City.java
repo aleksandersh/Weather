@@ -1,6 +1,7 @@
 package com.aleksandersh.weather.features.city.data.model.storable;
 
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -9,7 +10,7 @@ import android.arch.persistence.room.PrimaryKey;
  * Created by Vladimir Kondenko on 25.07.17.
  */
 
-@Entity
+@Entity(tableName = "city")
 public class City {
 
     @PrimaryKey
@@ -23,7 +24,8 @@ public class City {
 
     private double lat;
 
-    private boolean isCurrent = false;
+    @ColumnInfo(name = "current")
+    private boolean isCurrent;
 
     public City(int id, String name, String countryName, double lng, double lat, boolean isCurrent) {
         this.id = id;
@@ -80,6 +82,35 @@ public class City {
 
     public void setCurrent(boolean current) {
         isCurrent = current;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        if (id != city.id) return false;
+        if (Double.compare(city.lng, lng) != 0) return false;
+        if (Double.compare(city.lat, lat) != 0) return false;
+        if (isCurrent != city.isCurrent) return false;
+        if (name != null ? !name.equals(city.name) : city.name != null) return false;
+        return countryName != null ? countryName.equals(city.countryName) : city.countryName == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (countryName != null ? countryName.hashCode() : 0);
+        temp = Double.doubleToLongBits(lng);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(lat);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (isCurrent ? 1 : 0);
+        return result;
     }
 
     @Override

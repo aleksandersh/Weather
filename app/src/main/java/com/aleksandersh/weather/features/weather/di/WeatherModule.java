@@ -16,7 +16,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 import retrofit2.Retrofit;
 
 
@@ -57,8 +56,8 @@ public class WeatherModule {
 
 
     @Provides
-    public WeatherPresenter provideWeatherPresenter(WeatherInteractor weatherInteractor, CityInteractor cityInteractor, CompositeDisposable disposable) {
-        return new WeatherPresenter(weatherInteractor, cityInteractor, disposable);
+    public WeatherPresenter provideWeatherPresenter(WeatherInteractor weatherInteractor, CityInteractor cityInteractor) {
+        return new WeatherPresenter(weatherInteractor, cityInteractor);
     }
 
 }

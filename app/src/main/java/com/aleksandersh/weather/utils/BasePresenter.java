@@ -17,10 +17,8 @@ public abstract class BasePresenter<V extends BaseView> {
 
     protected CompositeDisposable disposables;
 
-    private BasePresenter() {}
-
-    public BasePresenter(CompositeDisposable disposables) {
-        this.disposables = disposables;
+    public BasePresenter() {
+        this.disposables = new CompositeDisposable();
     }
 
     @CallSuper

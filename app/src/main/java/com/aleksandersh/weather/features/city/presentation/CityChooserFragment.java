@@ -70,10 +70,6 @@ public class CityChooserFragment extends Fragment implements CityView {
     public CityChooserFragment() {
     }
 
-    public static CityChooserFragment newInstance() {
-        return new CityChooserFragment();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,7 +99,7 @@ public class CityChooserFragment extends Fragment implements CityView {
 
         savedCitiesAdapter = new SavedCitiesAdapter(this.getContext());
         addDisp(savedCitiesAdapter.clicks()
-                .subscribe(presenter::onSelectedCityClick));
+                .subscribe(presenter::onSavedCityClick));
 
         addDisp(RxTextView.textChanges(editTextSearchCity)
                 .filter(charSequence -> charSequence.length() > 0)
