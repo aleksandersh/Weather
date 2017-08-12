@@ -40,6 +40,7 @@ public class SavedCitiesAdapter extends BaseRxAdapter<City, SavedCitiesAdapter.V
 
         @Override
         public void bindItem(City city) {
+            super.bindItem(city);
             name.setText(city.getName());
         }
     }

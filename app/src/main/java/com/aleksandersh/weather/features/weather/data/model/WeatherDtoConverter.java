@@ -100,7 +100,7 @@ public class WeatherDtoConverter implements DtoConverter<CurrentWeatherDto, Weat
             description = stringBuilder.toString();
         }
 
-        return description;
+        return description.substring(0, 1).toUpperCase().concat(description.substring(1));
     }
 
 }

@@ -17,7 +17,7 @@ public class ForecastResultDto {
     private int cnt;
     @SerializedName("list")
     @Expose
-    private java.util.List<List> list = null;
+    private java.util.List<WeatherForecastDto> weatherForecastDto = null;
     @SerializedName("city")
     @Expose
     private City city;
@@ -46,12 +46,12 @@ public class ForecastResultDto {
         this.cnt = cnt;
     }
 
-    public java.util.List<List> getList() {
-        return list;
+    public java.util.List<WeatherForecastDto> getWeatherForecastDto() {
+        return weatherForecastDto;
     }
 
-    public void setList(java.util.List<List> list) {
-        this.list = list;
+    public void setWeatherForecastDto(java.util.List<WeatherForecastDto> weatherForecastDto) {
+        this.weatherForecastDto = weatherForecastDto;
     }
 
     public City getCity() {

@@ -30,15 +30,14 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     @Override
     public void onAttach(WeatherView view) {
         super.onAttach(view);
-        view.showLoading(true);
         onUpdate();
     }
 
     public void onUpdate() {
+        view.showLoading(true);
         add(cityInteractor.getCurrentCity()
                 .subscribe(
                         city -> {
-                            Timber.i("City found: " + city);
                             view.showCurrentCity(city.getName());
                             getCurrentWeather(city);
                             getForecast(city);
@@ -51,12 +50,14 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
 
     private void getForecast(City city) {
         weatherInteractor.getForecast(city)
+                .doFinally(() -> view.showLoading(false))
+                .doOnSuccess(forecastResultDto -> Timber.i(forecastResultDto.toString()))
                 .subscribe(view::showForecast, view::showError);
     }
 
     private void getCurrentWeather(City city) {
         weatherInteractor.getCurrentWeather(city)
-                .doOnSuccess(w -> view.showLoading(false))
+                .doFinally(() -> view.showLoading(false))
                 .subscribe(view::showCurrentWeather, view::showError);
     }
 

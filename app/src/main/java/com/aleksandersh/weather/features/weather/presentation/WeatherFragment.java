@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.features.weather.data.model.transferable.forecast.ForecastResultDto;
 import com.aleksandersh.weather.utils.IconMapper;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -29,7 +32,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 
 /**
@@ -72,9 +74,14 @@ public class WeatherFragment extends Fragment implements WeatherView {
     @BindView(R.id.weather_bottomsheet_layout_current_city)
     View bottomSheetCurrentCityLayout;
 
+    @BindView(R.id.weather_recyclerview_forecast)
+    RecyclerView recyclerViewForecast;
+
     BottomSheetBehavior behavior;
 
     CityChooserFragment fragmentCityChooser;
+
+    private ForecastAdapter forecastAdapter;
 
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
@@ -90,7 +97,11 @@ public class WeatherFragment extends Fragment implements WeatherView {
         swipeRefreshLayout.setOnRefreshListener(presenter::onUpdate);
 
         fragmentCityChooser = (CityChooserFragment) getChildFragmentManager().findFragmentById(R.id.weather_bottomsheet_fragment_citychooser);
-        fragmentCityChooser.setOnCitySelectedListener(city -> presenter.onUpdate());
+        fragmentCityChooser.setOnCitySelectedListener(() -> presenter.onUpdate());
+
+        recyclerViewForecast.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        forecastAdapter = new ForecastAdapter(this.getContext());
+        recyclerViewForecast.setAdapter(forecastAdapter);
 
         ViewCompat.setElevation(bottomSheet, getResources().getDimension(R.dimen.weather_elevation_bottomsheet));
         setBottomSheetLayoutExpanded(false);
@@ -150,7 +161,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
     @Override
     public void showForecast(ForecastResultDto forecast) {
-        Timber.i("Showing forecast " + forecast);
+        forecastAdapter.setData(new ArrayList<>(forecast.getWeatherForecastDto()));
     }
 
     @Override

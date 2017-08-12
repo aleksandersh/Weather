@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 
 /**
@@ -50,7 +49,6 @@ public class WeatherInteractor {
     }
 
     public Single<ForecastResultDto> getForecast(City city) {
-        Timber.i("Getting forecast for " + city.getName());
         String units = settingsDao.getUnits();
         String locale = settingsDao.getLocale();
         return forecastService.getForecast(city.getLat(), city.getLng(), units, locale)
@@ -59,7 +57,6 @@ public class WeatherInteractor {
     }
 
     public Single<Weather> getCurrentWeather(City city) {
-        Timber.i("Getting weather for " + city.getName());
         String units = settingsDao.getUnits();
         String locale = settingsDao.getLocale();
         return currentWeatherService.getCurrentWeatherByLocation(city.getLat(), city.getLng(), units, locale)
@@ -67,13 +64,10 @@ public class WeatherInteractor {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(converter::convert)
                 .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale))
-                .doOnSuccess(weather -> Timber.i("Weather found - " + weather.getTemperature()))
-                .onErrorResumeNext(getSavedWeather())
-                ;
+                .onErrorResumeNext(getSavedWeather());
     }
 
     private void save(Weather weather, double lat, double lng, String units, String locale) {
-        Timber.i("Saving weather");
         WeatherRequest request = new WeatherRequest(lng, lat, units, locale);
         Date updateTime = new Date(System.currentTimeMillis());
         WeatherStorableState storableState = new WeatherStorableState(weather, request, updateTime);
@@ -81,7 +75,6 @@ public class WeatherInteractor {
     }
 
     private Single<Weather> getSavedWeather() {
-        Timber.i("Getting saved weather");
         return weatherDao.getSavedWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

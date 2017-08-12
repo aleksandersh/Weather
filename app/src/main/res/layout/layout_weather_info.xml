@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp"
     >
@@ -113,8 +113,8 @@
         app:layout_constraintLeft_toRightOf="@+id/weather_info_image_pressure"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/weather_info_image_pressure"
-        tools:text="1000"
         app:layout_constraintVertical_bias="0.571"
+        tools:text="1000"
         />
 
 
@@ -181,11 +181,11 @@
         android:layout_marginStart="8dp"
         android:text="@string/weather_info_title_cloudiness"
         app:layout_constraintBottom_toBottomOf="@+id/weather_info_image_cloudiness"
+        app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/weather_info_image_cloudiness"
         app:layout_constraintTop_toTopOf="@+id/weather_info_image_cloudiness"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.89"
         />
 
     <ImageView
@@ -218,8 +218,8 @@
         app:layout_constraintLeft_toRightOf="@+id/weather_info_image_cloudiness"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/weather_info_image_cloudiness"
-        tools:text="1000"
         app:layout_constraintVertical_bias="0.5"
+        tools:text="1000"
         />
 
     <android.support.constraint.Guideline
@@ -228,8 +228,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05"
-        tools:layout_editor_absoluteY="30dp"
         tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="30dp"
         />
 
     <android.support.constraint.Guideline

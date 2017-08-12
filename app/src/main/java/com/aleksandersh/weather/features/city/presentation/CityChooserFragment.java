@@ -132,7 +132,7 @@ public class CityChooserFragment extends Fragment implements CityView {
 
     @Override
     public void showCurrentCity(City city) {
-        if (onCitySelectedListener != null) onCitySelectedListener.onSelected(city);
+        if (onCitySelectedListener != null) onCitySelectedListener.onSelected();
         textViewCurrentCity.setText(city.getName());
     }
 
@@ -169,7 +169,7 @@ public class CityChooserFragment extends Fragment implements CityView {
 
     public interface OnCitySelectedListener {
 
-        void onSelected(City city);
+        void onSelected();
     }
 
 }
