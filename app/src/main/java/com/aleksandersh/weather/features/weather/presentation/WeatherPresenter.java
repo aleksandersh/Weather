@@ -25,9 +25,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         this.cityInteractor = cityInteractor;
     }
 
-    @Override
-    public void attach(WeatherView view) {
-        super.attach(view);
+    public void onInit() {
         onUpdate();
     }
 
@@ -55,7 +53,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     private void getForecast(City city) {
         weatherInteractor.getForecast(city)
                 .doFinally(() -> view.showLoading(false))
-                .subscribe(view::showForecast, view::showError);
+                .subscribe(view::addForecast, view::showError);
     }
 
 }
