@@ -53,6 +53,17 @@ public class WeatherInteractor {
         this.forecastDtoConverter = forecastDtoConverter;
     }
 
+    public Single<Weather> getCurrentWeather(City city) {
+        String units = settingsDao.getUnits();
+        String locale = settingsDao.getLocale();
+        return currentWeatherService.getCurrentWeatherByLocation(city.getLat(), city.getLng(), units, locale)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(currentWeatherDtoConverter::convert)
+                .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale, true))
+                .onErrorResumeNext(getSavedCurrentWeather());
+    }
+
     public Observable<Weather> getForecast(City city) {
         String units = settingsDao.getUnits();
         String locale = settingsDao.getLocale();
@@ -74,17 +85,6 @@ public class WeatherInteractor {
                 ;
     }
 
-    public Single<Weather> getCurrentWeather(City city) {
-        String units = settingsDao.getUnits();
-        String locale = settingsDao.getLocale();
-        return currentWeatherService.getCurrentWeatherByLocation(city.getLat(), city.getLng(), units, locale)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(currentWeatherDtoConverter::convert)
-                .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale, true))
-                .onErrorResumeNext(getSavedCurrentWeather());
-    }
-
     private void save(Weather weather, double lat, double lng, String units, String locale, boolean isCurrent) {
         WeatherRequest request = new WeatherRequest(lng, lat, units, locale);
         Date updateTime = new Date(System.currentTimeMillis());
@@ -102,7 +102,7 @@ public class WeatherInteractor {
 
     private Observable<Weather> getSavedForecast() {
         Timber.i("Getting saved forecast");
-        return weatherDao.getCurrentWeather()
+        return weatherDao.getForecast()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(WeatherStorableState::getWeather)
