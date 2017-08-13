@@ -3,6 +3,7 @@ package com.aleksandersh.weather.features.weather.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -45,6 +46,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
     @BindView(R.id.weather_swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @Nullable
     @BindView(R.id.weather_textview_city)
     TextView textViewCity;
 
@@ -66,9 +68,11 @@ public class WeatherFragment extends Fragment implements WeatherView {
     @BindView(R.id.weather_imageview_condition)
     ImageView imageViewCondition;
 
+    @Nullable
     @BindView(R.id.weather_bottomsheet)
     View bottomSheet;
 
+    @Nullable
     @BindView(R.id.weather_bottomsheet_layout_current_city)
     View bottomSheetCurrentCityLayout;
 
@@ -106,31 +110,33 @@ public class WeatherFragment extends Fragment implements WeatherView {
         forecastAdapter = new ForecastAdapter(this.getContext());
         recyclerViewForecast.setAdapter(forecastAdapter);
 
-        ViewCompat.setElevation(bottomSheet, getResources().getDimension(R.dimen.weather_elevation_bottomsheet));
-        setBottomSheetLayoutExpanded(false);
-        behavior = BottomSheetBehavior.from(bottomSheet);
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View view, int i) {
-                switch (i) {
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        setBottomSheetLayoutExpanded(false);
-                        break;
-                    }
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        setBottomSheetLayoutExpanded(true);
-                        break;
+        if (bottomSheet != null) {
+            ViewCompat.setElevation(bottomSheet, getResources().getDimension(R.dimen.weather_elevation_bottomsheet));
+            setBottomSheetLayoutExpanded(false);
+            behavior = BottomSheetBehavior.from(bottomSheet);
+            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @Override
+                public void onStateChanged(@NonNull View view, int i) {
+                    switch (i) {
+                        case BottomSheetBehavior.STATE_COLLAPSED: {
+                            setBottomSheetLayoutExpanded(false);
+                            break;
+                        }
+                        case BottomSheetBehavior.STATE_EXPANDED: {
+                            setBottomSheetLayoutExpanded(true);
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onSlide(@NonNull View view, float v) {
+                @Override
+                public void onSlide(@NonNull View view, float v) {
 
-            }
-        });
+                }
+            });
 
-        bottomSheet.setOnClickListener(v -> behavior.setState(BottomSheetBehavior.STATE_EXPANDED));
+            bottomSheet.setOnClickListener(v -> behavior.setState(BottomSheetBehavior.STATE_EXPANDED));
+        }
 
         presenter.attach(this);
         presenter.onInit();
@@ -147,7 +153,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
     @Override
     public void showCurrentCity(String name) {
-        textViewCity.setText(name);
+        if (textViewCity != null) textViewCity.setText(name);
     }
 
     @Override
