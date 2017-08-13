@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
  * Always subscribeOn and observeOn Schedulers.trampoline()
  * for immediate execution.
  */
-public class RxJavaRule implements TestRule {
+public class RxTestRule implements TestRule {
 
     private final Scheduler trampoline = Schedulers.trampoline();
 
@@ -25,10 +25,12 @@ public class RxJavaRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RxAndroidPlugins.setMainThreadSchedulerHandler(scheduler -> trampoline);
-                RxJavaPlugins.setComputationSchedulerHandler(scheduler -> trampoline);
-                RxJavaPlugins.setIoSchedulerHandler(scheduler -> trampoline);
-                RxJavaPlugins.setNewThreadSchedulerHandler(scheduler -> trampoline);
+                RxJavaPlugins.setSingleSchedulerHandler(__ -> trampoline);
+                RxJavaPlugins.setComputationSchedulerHandler(__ -> trampoline);
+                RxJavaPlugins.setIoSchedulerHandler(__ -> trampoline);
+                RxJavaPlugins.setNewThreadSchedulerHandler(__ -> trampoline);
+                RxAndroidPlugins.setMainThreadSchedulerHandler(__ -> trampoline);
+                RxAndroidPlugins.setInitMainThreadSchedulerHandler(__ -> trampoline);
                 try {
                     base.evaluate();
                 } finally {
