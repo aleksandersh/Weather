@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 
@@ -23,7 +24,10 @@ public interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveWeather(WeatherStorableState storableState);
 
-    @Query("SELECT * FROM saved_weather")
-    Single<WeatherStorableState> getSavedWeather();
+    @Query("SELECT * FROM saved_weather WHERE is_current=1")
+    Single<WeatherStorableState> getCurrentWeather();
+
+    @Query("SELECT * FROM saved_weather WHERE is_current=0")
+    Flowable<WeatherStorableState> getForecast();
 
 }

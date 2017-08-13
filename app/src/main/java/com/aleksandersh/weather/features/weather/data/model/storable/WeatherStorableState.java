@@ -1,6 +1,7 @@
 package com.aleksandersh.weather.features.weather.data.model.storable;
 
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -29,10 +30,18 @@ public class WeatherStorableState {
     @Embedded
     private Date date;
 
-    public WeatherStorableState(Weather weather, WeatherRequest request, Date date) {
-       this.weather = weather;
-       this.request = request;
-       this.date = date;
+    @ColumnInfo(name = "is_current")
+    private boolean isCurrent;
+
+    public WeatherStorableState(Weather weather, WeatherRequest request, Date date, boolean isCurrent) {
+        this.weather = weather;
+        this.request = request;
+        this.date = date;
+        this.isCurrent = isCurrent;
+    }
+
+    public boolean isCurrent() {
+        return isCurrent;
     }
 
     public Weather getWeather() {

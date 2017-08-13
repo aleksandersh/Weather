@@ -58,14 +58,17 @@ public class ForecastAdapter extends BaseRxAdapter<Weather, ForecastAdapter.View
 
             temperature.setText(String.valueOf(item.getTemperature()));
 
-            try {
-                SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-                SimpleDateFormat displayFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
-                Date currentDate = currentFormat.parse(item.getDateReadable());
-                String displayDate = displayFormat.format(currentDate);
-                date.setText(displayDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            String dateReadable = item.getDateReadable();
+            if (dateReadable != null) {
+                try {
+                    SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+                    SimpleDateFormat displayFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
+                    Date currentDate = currentFormat.parse(dateReadable);
+                    String displayDate = displayFormat.format(currentDate);
+                    date.setText(displayDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

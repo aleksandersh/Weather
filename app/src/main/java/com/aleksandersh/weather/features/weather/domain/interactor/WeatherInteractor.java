@@ -62,6 +62,7 @@ public class WeatherInteractor {
                 .map(ForecastResultDto::getForecastDto)
                 .flatMapObservable(Observable::fromIterable)
                 .map(forecastDto -> forecastDtoConverter.convert(city.getId(), forecastDto))
+                .doOnNext(weather -> save(weather, city.getLat(), city.getLng(), units, locale, false))
                 .sorted((w1, w2) -> {
                     int timestamp1 = w1.getTimestamp();
                     int timestamp2 = w2.getTimestamp();
@@ -69,7 +70,7 @@ public class WeatherInteractor {
                     if (timestamp1 < timestamp2) return -1;
                     return 0;
                 })
-                .doOnNext(weather -> Timber.i("Item " + weather.toString()))
+                .onErrorResumeNext(getSavedForecast())
                 ;
     }
 
@@ -80,22 +81,32 @@ public class WeatherInteractor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(currentWeatherDtoConverter::convert)
-                .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale))
-                .onErrorResumeNext(getSavedWeather());
+                .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale, true))
+                .onErrorResumeNext(getSavedCurrentWeather());
     }
 
-    private void save(Weather weather, double lat, double lng, String units, String locale) {
+    private void save(Weather weather, double lat, double lng, String units, String locale, boolean isCurrent) {
         WeatherRequest request = new WeatherRequest(lng, lat, units, locale);
         Date updateTime = new Date(System.currentTimeMillis());
-        WeatherStorableState storableState = new WeatherStorableState(weather, request, updateTime);
+        WeatherStorableState storableState = new WeatherStorableState(weather, request, updateTime, isCurrent);
         Utils.transaction(() -> weatherDao.saveWeather(storableState));
     }
 
-    private Single<Weather> getSavedWeather() {
-        return weatherDao.getSavedWeather()
+    private Single<Weather> getSavedCurrentWeather() {
+        Timber.i("Getting saved weather");
+        return weatherDao.getCurrentWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(WeatherStorableState::getWeather);
+    }
+
+    private Observable<Weather> getSavedForecast() {
+        Timber.i("Getting saved forecast");
+        return weatherDao.getCurrentWeather()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(WeatherStorableState::getWeather)
+                .toObservable();
     }
 
 }
