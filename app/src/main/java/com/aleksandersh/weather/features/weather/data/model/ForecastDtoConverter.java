@@ -20,7 +20,7 @@ import static com.aleksandersh.weather.utils.ConditionMapper.getGroupByServiceWe
 
 public class ForecastDtoConverter {
 
-    public Weather convert(ForecastDto forecast, double lng, double lat) {
+    public Weather convert(ForecastDto forecast) {
         Weather weather = new Weather();
 
         MainDto main = forecast.getMain();

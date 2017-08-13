@@ -44,10 +44,14 @@ public class CurrentWeatherDtoConverter {
         }
 
         String description;
-        String group;
+        String group = null;
         List<WeatherConditionDto> weatherConditionDtoList = dto.getWeatherConditions();
         if (weatherConditionDtoList != null && !weatherConditionDtoList.isEmpty()) {
-            group = getGroupByServiceWeatherId(weatherConditionDtoList.get(0).getId());
+            try {
+                group = getGroupByServiceWeatherId(weatherConditionDtoList.get(0).getId());
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
             description = getDescriptionFromWeatherConditions(weatherConditionDtoList);
         } else {
             description = "";
@@ -55,7 +59,7 @@ public class CurrentWeatherDtoConverter {
         }
 
         weather.setDescription(description);
-        weather.setGroup(group);
+        weather.setGroup(group != null ? group : "");
 
         return weather;
     }

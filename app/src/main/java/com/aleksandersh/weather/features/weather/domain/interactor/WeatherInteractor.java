@@ -61,7 +61,7 @@ public class WeatherInteractor {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(ForecastResultDto::getForecastDto)
                 .flatMapObservable(Observable::fromIterable)
-                .map(forecastDto -> forecastDtoConverter.convert(forecastDto, city.getLng(), city.getLat()))
+                .map(forecastDto -> forecastDtoConverter.convert(forecastDto))
                 .sorted((w1, w2) -> {
                     int timestamp1 = w1.getTimestamp();
                     int timestamp2 = w2.getTimestamp();
