@@ -26,8 +26,8 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     }
 
     @Override
-    public void onAttach(WeatherView view) {
-        super.onAttach(view);
+    public void attach(WeatherView view) {
+        super.attach(view);
         onUpdate();
     }
 

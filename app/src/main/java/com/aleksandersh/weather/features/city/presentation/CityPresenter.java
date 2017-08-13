@@ -22,8 +22,7 @@ public class CityPresenter extends BasePresenter<CityView> {
         this.interactor = interactor;
     }
 
-    public void onAttach(CityView view) {
-        super.onAttach(view);
+    public void onInit() {
         view.showSearchState(false);
         onSavedCitiesRequested();
     }

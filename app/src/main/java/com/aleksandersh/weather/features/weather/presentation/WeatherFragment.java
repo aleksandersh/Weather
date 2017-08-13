@@ -132,7 +132,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
 
         bottomSheet.setOnClickListener(v -> behavior.setState(BottomSheetBehavior.STATE_EXPANDED));
 
-        presenter.onAttach(this);
+        presenter.attach(this);
 
         return view;
     }
@@ -140,7 +140,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.onDetach();
+        presenter.detach();
         unbinder.unbind();
     }
 
