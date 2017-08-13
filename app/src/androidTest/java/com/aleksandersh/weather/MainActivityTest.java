@@ -36,7 +36,6 @@ public class MainActivityTest {
 
     private static final int DRAWER_ID = R.id.drawer_layout;
     private static final int NAV_VIEW_ID = R.id.navigation_view;
-    private static final int FRAGMENT_CONTAINER_ID = R.id.fragment_container;
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule(MainActivity.class);

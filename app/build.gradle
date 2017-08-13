@@ -135,8 +135,11 @@ dependencies {
     debugCompile "com.facebook.stetho:stetho:$stethoVersion"
     debugCompile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+//    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+//    compile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+//    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+//    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
+//    androidTestCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
 
     // Testing
 

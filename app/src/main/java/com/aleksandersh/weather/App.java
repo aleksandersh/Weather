@@ -12,7 +12,6 @@ import com.aleksandersh.weather.di.module.ServiceModule;
 import com.aleksandersh.weather.features.city.di.CityModule;
 import com.aleksandersh.weather.features.weather.di.WeatherModule;
 import com.facebook.stetho.Stetho;
-import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
@@ -30,11 +29,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) return;
+//        if (LeakCanary.isInAnalyzerProcess(this)) return;
         if (com.aleksandersh.weather.BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
             Stetho.initializeWithDefaults(this);
-            LeakCanary.install(this);
+//            LeakCanary.install(this);
         }
         appComponent = buildAppComponent();
     }

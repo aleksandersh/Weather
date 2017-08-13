@@ -1,13 +1,14 @@
 package com.aleksandersh.weather;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
 import android.support.test.espresso.IdlingRegistry;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.aleksandersh.weather.di.component.AppComponent;
 import com.aleksandersh.weather.features.main.MainActivity;
@@ -27,18 +28,15 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+
 
 /**
  * Created by Vladimir Kondenko on 28.07.17.
@@ -46,7 +44,9 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 @MediumTest
-public class WeatherTest {
+public class CityTest {
+
+    private static final String TAG = "WeatherTest";
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule(MainActivity.class);
@@ -56,7 +56,7 @@ public class WeatherTest {
     @BeforeClass
     public static void setUpClass() {
         AppComponent appComponent = App.getAppComponent();
-        OkHttpClient client = appComponent.getWeatherHttpClient();
+        OkHttpClient client = appComponent.getHttpClient();
         idlingResource = OkHttp3IdlingResource.create(Const.OKHTTP_IDLING_RESOURCE_NAME, client);
     }
 
@@ -65,7 +65,15 @@ public class WeatherTest {
         IdlingRegistry.getInstance().register(idlingResource);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.navigation_view)).perform(NavigationViewActions.navigateTo(R.id.nav_weather_fragment));
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.close());
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.close());;
+        try {
+            onView(withId(R.id.weather_bottomsheet)).check(matches(isDisplayed()));
+            // Espresso can't perform clicks on BottomSheet for some reason, so these
+            // tests are runnable only with the two-pane layout.
+            onView(withId(R.id.weather_bottomsheet)).perform(click());
+        } catch (NoMatchingViewException e) {
+            Log.e(TAG, "No BottomSheet found, proceeding", e);
+        }
     }
 
     @After
@@ -74,52 +82,28 @@ public class WeatherTest {
     }
 
     @Test
-    public void shouldOpenCityFinder() {
-        onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
-        onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void shouldDisplaySuggestionEng() {
-        onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
-        onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
+        onView(withId(R.id.citychooser_fab)).perform(click());
+        onView(withId(R.id.citychooser_textview_search_city)).check(matches(isDisplayed()));
         onView(withId(R.id.citychooser_textview_search_city)).perform(typeText("Moscow"));
         onView(withChild(withText("Moscow"))).check(matches(isDisplayed()));
     }
 
     @Test
     public void shouldDisplaySuggestionRu() {
-        onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
-        onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
+        onView(withId(R.id.citychooser_fab)).perform(click());
         onView(withId(R.id.citychooser_textview_search_city)).perform(replaceText("Москва"));
         onView(withChild(withText("Москва"))).check(matches(isDisplayed()));
     }
 
     @Test
     public void shouldChangeCity() {
-        onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
-        onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
+        onView(withId(R.id.citychooser_fab)).perform(click());
         onView(withId(R.id.citychooser_textview_search_city)).perform(typeText("Taganrog"));
         onView(withText("Taganrog")).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView()))))
                 .perform(click());
+        onView(withId(R.id.citychooser_fab)).perform(click());
         onView(withText("Taganrog")).check(matches(isDisplayed()));
-        onView(withText("Moscow")).check(doesNotExist());
     }
-
-    @Test
-    public void shouldSaveCity() {
-        String city = "Taganrog";
-        onView(withId(R.id.action_weather_toolbar_change_city)).perform(click());
-        onView(withChild(withId(R.id.fragment_city_chooser_root))).check(matches(isDisplayed()));
-        onView(withId(R.id.citychooser_textview_search_city)).perform(replaceText(city));
-        onView(withText(city)).inRoot(withDecorView(not(is(activityTestRule.getActivity().getWindow().getDecorView()))))
-                .perform(click());
-        SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(activityTestRule.getActivity());
-        String currentCityNameKey = activityTestRule.getActivity().getString(R.string.pref_current_city_name);
-        String savedName = preferenceManager.getString(currentCityNameKey, null);
-        assertThat(savedName, notNullValue());
-        assertEquals(city, savedName);
-    }   
-
 
 }
