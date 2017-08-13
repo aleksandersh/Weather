@@ -2,7 +2,6 @@ package com.aleksandersh.weather.features.weather.presentation;
 
 
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.model.transferable.forecast.ForecastResultDto;
 import com.aleksandersh.weather.utils.BaseView;
 
 
@@ -14,7 +13,7 @@ public interface WeatherView extends BaseView {
 
     void showCurrentWeather(Weather weather);
 
-    void showForecast(ForecastResultDto forecast);
+    void showForecast(Weather forecast);
 
     void showCurrentCity(String name);
 

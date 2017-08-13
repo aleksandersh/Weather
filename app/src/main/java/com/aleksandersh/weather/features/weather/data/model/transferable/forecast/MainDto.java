@@ -4,7 +4,7 @@ package com.aleksandersh.weather.features.weather.data.model.transferable.foreca
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Main {
+public class MainDto {
 
     @SerializedName("temp")
     @Expose

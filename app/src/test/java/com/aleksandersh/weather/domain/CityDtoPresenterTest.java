@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Vladimir Kondenko on 30.07.17.
  */
-public class CityPresenterTest {
+public class CityDtoPresenterTest {
 
     private CityView cityView;
     private CityInteractor client;

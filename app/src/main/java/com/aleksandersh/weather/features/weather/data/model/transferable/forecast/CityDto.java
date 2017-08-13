@@ -4,7 +4,7 @@ package com.aleksandersh.weather.features.weather.data.model.transferable.foreca
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class City {
+public class CityDto {
 
     @SerializedName("id")
     @Expose
@@ -14,7 +14,7 @@ public class City {
     private String name;
     @SerializedName("coord")
     @Expose
-    private Coord coord;
+    private CoordDto coord;
     @SerializedName("country")
     @Expose
     private String country;
@@ -35,11 +35,11 @@ public class City {
         this.name = name;
     }
 
-    public Coord getCoord() {
+    public CoordDto getCoord() {
         return coord;
     }
 
-    public void setCoord(Coord coord) {
+    public void setCoord(CoordDto coord) {
         this.coord = coord;
     }
 

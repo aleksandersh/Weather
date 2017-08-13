@@ -25,6 +25,18 @@ public class Weather {
 
     private String group;
 
+    private String dateReadable;
+
+    private int timestamp;
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public long getCityId() {
         return cityId;
     }
@@ -38,7 +50,7 @@ public class Weather {
     }
 
     public void setTemperature(double temperature) {
-       this.temperature = temperature;
+        this.temperature = temperature;
     }
 
     public double getPressure() {
@@ -46,7 +58,7 @@ public class Weather {
     }
 
     public void setPressure(double pressure) {
-       this.pressure = pressure;
+        this.pressure = pressure;
     }
 
     public double getHumidity() {
@@ -54,7 +66,7 @@ public class Weather {
     }
 
     public void setHumidity(double humidity) {
-       this.humidity = humidity;
+        this.humidity = humidity;
     }
 
     public int getCloudiness() {
@@ -62,7 +74,7 @@ public class Weather {
     }
 
     public void setCloudiness(int cloudiness) {
-       this.cloudiness = cloudiness;
+        this.cloudiness = cloudiness;
     }
 
     public double getWindSpeed() {
@@ -86,7 +98,7 @@ public class Weather {
     }
 
     public void setDescription(String description) {
-       this.description = description;
+        this.description = description;
     }
 
     public String getGroup() {
@@ -94,7 +106,14 @@ public class Weather {
     }
 
     public void setGroup(String group) {
-       this.group = group;
+        this.group = group;
     }
 
+    public String getDateReadable() {
+        return dateReadable;
+    }
+
+    public void setDateReadable(String dateReadable) {
+        this.dateReadable = dateReadable;
+    }
 }

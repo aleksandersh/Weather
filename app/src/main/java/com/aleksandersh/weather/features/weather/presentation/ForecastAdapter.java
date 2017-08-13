@@ -8,8 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleksandersh.weather.R;
-import com.aleksandersh.weather.features.weather.data.model.transferable.forecast.WeatherForecastDto;
+import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.utils.BaseRxAdapter;
+import com.aleksandersh.weather.utils.ConditionMapper;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 
@@ -18,7 +23,7 @@ import butterknife.BindView;
  * Created by Vladimir Kondenko on 12.08.17.
  */
 
-public class ForecastAdapter extends BaseRxAdapter<WeatherForecastDto, ForecastAdapter.ViewHolder> {
+public class ForecastAdapter extends BaseRxAdapter<Weather, ForecastAdapter.ViewHolder> {
 
     public ForecastAdapter(Context context) {
         super(context);
@@ -30,14 +35,14 @@ public class ForecastAdapter extends BaseRxAdapter<WeatherForecastDto, ForecastA
         return new ForecastAdapter.ViewHolder(view);
     }
 
-    static class ViewHolder extends BaseRxAdapter.BaseViewHolder<WeatherForecastDto> {
-        
+    static class ViewHolder extends BaseRxAdapter.BaseViewHolder<Weather> {
+
         @BindView(R.id.forecast_textview_date)
         TextView date;
-        
+
         @BindView(R.id.forecast_imageview_condition)
         ImageView condition;
-        
+
         @BindView(R.id.forecast_textview_temperature)
         TextView temperature;
 
@@ -46,11 +51,22 @@ public class ForecastAdapter extends BaseRxAdapter<WeatherForecastDto, ForecastA
         }
 
         @Override
-        public void bindItem(WeatherForecastDto item) {
+        public void bindItem(Weather item) {
             super.bindItem(item);
-            date.setText(item.getDtTxt());
-            // TODO Set icon
-            temperature.setText(String.valueOf(item.getMain().getTemp()));
+            int drawableRes = ConditionMapper.getDrawableResourceByGroup(item.getGroup());
+            condition.setImageDrawable(itemView.getContext().getResources().getDrawable(drawableRes));
+
+            temperature.setText(String.valueOf(item.getTemperature()));
+
+            try {
+                SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+                SimpleDateFormat displayFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
+                Date currentDate = currentFormat.parse(item.getDateReadable());
+                String displayDate = displayFormat.format(currentDate);
+                date.setText(displayDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 

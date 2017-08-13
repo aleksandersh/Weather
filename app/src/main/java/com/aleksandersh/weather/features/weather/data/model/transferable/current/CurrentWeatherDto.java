@@ -1,7 +1,6 @@
 package com.aleksandersh.weather.features.weather.data.model.transferable.current;
 
 
-import com.aleksandersh.weather.storage.Dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * Created by AleksanderSh on 14.07.2017.
  */
 
-public class CurrentWeatherDto extends Dto {
+public class CurrentWeatherDto {
 
     @SerializedName("coord")
     @Expose

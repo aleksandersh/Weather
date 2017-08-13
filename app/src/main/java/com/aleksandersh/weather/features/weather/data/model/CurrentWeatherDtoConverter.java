@@ -7,10 +7,10 @@ import com.aleksandersh.weather.features.weather.data.model.transferable.current
 import com.aleksandersh.weather.features.weather.data.model.transferable.current.GeneralDto;
 import com.aleksandersh.weather.features.weather.data.model.transferable.current.WeatherConditionDto;
 import com.aleksandersh.weather.features.weather.data.model.transferable.current.WindDto;
-import com.aleksandersh.weather.storage.DtoConverter;
-import com.aleksandersh.weather.utils.IconMapper;
 
 import java.util.List;
+
+import static com.aleksandersh.weather.utils.ConditionMapper.getGroupByServiceWeatherId;
 
 
 /**
@@ -20,9 +20,8 @@ import java.util.List;
  * используемую в приложении.
  */
 
-public class WeatherDtoConverter implements DtoConverter<CurrentWeatherDto, Weather> {
+public class CurrentWeatherDtoConverter {
 
-    @Override
     public Weather convert(CurrentWeatherDto dto) {
         Weather weather = new Weather();
 
@@ -61,27 +60,6 @@ public class WeatherDtoConverter implements DtoConverter<CurrentWeatherDto, Weat
         weather.setGroup(group);
 
         return weather;
-    }
-
-    private String getGroupByServiceWeatherId(int weatherId) {
-        String group;
-        if (200 <= weatherId && weatherId < 300) {
-            group = IconMapper.GROUP_STORM;
-        } else if (300 <= weatherId && weatherId < 600) {
-            group = IconMapper.GROUP_RAIN;
-        } else if (600 <= weatherId && weatherId < 700) {
-            group = IconMapper.GROUP_SNOW;
-        } else if (700 <= weatherId && weatherId < 800) {
-            group = IconMapper.GROUP_FOG;
-        } else if (weatherId == 800) {
-            group = IconMapper.GROUP_CLEAR_SKY;
-        } else if (801 <= weatherId && weatherId < 900) {
-            group = IconMapper.GROUP_CLOUDS;
-        } else {
-            group = "";
-        }
-
-        return group;
     }
 
     private String getDescriptionFromWeatherConditions(List<WeatherConditionDto> conditions) {

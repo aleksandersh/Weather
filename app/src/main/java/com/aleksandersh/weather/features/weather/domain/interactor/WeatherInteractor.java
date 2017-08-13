@@ -2,7 +2,8 @@ package com.aleksandersh.weather.features.weather.domain.interactor;
 
 
 import com.aleksandersh.weather.features.city.data.model.storable.City;
-import com.aleksandersh.weather.features.weather.data.model.WeatherDtoConverter;
+import com.aleksandersh.weather.features.weather.data.model.CurrentWeatherDtoConverter;
+import com.aleksandersh.weather.features.weather.data.model.ForecastDtoConverter;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherRequest;
 import com.aleksandersh.weather.features.weather.data.model.storable.WeatherStorableState;
@@ -17,9 +18,11 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 /**
@@ -32,7 +35,8 @@ public class WeatherInteractor {
     private ForecastService forecastService;
     private SettingsDao settingsDao;
     private WeatherDao weatherDao;
-    private WeatherDtoConverter converter;
+    private CurrentWeatherDtoConverter currentWeatherDtoConverter;
+    private ForecastDtoConverter forecastDtoConverter;
 
     @Inject
     public WeatherInteractor(
@@ -40,20 +44,33 @@ public class WeatherInteractor {
             ForecastService forecastService,
             SettingsDao settingsDao,
             WeatherDao weatherDao,
-            WeatherDtoConverter converter) {
+            CurrentWeatherDtoConverter currentWeatherDtoConverter, ForecastDtoConverter forecastDtoConverter) {
         this.currentWeatherService = currentWeatherService;
         this.forecastService = forecastService;
         this.settingsDao = settingsDao;
         this.weatherDao = weatherDao;
-        this.converter = converter;
+        this.currentWeatherDtoConverter = currentWeatherDtoConverter;
+        this.forecastDtoConverter = forecastDtoConverter;
     }
 
-    public Single<ForecastResultDto> getForecast(City city) {
+    public Observable<Weather> getForecast(City city) {
         String units = settingsDao.getUnits();
         String locale = settingsDao.getLocale();
         return forecastService.getForecast(city.getLat(), city.getLng(), units, locale)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(ForecastResultDto::getForecastDto)
+                .flatMapObservable(Observable::fromIterable)
+                .map(forecastDto -> forecastDtoConverter.convert(city.getId(), forecastDto))
+                .sorted((w1, w2) -> {
+                    int timestamp1 = w1.getTimestamp();
+                    int timestamp2 = w2.getTimestamp();
+                    if (timestamp1 > timestamp2) return 1;
+                    if (timestamp1 < timestamp2) return -1;
+                    return 0;
+                })
+                .doOnNext(weather -> Timber.i("Item " + weather.toString()))
+                ;
     }
 
     public Single<Weather> getCurrentWeather(City city) {
@@ -62,7 +79,7 @@ public class WeatherInteractor {
         return currentWeatherService.getCurrentWeatherByLocation(city.getLat(), city.getLng(), units, locale)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(converter::convert)
+                .map(currentWeatherDtoConverter::convert)
                 .doOnSuccess(weather -> save(weather, city.getLat(), city.getLng(), units, locale))
                 .onErrorResumeNext(getSavedWeather());
     }

@@ -1,32 +1,33 @@
 
 package com.aleksandersh.weather.features.weather.data.model.transferable.forecast;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherForecastDto {
+public class ForecastDto {
 
     @SerializedName("dt")
     @Expose
     private int dt;
     @SerializedName("main")
     @Expose
-    private Main main;
+    private MainDto main;
     @SerializedName("weather")
     @Expose
-    private java.util.List<Weather> weather = null;
+    private java.util.List<WeatherDto> weather = null;
     @SerializedName("clouds")
     @Expose
-    private Clouds clouds;
+    private CloudsDto cloudsDto;
     @SerializedName("wind")
     @Expose
-    private Wind wind;
+    private WindDto wind;
     @SerializedName("rain")
     @Expose
-    private Rain rain;
+    private RainDto rain;
     @SerializedName("sys")
     @Expose
-    private Sys sys;
+    private SysDto sys;
     @SerializedName("dt_txt")
     @Expose
     private String dtTxt;
@@ -39,51 +40,51 @@ public class WeatherForecastDto {
         this.dt = dt;
     }
 
-    public Main getMain() {
+    public MainDto getMain() {
         return main;
     }
 
-    public void setMain(Main main) {
+    public void setMain(MainDto main) {
         this.main = main;
     }
 
-    public java.util.List<Weather> getWeather() {
+    public java.util.List<WeatherDto> getWeather() {
         return weather;
     }
 
-    public void setWeather(java.util.List<Weather> weather) {
+    public void setWeather(java.util.List<WeatherDto> weather) {
         this.weather = weather;
     }
 
-    public Clouds getClouds() {
-        return clouds;
+    public CloudsDto getCloudsDto() {
+        return cloudsDto;
     }
 
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
+    public void setCloudsDto(CloudsDto cloudsDto) {
+        this.cloudsDto = cloudsDto;
     }
 
-    public Wind getWind() {
+    public WindDto getWind() {
         return wind;
     }
 
-    public void setWind(Wind wind) {
+    public void setWind(WindDto wind) {
         this.wind = wind;
     }
 
-    public Rain getRain() {
+    public RainDto getRain() {
         return rain;
     }
 
-    public void setRain(Rain rain) {
+    public void setRain(RainDto rain) {
         this.rain = rain;
     }
 
-    public Sys getSys() {
+    public SysDto getSys() {
         return sys;
     }
 
-    public void setSys(Sys sys) {
+    public void setSys(SysDto sys) {
         this.sys = sys;
     }
 

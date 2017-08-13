@@ -26,6 +26,7 @@ public abstract class BaseRxAdapter<I, VH extends BaseRxAdapter.BaseViewHolder<I
 
     protected final PublishSubject<I> itemClickSubject = PublishSubject.create();
 
+    protected Context context;
     protected LayoutInflater inflater;
     protected ArrayList<I> items;
 
@@ -34,6 +35,7 @@ public abstract class BaseRxAdapter<I, VH extends BaseRxAdapter.BaseViewHolder<I
     }
 
     public BaseRxAdapter(Context context, ArrayList<I> items) {
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.items = items;
         notifyDataSetChanged();

@@ -13,7 +13,7 @@ public class WeatherConditionDto {
 
     @SerializedName("id")
     @Expose
-    private Integer mId;
+    private Integer id;
 
     @SerializedName("main")
     @Expose
@@ -28,7 +28,7 @@ public class WeatherConditionDto {
     private String icon;
 
     public Integer getId() {
-        return mId;
+        return id;
     }
 
     public String getGroup() {

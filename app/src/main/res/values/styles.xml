@@ -19,7 +19,6 @@
     <style name="AppTheme.Weather.Card" parent="AppTheme">
         <item name="cardBackgroundColor">@color/colorPrimary</item>
         <item name="cardUseCompatPadding">true</item>
-        <item name="contentPadding">@dimen/all_margin_small</item>
         <item name="android:layout_margin">@dimen/all_margin_small</item>
     </style>
 

@@ -8,8 +8,6 @@ import com.aleksandersh.weather.utils.BasePresenter;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 
 /**
  * Created by AleksanderSh on 20.07.2017.
@@ -48,17 +46,16 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
         );
     }
 
-    private void getForecast(City city) {
-        weatherInteractor.getForecast(city)
-                .doFinally(() -> view.showLoading(false))
-                .doOnSuccess(forecastResultDto -> Timber.i(forecastResultDto.toString()))
-                .subscribe(view::showForecast, view::showError);
-    }
-
     private void getCurrentWeather(City city) {
         weatherInteractor.getCurrentWeather(city)
                 .doFinally(() -> view.showLoading(false))
                 .subscribe(view::showCurrentWeather, view::showError);
+    }
+
+    private void getForecast(City city) {
+        weatherInteractor.getForecast(city)
+                .doFinally(() -> view.showLoading(false))
+                .subscribe(view::showForecast, view::showError);
     }
 
 }

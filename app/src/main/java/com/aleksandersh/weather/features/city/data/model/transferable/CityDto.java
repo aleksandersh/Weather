@@ -4,7 +4,6 @@ package com.aleksandersh.weather.features.city.data.model.transferable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.aleksandersh.weather.storage.Dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Vladimir Kondenko on 22.07.17.
  */
-public class CityDto extends Dto implements Parcelable {
+public class CityDto implements Parcelable {
 
     @SerializedName("adminCode1")
     @Expose

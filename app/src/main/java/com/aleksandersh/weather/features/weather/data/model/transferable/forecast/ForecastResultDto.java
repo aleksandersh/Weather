@@ -1,8 +1,10 @@
 
 package com.aleksandersh.weather.features.weather.data.model.transferable.forecast;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 
 public class ForecastResultDto {
 
@@ -17,10 +19,10 @@ public class ForecastResultDto {
     private int cnt;
     @SerializedName("list")
     @Expose
-    private java.util.List<WeatherForecastDto> weatherForecastDto = null;
+    private java.util.List<ForecastDto> forecastDto = null;
     @SerializedName("city")
     @Expose
-    private City city;
+    private CityDto cityDto;
 
     public String getCod() {
         return cod;
@@ -46,20 +48,20 @@ public class ForecastResultDto {
         this.cnt = cnt;
     }
 
-    public java.util.List<WeatherForecastDto> getWeatherForecastDto() {
-        return weatherForecastDto;
+    public java.util.List<ForecastDto> getForecastDto() {
+        return forecastDto;
     }
 
-    public void setWeatherForecastDto(java.util.List<WeatherForecastDto> weatherForecastDto) {
-        this.weatherForecastDto = weatherForecastDto;
+    public void setForecastDto(java.util.List<ForecastDto> forecastDto) {
+        this.forecastDto = forecastDto;
     }
 
-    public City getCity() {
-        return city;
+    public CityDto getCityDto() {
+        return cityDto;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCityDto(CityDto cityDto) {
+        this.cityDto = cityDto;
     }
 
 }

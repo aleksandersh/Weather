@@ -1,15 +1,12 @@
 package com.aleksandersh.weather.features.weather.di;
 
 
-import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
-import com.aleksandersh.weather.features.weather.data.model.WeatherDtoConverter;
-import com.aleksandersh.weather.features.weather.domain.interactor.WeatherInteractor;
+import com.aleksandersh.weather.features.weather.data.model.CurrentWeatherDtoConverter;
+import com.aleksandersh.weather.features.weather.data.model.ForecastDtoConverter;
 import com.aleksandersh.weather.features.weather.domain.service.CurrentWeatherService;
 import com.aleksandersh.weather.features.weather.domain.service.ForecastService;
-import com.aleksandersh.weather.features.weather.presentation.WeatherPresenter;
 import com.aleksandersh.weather.features.weather.storage.WeatherDao;
 import com.aleksandersh.weather.storage.AppDatabase;
-import com.aleksandersh.weather.storage.SettingsDao;
 import com.aleksandersh.weather.utils.Const;
 
 import javax.inject.Named;
@@ -35,8 +32,14 @@ public class WeatherModule {
 
     @Provides
     @Singleton
-    public WeatherDtoConverter provideDtoConverter() {
-        return new WeatherDtoConverter();
+    public CurrentWeatherDtoConverter provideCurrentWeatherDtoConverter() {
+        return new CurrentWeatherDtoConverter();
+    }
+
+    @Provides
+    @Singleton
+    public ForecastDtoConverter provideForecastDtoConverter() {
+        return new ForecastDtoConverter();
     }
 
     @Provides
@@ -49,23 +52,6 @@ public class WeatherModule {
     @Singleton
     public ForecastService provideForecastService(@Named(Const.DI_API_SCOPE_WEATHER) Retrofit retrofit) {
         return retrofit.create(ForecastService.class);
-    }
-
-    @Provides
-    @Singleton
-    public WeatherInteractor provideInteractor(
-            CurrentWeatherService currentWeatherService,
-            ForecastService forecastService,
-            SettingsDao settingsDao,
-            WeatherDao weatherDao,
-            WeatherDtoConverter dtoConverter) {
-        return new WeatherInteractor(currentWeatherService, forecastService, settingsDao, weatherDao, dtoConverter);
-    }
-
-
-    @Provides
-    public WeatherPresenter provideWeatherPresenter(WeatherInteractor weatherInteractor, CityInteractor cityInteractor) {
-        return new WeatherPresenter(weatherInteractor, cityInteractor);
     }
 
 }

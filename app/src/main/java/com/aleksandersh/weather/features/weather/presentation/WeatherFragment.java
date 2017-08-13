@@ -21,10 +21,8 @@ import com.aleksandersh.weather.App;
 import com.aleksandersh.weather.R;
 import com.aleksandersh.weather.features.city.presentation.CityChooserFragment;
 import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
-import com.aleksandersh.weather.features.weather.data.model.transferable.forecast.ForecastResultDto;
-import com.aleksandersh.weather.utils.IconMapper;
+import com.aleksandersh.weather.utils.ConditionMapper;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -153,15 +151,15 @@ public class WeatherFragment extends Fragment implements WeatherView {
         textViewPressure.setText(String.valueOf(weather.getPressure()));
         textViewHumidity.setText(String.valueOf(weather.getHumidity()));
         textViewCloudiness.setText(String.valueOf(weather.getCloudiness()));
-        int iconId = IconMapper.getDrawableResourceByGroup(weather.getGroup());
+        int iconId = ConditionMapper.getDrawableResourceByGroup(weather.getGroup());
         if (iconId != 0) {
             imageViewCondition.setImageDrawable(ContextCompat.getDrawable(getActivity(), iconId));
         }
     }
 
     @Override
-    public void showForecast(ForecastResultDto forecast) {
-        forecastAdapter.setData(new ArrayList<>(forecast.getWeatherForecastDto()));
+    public void showForecast(Weather forecast) {
+        forecastAdapter.addItem(forecast);
     }
 
     @Override

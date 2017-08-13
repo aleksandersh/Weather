@@ -12,7 +12,7 @@ import com.aleksandersh.weather.R;
  * Позволяет подбирать иконки в зависимости от типа погоды.
  */
 
-public class IconMapper {
+public class ConditionMapper {
 
     public static final String GROUP_STORM = "storm";
 
@@ -51,4 +51,23 @@ public class IconMapper {
                 return 0;
         }
     }
+
+    public static String getGroupByServiceWeatherId(int weatherId) {
+        if (200 <= weatherId && weatherId < 300) {
+            return ConditionMapper.GROUP_STORM;
+        } else if (300 <= weatherId && weatherId < 600) {
+            return ConditionMapper.GROUP_RAIN;
+        } else if (600 <= weatherId && weatherId < 700) {
+            return ConditionMapper.GROUP_SNOW;
+        } else if (700 <= weatherId && weatherId < 800) {
+            return ConditionMapper.GROUP_FOG;
+        } else if (weatherId == 800) {
+            return ConditionMapper.GROUP_CLEAR_SKY;
+        } else if (801 <= weatherId && weatherId < 900) {
+            return ConditionMapper.GROUP_CLOUDS;
+        } else {
+            throw new IllegalArgumentException("Unknown weather condition - " + weatherId);
+        }
+    }
+
 }

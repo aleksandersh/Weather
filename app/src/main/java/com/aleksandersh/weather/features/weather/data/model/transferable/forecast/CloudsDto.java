@@ -4,18 +4,18 @@ package com.aleksandersh.weather.features.weather.data.model.transferable.foreca
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Clouds {
+public class CloudsDto {
 
     @SerializedName("all")
     @Expose
-    private int all;
+    private int cloudiness;
 
-    public int getAll() {
-        return all;
+    public int getCloudiness() {
+        return cloudiness;
     }
 
-    public void setAll(int all) {
-        this.all = all;
+    public void setCloudiness(int cloudiness) {
+        this.cloudiness = cloudiness;
     }
 
 }

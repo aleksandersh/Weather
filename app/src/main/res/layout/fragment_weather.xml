@@ -30,6 +30,7 @@
                     style="@style/AppTheme.Weather.Card"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/weather_height_info_card"
+                    app:contentPadding="@dimen/all_margin_small"
                     >
 
                     <include
