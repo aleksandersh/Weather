@@ -51,6 +51,7 @@ public class WeatherPresenter extends BasePresenter<WeatherView> {
     }
 
     private void getForecast(City city) {
+        view.clearForecastList();
         weatherInteractor.getForecast(city)
                 .doFinally(() -> view.showLoading(false))
                 .subscribe(view::addForecast, view::showError);

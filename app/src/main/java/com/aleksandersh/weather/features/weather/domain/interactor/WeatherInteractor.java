@@ -109,13 +109,5 @@ public class WeatherInteractor {
                 .toObservable();
     }
 
-    private Observable<Weather> getSavedForecast() {
-        Timber.i("Getting saved forecast");
-        return weatherDao.getCurrentWeather()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(WeatherStorableState::getWeather)
-                .toObservable();
-    }
 
 }

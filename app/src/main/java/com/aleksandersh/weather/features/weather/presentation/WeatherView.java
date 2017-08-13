@@ -15,6 +15,8 @@ public interface WeatherView extends BaseView {
 
     void addForecast(Weather forecast);
 
+    void clearForecastList();
+
     void showCurrentCity(String name);
 
 }

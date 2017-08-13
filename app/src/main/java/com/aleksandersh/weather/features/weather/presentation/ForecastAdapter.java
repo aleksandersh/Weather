@@ -12,10 +12,6 @@ import com.aleksandersh.weather.features.weather.data.model.storable.Weather;
 import com.aleksandersh.weather.utils.BaseRxAdapter;
 import com.aleksandersh.weather.utils.ConditionMapper;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import butterknife.BindView;
 
 
@@ -60,15 +56,7 @@ public class ForecastAdapter extends BaseRxAdapter<Weather, ForecastAdapter.View
 
             String dateReadable = item.getDateReadable();
             if (dateReadable != null) {
-                try {
-                    SimpleDateFormat currentFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-                    SimpleDateFormat displayFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
-                    Date currentDate = currentFormat.parse(dateReadable);
-                    String displayDate = displayFormat.format(currentDate);
-                    date.setText(displayDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                           date.setText(dateReadable);
             }
         }
     }

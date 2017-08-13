@@ -175,6 +175,11 @@ public class WeatherFragment extends Fragment implements WeatherView {
     }
 
     @Override
+    public void clearForecastList() {
+        forecastAdapter.clear();
+    }
+
+    @Override
     public void showLoading(boolean loading) {
         swipeRefreshLayout.setRefreshing(loading);
     }
