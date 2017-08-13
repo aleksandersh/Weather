@@ -108,14 +108,15 @@ public class CityChooserFragment extends Fragment implements CityView {
                 .map(String::trim)
                 .subscribe(presenter::onSearchQueryUpdated));
 
-        presenter.onAttach(this);
+        presenter.attach(this);
+        presenter.onInit();
         return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.onDetach();
+        presenter.detach();
         mUnbinder.unbind();
         compositeDisposable.dispose();
     }

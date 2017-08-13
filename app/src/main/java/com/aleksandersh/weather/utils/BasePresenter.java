@@ -22,12 +22,12 @@ public abstract class BasePresenter<V extends BaseView> {
     }
 
     @CallSuper
-    public void onAttach(V view) {
+    public void attach(V view) {
         this.view = view;
     }
 
     @CallSuper
-    public void onDetach() {
+    public void detach() {
         Utils.dispose(disposables);
         this.view = null;
     }

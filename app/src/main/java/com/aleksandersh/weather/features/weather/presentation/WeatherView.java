@@ -13,7 +13,7 @@ public interface WeatherView extends BaseView {
 
     void showCurrentWeather(Weather weather);
 
-    void showForecast(Weather forecast);
+    void addForecast(Weather forecast);
 
     void showCurrentCity(String name);
 

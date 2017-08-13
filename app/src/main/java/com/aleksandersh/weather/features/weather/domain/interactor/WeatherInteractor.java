@@ -61,7 +61,7 @@ public class WeatherInteractor {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(ForecastResultDto::getForecastDto)
                 .flatMapObservable(Observable::fromIterable)
-                .map(forecastDto -> forecastDtoConverter.convert(city.getId(), forecastDto))
+                .map(forecastDto -> forecastDtoConverter.convert(forecastDto))
                 .doOnNext(weather -> save(weather, city.getLat(), city.getLng(), units, locale, false))
                 .sorted((w1, w2) -> {
                     int timestamp1 = w1.getTimestamp();
@@ -98,6 +98,15 @@ public class WeatherInteractor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(WeatherStorableState::getWeather);
+    }
+
+    private Observable<Weather> getSavedForecast() {
+        Timber.i("Getting saved forecast");
+        return weatherDao.getCurrentWeather()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(WeatherStorableState::getWeather)
+                .toObservable();
     }
 
     private Observable<Weather> getSavedForecast() {

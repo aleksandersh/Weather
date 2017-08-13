@@ -8,6 +8,9 @@ import java.util.Date;
 
 /**
  * Created by Vladimir Kondenko on 11.08.17.
+ *
+ * Helps Room convert classes to types that can be saved in the database
+ * and vice versa.
  */
 
 public class Converters {

@@ -12,10 +12,13 @@ import com.aleksandersh.weather.features.settings.SettingsFragment;
 import com.aleksandersh.weather.features.weather.di.WeatherModule;
 import com.aleksandersh.weather.features.weather.presentation.WeatherFragment;
 import com.aleksandersh.weather.service.WeatherUpdatingJobService;
+import com.aleksandersh.weather.utils.Const;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -31,6 +34,9 @@ import dagger.Component;
         WeatherModule.class,
         CityModule.class})
 public interface AppComponent {
+
+    @Named(Const.DI_API_SCOPE_WEATHER)
+    OkHttpClient getHttpClient();
 
     void inject(App app);
 

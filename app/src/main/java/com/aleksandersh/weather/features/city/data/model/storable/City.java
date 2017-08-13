@@ -12,8 +12,8 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "city")
 public class City {
 
-    @PrimaryKey
-    private int id;
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
     private String name;
 
@@ -23,16 +23,11 @@ public class City {
 
     private double lat;
 
-    public City(int id, String name, String countryName, double lat, double lng) {
-        this.id = id;
+    public City(String name, String countryName, double lat, double lng) {
         this.name = name;
         this.countryName = countryName;
         this.lng = lng;
         this.lat = lat;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -49,10 +44,6 @@ public class City {
 
     public double getLat() {
         return lat;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setName(String name) {

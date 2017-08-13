@@ -20,10 +20,8 @@ import static com.aleksandersh.weather.utils.ConditionMapper.getGroupByServiceWe
 
 public class ForecastDtoConverter {
 
-    public Weather convert(int cityId, ForecastDto forecast) {
+    public Weather convert(ForecastDto forecast) {
         Weather weather = new Weather();
-
-        weather.setCityId(cityId);
 
         MainDto main = forecast.getMain();
         if (main != null) {

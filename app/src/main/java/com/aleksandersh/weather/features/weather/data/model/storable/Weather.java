@@ -7,8 +7,6 @@ package com.aleksandersh.weather.features.weather.data.model.storable;
 
 public class Weather {
 
-    private long cityId;
-
     private double temperature;
 
     private double pressure;
@@ -35,14 +33,6 @@ public class Weather {
 
     public void setTimestamp(int timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(long cityId) {
-        this.cityId = cityId;
     }
 
     public double getTemperature() {
