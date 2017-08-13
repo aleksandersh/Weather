@@ -3,8 +3,8 @@ package com.aleksandersh.weather.features.city.di;
 
 import com.aleksandersh.weather.features.city.data.dao.CityDao;
 import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
-import com.aleksandersh.weather.features.city.data.repository.CityInteractorImpl;
 import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
+import com.aleksandersh.weather.features.city.domain.interactor.CityInteractorImpl;
 import com.aleksandersh.weather.features.city.domain.service.CitySearchService;
 import com.aleksandersh.weather.features.city.presentation.CityPresenter;
 import com.aleksandersh.weather.storage.AppDatabase;

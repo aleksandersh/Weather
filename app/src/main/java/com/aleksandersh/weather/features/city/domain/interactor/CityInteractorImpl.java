@@ -1,4 +1,4 @@
-package com.aleksandersh.weather.features.city.data.repository;
+package com.aleksandersh.weather.features.city.domain.interactor;
 
 
 import com.aleksandersh.weather.features.city.data.dao.CityDao;
@@ -6,7 +6,6 @@ import com.aleksandersh.weather.features.city.data.model.CityDtoConverter;
 import com.aleksandersh.weather.features.city.data.model.storable.City;
 import com.aleksandersh.weather.features.city.data.model.storable.CurrentCity;
 import com.aleksandersh.weather.features.city.data.model.transferable.CityResultDto;
-import com.aleksandersh.weather.features.city.domain.interactor.CityInteractor;
 import com.aleksandersh.weather.features.city.domain.service.CitySearchService;
 import com.aleksandersh.weather.utils.Const;
 import com.aleksandersh.weather.utils.Utils;
