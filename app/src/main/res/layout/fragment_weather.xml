@@ -8,11 +8,12 @@
     tools:context="com.aleksandersh.weather.features.weather.presentation.WeatherFragment"
     >
 
-
+    <!--The bottom padding fixes this view's overlapping with the BottomSheet-->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/weather_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="56dp"
         >
 
         <android.support.v4.widget.NestedScrollView

@@ -97,7 +97,12 @@ public class WeatherFragment extends Fragment implements WeatherView {
         fragmentCityChooser = (CityChooserFragment) getChildFragmentManager().findFragmentById(R.id.weather_bottomsheet_fragment_citychooser);
         fragmentCityChooser.setOnCitySelectedListener(() -> presenter.onUpdate());
 
-        recyclerViewForecast.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerViewForecast.setLayoutManager(new LinearLayoutManager(this.getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         forecastAdapter = new ForecastAdapter(this.getContext());
         recyclerViewForecast.setAdapter(forecastAdapter);
 
