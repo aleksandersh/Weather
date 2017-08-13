@@ -25,8 +25,6 @@ public class CurrentWeatherDtoConverter {
     public Weather convert(CurrentWeatherDto dto) {
         Weather weather = new Weather();
 
-        weather.setCityId(dto.getCityId());
-
         GeneralDto generalDto = dto.getGeneral();
         if (generalDto != null) {
             weather.setTemperature(generalDto.getTemperature());

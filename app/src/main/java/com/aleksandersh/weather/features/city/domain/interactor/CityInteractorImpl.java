@@ -48,7 +48,6 @@ public class CityInteractorImpl implements CityInteractor {
                 .toObservable()
                 .flatMap(Observable::fromIterable)
                 .map(converter::convert)
-                .distinct(City::getId)
                 .distinct(City::getName)
                 .distinct(City::getCountryName)
                 .toList();
@@ -106,7 +105,7 @@ public class CityInteractorImpl implements CityInteractor {
     }
 
     private City getDefaultCityObject() {
-        City defaultCity = new City(524894, "Moscow", "Russia", 55.76167, 37.60667);
+        City defaultCity = new City("Moscow", "Russia", 55.76167, 37.60667);
         addCity(defaultCity);
         return defaultCity;
     }

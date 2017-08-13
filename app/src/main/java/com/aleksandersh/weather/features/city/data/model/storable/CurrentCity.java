@@ -32,4 +32,21 @@ public class CurrentCity {
     public void setCurrentCity(City currentCity) {
         this.currentCity = currentCity;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CurrentCity that = (CurrentCity) o;
+        if (currentCityKey != that.currentCityKey) return false;
+        return currentCity != null ? currentCity.equals(that.currentCity) : that.currentCity == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = currentCityKey;
+        result = 31 * result + (currentCity != null ? currentCity.hashCode() : 0);
+        return result;
+    }
 }
