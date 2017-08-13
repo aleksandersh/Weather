@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "me.tatarka.retrolambda"
 apply plugin: 'jacoco-android'
+apply from: rootProject.file('gradle/jacoco.gradle')
 
 android {
     signingConfigs {
@@ -53,14 +54,6 @@ android {
             java.srcDirs += "src/testUtils/java"
         }
     }
-}
-
-jacocoAndroidUnitTestReport {
-    excludes += [
-            '**/di/*',
-            '**features/**/data/model/**'
-    ]
-    xml.enabled false
 }
 
 ext {
